@@ -69,13 +69,22 @@ public class playerController : MonoBehaviour
 
     private void Update()
     {
+        if (isRolling)
+        {
+            isCeiling = Physics2D.OverlapBox(ceillingCheck.position, new Vector2(1.3f, 1.7f), 0, headHitters);
+            return;
+        }
+
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.7f, .2f), 0, groundLayer);
 
         if (!IsAnimationPlaying(anim, PLAYER_ATTACK_1))
         {
             if (!IsAnimationPlaying(anim, PLAYER_ATTACK_2))
             {
-                attacking = false;
+                if (!IsAnimationPlaying(anim, PLAYER_ATTACK_3))
+                {
+                    attacking = false;
+                }
             }
         }
 
@@ -101,12 +110,6 @@ public class playerController : MonoBehaviour
 
         if (attacking)
         {
-            return;
-        }
-
-        if (isRolling)
-        {
-            isCeiling = Physics2D.OverlapBox(ceillingCheck.position, new Vector2(1.3f, 1.7f), 0, headHitters);
             return;
         }
 
@@ -205,16 +208,21 @@ public class playerController : MonoBehaviour
     {
         lastClickedTime = Time.time;
         noOfClicks++;
-        if (noOfClicks == 1)
+        noOfClicks = Mathf.Clamp(noOfClicks, 0, 3);
+
+        if (noOfClicks == 1 && !IsAnimationPlaying(anim, PLAYER_ATTACK_1) && !IsAnimationPlaying(anim, PLAYER_ATTACK_2) && !IsAnimationPlaying(anim, PLAYER_ATTACK_3))
         {
             ChangeAnimationState(PLAYER_ATTACK_1);
         }
-
-        noOfClicks = Mathf.Clamp(noOfClicks, 0, 2);
  
-        if( noOfClicks >= 2 && !IsAnimationPlaying(anim, PLAYER_ATTACK_1))
+        if( noOfClicks == 2 && !IsAnimationPlaying(anim, PLAYER_ATTACK_1) && !IsAnimationPlaying(anim, PLAYER_ATTACK_2) && !IsAnimationPlaying(anim, PLAYER_ATTACK_3))
         {
             ChangeAnimationState(PLAYER_ATTACK_2);
+        }
+
+        if( noOfClicks == 3 && !IsAnimationPlaying(anim, PLAYER_ATTACK_1) && !IsAnimationPlaying(anim, PLAYER_ATTACK_2) && !IsAnimationPlaying(anim, PLAYER_ATTACK_3))
+        {
+            ChangeAnimationState(PLAYER_ATTACK_3);
             noOfClicks = 0;
         }
     }
