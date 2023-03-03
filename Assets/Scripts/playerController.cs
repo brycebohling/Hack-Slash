@@ -13,7 +13,7 @@ public class playerController : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D bcoll;
 
-    // Animation
+    // Animatinon
     private Animator anim;
     string _currentState;
     const string PLAYER_IDLE = "idle";
@@ -111,7 +111,7 @@ public class playerController : MonoBehaviour
         }
 
         Flip();
-        
+
         movementX = Input.GetAxisRaw("Horizontal");
 
         if (isGrounded && !Input.GetButton("Jump")) 
