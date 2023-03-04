@@ -7,7 +7,7 @@ public class playerController : MonoBehaviour
     // Movement
     private float movementX;
     [SerializeField] private float speed;
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
 
     // Physics
     private Rigidbody2D rb;
@@ -58,6 +58,10 @@ public class playerController : MonoBehaviour
     [SerializeField] private float maxComboDelay = 1;
     private bool attacking;
     [SerializeField] private float attackMovementSpeed;
+
+    // Scythe
+    public GameObject scythe;
+    private Vector2 location;
 
     private void Start()
     {
@@ -157,6 +161,21 @@ public class playerController : MonoBehaviour
         {
             StartCoroutine(Roll());
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (isFacingRight) 
+            {
+                location = new Vector2(transform.position.x + 3f, transform.position.y + .55f);
+                Instantiate(scythe, location, Quaternion.identity);
+            } else
+            {
+                location = new Vector2(transform.position.x - 3, transform.position.y + .55f);
+                Instantiate(scythe, location, transform.rotation * Quaternion.Euler (0f, 180f, 0f));
+            }
+            
+            
+        }
     }
 
     private void FixedUpdate() 
@@ -240,8 +259,7 @@ public class playerController : MonoBehaviour
 
     private bool IsAnimationPlaying(Animator animator, string stateName)
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
-        animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
             return true;
         } else
