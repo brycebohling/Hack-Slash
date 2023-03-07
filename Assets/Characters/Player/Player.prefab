@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 5112000661765236302}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   maxComboDelay: 1
   attackMovementSpeed: 1
   scythe: {fileID: 8111210303720067932, guid: bc7b837ac7ed444d1965dbb992678433, type: 3}
+  throwCooldown: 1.5
 --- !u!50 &5112000661765236303
 Rigidbody2D:
   serializedVersion: 4

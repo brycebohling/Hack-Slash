@@ -62,6 +62,8 @@ public class playerController : MonoBehaviour
     // Scythe
     public GameObject scythe;
     private Vector2 location;
+    [SerializeField] private float throwCooldown;
+    private float throwCountdown;
 
     private void Start()
     {
@@ -73,6 +75,11 @@ public class playerController : MonoBehaviour
 
     private void Update()
     {
+        if (throwCountdown > 0)
+        {
+            throwCountdown -= Time.deltaTime;
+        }
+
         if (isRolling)
         {
             isCeiling = Physics2D.OverlapBox(ceillingCheck.position, new Vector2(1.3f, 1.7f), 0, headHitters);
@@ -162,18 +169,19 @@ public class playerController : MonoBehaviour
             StartCoroutine(Roll());
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && throwCountdown <= 0)
         {
             if (isFacingRight) 
             {
                 location = new Vector2(transform.position.x + 3f, transform.position.y + .55f);
                 Instantiate(scythe, location, Quaternion.identity);
+                
             } else
             {
                 location = new Vector2(transform.position.x - 3, transform.position.y + .55f);
                 Instantiate(scythe, location, transform.rotation * Quaternion.Euler (0f, 180f, 0f));
             }
-            
+            throwCountdown = throwCooldown;
             
         }
     }
