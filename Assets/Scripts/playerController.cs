@@ -7,7 +7,7 @@ public class playerController : MonoBehaviour
     // Movement
     private float movementX;
     [SerializeField] private float speed;
-    public bool isFacingRight = true;
+    public bool isFacingRight;
 
     // Physics
     private Rigidbody2D rb;
