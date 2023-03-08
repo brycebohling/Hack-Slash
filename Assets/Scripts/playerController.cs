@@ -65,6 +65,11 @@ public class playerController : MonoBehaviour
     [SerializeField] private float throwCooldown;
     private float throwCountdown;
 
+    [SerializeField] float iFrameTime;
+    float iFrameCountdown;
+    [SerializeField] HealthBar HB;
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -74,7 +79,12 @@ public class playerController : MonoBehaviour
 
 
     private void Update()
-    {
+    {   
+        if (iFrameCountdown > 0)
+        {
+            iFrameCountdown -= Time.deltaTime;
+        }
+
         if (throwCountdown > 0)
         {
             throwCountdown -= Time.deltaTime;
@@ -253,6 +263,23 @@ public class playerController : MonoBehaviour
             noOfClicks = 0;
         }
     }
+
+    public void PlayerTakeDmg(int dmg)
+    {
+        if (iFrameCountdown <= 0)
+        {
+            GameManager.gameManager._playerHealth.DamUnit(dmg);
+            HB.SetHealth(GameManager.gameManager._playerHealth.Health);
+            Debug.Log(GameManager.gameManager._playerHealth.Health);
+            iFrameCountdown = iFrameTime;
+        }
+    }
+
+    public void PlayerHeal(int healing)
+    {
+        GameManager.gameManager._playerHealth.HealUnit(healing);
+    }
+
 
     private void ChangeAnimationState(string newState)
     {

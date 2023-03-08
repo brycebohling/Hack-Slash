@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
+    playerController PC;
+
+    // Animation
+    private Animator anim;
+    string _currentState;
+    const string ATTACK = "attack";
+    const string DAMAGED = "damaged";
+    const string NORMAL = "normal";
+
     private Rigidbody2D rb;
     private float movementX;
     private bool isFacingRight;
@@ -11,18 +20,30 @@ public class enemy : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float minDistance;
 
+    Vector2 targetLocation;
+
+    
+
+
+
+    // public unitHealth _enemyHealth = new unitHealth(100, 100);
+
+
     private void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
+        PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
     }
 
     private void Update()
     {
         movementX = rb.velocity.x;
 
-        if (Vector2.Distance(transform.position, target.position) > minDistance)
+        targetLocation = new Vector2(target.position.x, 0);
+
+        if (Vector2.Distance(transform.position, targetLocation) > minDistance)
         {
-            transform.position =  Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            transform.position =  Vector2.MoveTowards(transform.position, targetLocation, speed * Time.deltaTime);
 
             if (target.position.x > transform.position.x)
             {
@@ -43,12 +64,10 @@ public class enemy : MonoBehaviour
                     transform.localScale = localScale;
                 }
             }        
-        } 
-    }
-
-    private void FixedUpdate() 
-    {
-        
+        } else
+        {
+            PC.PlayerTakeDmg(10);
+        }
     }
 
     private void Flip()
@@ -59,6 +78,28 @@ public class enemy : MonoBehaviour
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
+        }
+    }
+
+    private void ChangeAnimationState(string newState)
+    {
+        if (newState == _currentState)
+        {
+            return;
+        }
+
+        anim.Play(newState);
+        _currentState = newState;
+    }
+
+    private bool IsAnimationPlaying(Animator animator, string stateName)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            return true;
+        } else
+        {
+            return false;
         }
     }
 }
