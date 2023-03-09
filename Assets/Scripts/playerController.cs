@@ -21,7 +21,6 @@ public class playerController : MonoBehaviour
     const string PLAYER_JUMP = "jump";
     const string PLAYER_FALL = "fall";
     const string PLAYER_START_ROLL = "startRoll";
-    const string PLAYER_ROLL = "rolling";
     const string PLAYER_ATTACK_1 = "attack-1";
     const string PLAYER_ATTACK_2 = "attack-2";
     const string PLAYER_ATTACK_3 = "attack-3";

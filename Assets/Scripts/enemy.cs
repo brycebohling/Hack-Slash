@@ -24,6 +24,9 @@ public class enemy : MonoBehaviour
     // Attack
     [SerializeField] float attackTimer;
     float attackCountdown;
+    [SerializeField] Transform attckPoint;
+    [SerializeField] private LayerMask attackLayer;
+    bool canDmgPlayer;
 
 
     private void Start() 
@@ -39,7 +42,7 @@ public class enemy : MonoBehaviour
         {
             attackCountdown -= Time.deltaTime;
         }
-        
+
         movementX = rb.velocity.x;
 
         targetLocation = new Vector2(target.position.x, 0);
@@ -84,7 +87,11 @@ public class enemy : MonoBehaviour
 
     public void DmgPlayer()
     {
-        PC.PlayerTakeDmg(10);
+        canDmgPlayer = Physics2D.OverlapBox(attckPoint.position, new Vector2(1f, 1f), 0, attackLayer);
+        if (canDmgPlayer)
+        {
+            PC.PlayerTakeDmg(10);
+        }
     }
 
     private void Flip()
