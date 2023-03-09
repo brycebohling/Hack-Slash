@@ -86,6 +86,7 @@ public class playerController : MonoBehaviour
     {   
         if (isDead)
         {
+            rb.velocity = new Vector2(0,0);
             return;
         }
 

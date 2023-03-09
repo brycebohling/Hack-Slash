@@ -1225,6 +1225,7 @@ MonoBehaviour:
   speed: 1
   target: {fileID: 696645491}
   minDistance: 4
+  attackTimer: 1
 --- !u!50 &1826865060
 Rigidbody2D:
   serializedVersion: 4

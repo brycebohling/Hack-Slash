@@ -21,6 +21,10 @@ public class enemy : MonoBehaviour
     [SerializeField] private float minDistance;
     Vector2 targetLocation;
 
+    // Attack
+    [SerializeField] float attackTimer;
+    float attackCountdown;
+
 
     private void Start() 
     {
@@ -31,6 +35,11 @@ public class enemy : MonoBehaviour
 
     private void Update()
     {
+        if (attackCountdown > 0)
+        {
+            attackCountdown -= Time.deltaTime;
+        }
+        
         movementX = rb.velocity.x;
 
         targetLocation = new Vector2(target.position.x, 0);
@@ -60,10 +69,22 @@ public class enemy : MonoBehaviour
             }        
         } else
         {
-            ChangeAnimationState(ENEMY_ATTACK);
-            PC.PlayerTakeDmg(10);
-            
+            if (attackCountdown <= 0)
+            {
+                ChangeAnimationState(ENEMY_ATTACK);
+                attackCountdown = attackTimer;
+            } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+            {
+                ChangeAnimationState(ENEMY_NORMAL);
+                
+            }
+
         }
+    }
+
+    public void DmgPlayer()
+    {
+        PC.PlayerTakeDmg(10);
     }
 
     private void Flip()
