@@ -260,6 +260,8 @@ MonoBehaviour:
   attackMovementSpeed: 1
   scythe: {fileID: 8111210303720067932, guid: bc7b837ac7ed444d1965dbb992678433, type: 3}
   throwCooldown: 1.5
+  iFrameTime: 1
+  HB: {fileID: 0}
 --- !u!50 &5112000661765236303
 Rigidbody2D:
   serializedVersion: 4

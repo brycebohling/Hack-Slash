@@ -25,7 +25,7 @@ public class playerController : MonoBehaviour
     const string PLAYER_ATTACK_1 = "attack-1";
     const string PLAYER_ATTACK_2 = "attack-2";
     const string PLAYER_ATTACK_3 = "attack-3";
-
+    const string PLAYER_DAMAGED = "damaged";
 
     // Ground check
     [SerializeField] Transform groundCheck;
@@ -65,10 +65,14 @@ public class playerController : MonoBehaviour
     [SerializeField] private float throwCooldown;
     private float throwCountdown;
 
+    // Dmg
     [SerializeField] float iFrameTime;
     float iFrameCountdown;
     [SerializeField] HealthBar HB;
+    bool takingDmg = false;
 
+    // Death
+    bool isDead = false;
 
     private void Start()
     {
@@ -80,6 +84,20 @@ public class playerController : MonoBehaviour
 
     private void Update()
     {   
+        if (isDead)
+        {
+            return;
+        }
+
+        if (takingDmg && IsAnimationPlaying(anim, PLAYER_DAMAGED))
+        {
+            rb.velocity = new Vector2(0,0);
+            return;
+        } else
+        {
+            takingDmg = false;
+        }
+
         if (iFrameCountdown > 0)
         {
             iFrameCountdown -= Time.deltaTime;
@@ -198,7 +216,7 @@ public class playerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        if (isRolling || attacking)
+        if (isRolling || attacking || takingDmg || isDead)
         {
             return;
         }
@@ -266,12 +284,23 @@ public class playerController : MonoBehaviour
 
     public void PlayerTakeDmg(int dmg)
     {
+        
         if (iFrameCountdown <= 0)
         {
             GameManager.gameManager._playerHealth.DamUnit(dmg);
             HB.SetHealth(GameManager.gameManager._playerHealth.Health);
-            Debug.Log(GameManager.gameManager._playerHealth.Health);
-            iFrameCountdown = iFrameTime;
+
+            if (GameManager.gameManager._playerHealth.Health <= 0)
+            {
+                isDead = true;
+            } else
+            {
+                iFrameCountdown = iFrameTime;
+                takingDmg = true;
+                ChangeAnimationState(PLAYER_DAMAGED);
+            }
+            
+
         }
     }
 

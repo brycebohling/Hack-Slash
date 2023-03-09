@@ -9,9 +9,9 @@ public class enemy : MonoBehaviour
     // Animation
     private Animator anim;
     string _currentState;
-    const string ATTACK = "attack";
-    const string DAMAGED = "damaged";
-    const string NORMAL = "normal";
+    const string ENEMY_ATTACK = "attack";
+    const string ENEMY_DAMAGED = "damaged";
+    const string ENEMY_NORMAL = "normal";
 
     private Rigidbody2D rb;
     private float movementX;
@@ -19,20 +19,14 @@ public class enemy : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform target;
     [SerializeField] private float minDistance;
-
     Vector2 targetLocation;
-
-    
-
-
-
-    // public unitHealth _enemyHealth = new unitHealth(100, 100);
 
 
     private void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -66,7 +60,9 @@ public class enemy : MonoBehaviour
             }        
         } else
         {
+            ChangeAnimationState(ENEMY_ATTACK);
             PC.PlayerTakeDmg(10);
+            
         }
     }
 
