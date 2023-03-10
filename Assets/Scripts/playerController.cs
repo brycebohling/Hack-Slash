@@ -52,11 +52,15 @@ public class playerController : MonoBehaviour
     private bool isRolling; 
 
     // Attack
+    [SerializeField] int dmg;
     public static int noOfClicks = 0;
     private float lastClickedTime = 0;
     [SerializeField] private float maxComboDelay = 1;
     private bool attacking;
     [SerializeField] private float attackMovementSpeed;
+    [SerializeField] GameObject attackPoint;
+    [SerializeField] float attackRadius;
+    [SerializeField] LayerMask enemies;
 
     // Scythe
     public GameObject scythe;
@@ -69,6 +73,9 @@ public class playerController : MonoBehaviour
     float iFrameCountdown;
     [SerializeField] HealthBar HB;
     bool takingDmg = false;
+    [SerializeField] float dmgTime;
+    float dmgTimerCountdown;
+
 
     // Death
     bool isDead = false;
@@ -89,8 +96,15 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        if (takingDmg && IsAnimationPlaying(anim, PLAYER_DAMAGED))
+        if (takingDmg)
         {
+            dmgTimerCountdown -= Time.deltaTime;
+
+            if (dmgTimerCountdown <= 0) 
+            {
+                takingDmg = false;
+            }
+
             rb.velocity = new Vector2(0,0);
             return;
         } else
@@ -134,7 +148,7 @@ public class playerController : MonoBehaviour
  
         if (Input.GetMouseButtonDown(0))
         {
-            Attack();
+            AttackAnim();
             attacking = true;
             if (isGrounded)
             {
@@ -259,7 +273,7 @@ public class playerController : MonoBehaviour
         canRoll = true;
     }
 
-    void Attack()
+    private void AttackAnim()
     {
         lastClickedTime = Time.time;
         noOfClicks++;
@@ -282,6 +296,21 @@ public class playerController : MonoBehaviour
         }
     }
 
+    public void PlayerAttackEnemy() 
+    {
+        Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
+
+        foreach (Collider2D enemyGameobject in enemy)
+        {
+            Debug.Log("hit enemy");
+            enemyGameobject.GetComponent<RedBoyC>().RedBoyTakeDmg(dmg);
+        }
+    }
+
+    private void OnDrawGizmos() 
+    {
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);    
+    }
     public void PlayerTakeDmg(int dmg)
     {
         
@@ -295,12 +324,11 @@ public class playerController : MonoBehaviour
                 isDead = true;
             } else
             {
+                dmgTimerCountdown = dmgTime;
                 iFrameCountdown = iFrameTime;
                 takingDmg = true;
                 ChangeAnimationState(PLAYER_DAMAGED);
             }
-            
-
         }
     }
 
@@ -308,7 +336,6 @@ public class playerController : MonoBehaviour
     {
         GameManager.gameManager._playerHealth.HealUnit(healing);
     }
-
 
     private void ChangeAnimationState(string newState)
     {
