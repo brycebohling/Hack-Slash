@@ -5,7 +5,7 @@ using UnityEngine;
 public class scythe : MonoBehaviour
 {
     [SerializeField] private float speed;
-    
+    [SerializeField] int dmg;
     private Rigidbody2D rb;
     void Start()
     {
@@ -17,12 +17,8 @@ public class scythe : MonoBehaviour
     {
         if (collision.CompareTag("enemy"))
         {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<RedBoyC>().RedBoyTakeDmg(dmg);
         }
         Destroy(gameObject);
     }
 }
-
-
-
-    

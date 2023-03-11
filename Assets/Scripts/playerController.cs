@@ -68,6 +68,11 @@ public class playerController : MonoBehaviour
     [SerializeField] private float throwCooldown;
     private float throwCountdown;
 
+    // Health
+
+    int currentHealth;
+    [SerializeField] int health;
+
     // Dmg
     [SerializeField] float iFrameTime;
     float iFrameCountdown;
@@ -75,7 +80,6 @@ public class playerController : MonoBehaviour
     bool takingDmg = false;
     [SerializeField] float dmgTime;
     float dmgTimerCountdown;
-
 
     // Death
     bool isDead = false;
@@ -85,6 +89,7 @@ public class playerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         bcoll = GetComponent<BoxCollider2D>();
+        currentHealth = health;
     }
 
 
@@ -260,10 +265,12 @@ public class playerController : MonoBehaviour
         bcoll.size = new Vector2(rollWidth, rollHight);
         bcoll.offset = new Vector2(rollOffsetX, rollOffsetY);
         rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);
+        gameObject.layer = 10;
 
         yield return new WaitForSeconds(rollTime);
         yield return new WaitUntil(() => !isCeiling);
 
+        gameObject.layer = 8;
         bcoll.size = new Vector2(originalWidth, originalHight);
         bcoll.offset = new Vector2(originalOffsetX, originalOffsetY);
         isRolling = false;
@@ -302,7 +309,6 @@ public class playerController : MonoBehaviour
 
         foreach (Collider2D enemyGameobject in enemy)
         {
-            Debug.Log("hit enemy");
             enemyGameobject.GetComponent<RedBoyC>().RedBoyTakeDmg(dmg);
         }
     }
@@ -316,10 +322,10 @@ public class playerController : MonoBehaviour
         
         if (iFrameCountdown <= 0)
         {
-            GameManager.gameManager._playerHealth.DamUnit(dmg);
-            HB.SetHealth(GameManager.gameManager._playerHealth.Health);
+            currentHealth -= dmg;
+            HB.SetHealth(currentHealth);
 
-            if (GameManager.gameManager._playerHealth.Health <= 0)
+            if (currentHealth <= 0)
             {
                 isDead = true;
             } else

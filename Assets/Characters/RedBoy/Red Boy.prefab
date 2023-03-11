@@ -135,8 +135,9 @@ MonoBehaviour:
   attackLayer:
     serializedVersion: 2
     m_Bits: 256
-  iFrameTime: 0
-  dmgTimerCountdown: 0.1
+  health: 30
+  dmgTime: 0.1
+  deathParticals: {fileID: 0}
 --- !u!50 &793930967036904722
 Rigidbody2D:
   serializedVersion: 4

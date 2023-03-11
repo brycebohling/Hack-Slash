@@ -28,6 +28,11 @@ public class RedBoyC : MonoBehaviour
     [SerializeField] private LayerMask attackLayer;
     bool canDmgPlayer;
 
+    // Health
+
+    int currentHealth;
+    [SerializeField] int health;
+
     // Damaged
 
     bool takingDmg;
@@ -38,6 +43,8 @@ public class RedBoyC : MonoBehaviour
 
     bool isDead;
 
+    [SerializeField] GameObject deathParticals;
+
 
 
     private void Start() 
@@ -45,14 +52,15 @@ public class RedBoyC : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
         anim = GetComponent<Animator>();
+        currentHealth = health;
     }
 
     private void Update()
     {
         if (isDead)
         {
-            rb.velocity = new Vector2(0,0);
-            return;
+            Destroy(gameObject);
+            deathParticals.SetActive(true);
         }
 
         if (takingDmg)
@@ -90,6 +98,9 @@ public class RedBoyC : MonoBehaviour
             {
                 ChangeAnimationState(ENEMY_ATTACK);
                 attackCountdown = attackTimer;
+            } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+            {
+                ChangeAnimationState(ENEMY_NORMAL);
             }
         }
     }
@@ -128,10 +139,9 @@ public class RedBoyC : MonoBehaviour
 
     public void RedBoyTakeDmg(int dmg)
     {
-        GameManager.gameManager._RedBoyHealth.DamUnit(dmg);
-        Debug.Log(GameManager.gameManager._RedBoyHealth.Health);
+        currentHealth -= dmg;   
 
-        if (GameManager.gameManager._RedBoyHealth.Health <= 0)
+        if (currentHealth <= 0)
         {
             isDead = true;
         } else
