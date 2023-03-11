@@ -30,11 +30,9 @@ public class RedBoyC : MonoBehaviour
 
     // Damaged
 
-    [SerializeField] float iFrameTime;
-    float iFrameCountdown;
     bool takingDmg;
-    [SerializeField] float dmgTimerCountdown;
-    float dmgTime;
+    float dmgTimerCountdown;
+    [SerializeField] float dmgTime;
 
     // Death
 
@@ -64,13 +62,11 @@ public class RedBoyC : MonoBehaviour
             if (dmgTimerCountdown <= 0) 
             {
                 takingDmg = false;
-            }
-
-            rb.velocity = new Vector2(0,0);
-            return;
-        } else
-        {
-            takingDmg = false;
+            } else 
+            {
+                rb.velocity = new Vector2(0,0);
+                return;
+            }            
         }
 
         if (attackCountdown > 0)
@@ -94,12 +90,7 @@ public class RedBoyC : MonoBehaviour
             {
                 ChangeAnimationState(ENEMY_ATTACK);
                 attackCountdown = attackTimer;
-            } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
-            {
-                ChangeAnimationState(ENEMY_NORMAL);
-                
             }
-
         }
     }
 
@@ -137,9 +128,6 @@ public class RedBoyC : MonoBehaviour
 
     public void RedBoyTakeDmg(int dmg)
     {
-        
-        
-
         GameManager.gameManager._RedBoyHealth.DamUnit(dmg);
         Debug.Log(GameManager.gameManager._RedBoyHealth.Health);
 
@@ -149,19 +137,9 @@ public class RedBoyC : MonoBehaviour
         } else
         {
             dmgTimerCountdown = dmgTime;
-            iFrameCountdown = iFrameTime;
             takingDmg = true;
-            Debug.Log("helo");
             ChangeAnimationState(ENEMY_DAMAGED);
         }
-
-        // if (iFrameCountdown <= 0)
-        // {
-            
-        //     // HB.SetHealth(GameManager.gameManager._playerHealth.Health);
-
-            
-        // }
     }
 
     private void ChangeAnimationState(string newState)

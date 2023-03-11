@@ -256,12 +256,19 @@ MonoBehaviour:
   rollSpeed: 18
   rollTime: 0.5
   rollCoolDown: 0.5
+  dmg: 10
   maxComboDelay: 1
   attackMovementSpeed: 1
+  attackPoint: {fileID: 0}
+  attackRadius: 1.5
+  enemies:
+    serializedVersion: 2
+    m_Bits: 512
   scythe: {fileID: 8111210303720067932, guid: bc7b837ac7ed444d1965dbb992678433, type: 3}
   throwCooldown: 1.5
   iFrameTime: 1
   HB: {fileID: 0}
+  dmgTime: 0.1
 --- !u!50 &5112000661765236303
 Rigidbody2D:
   serializedVersion: 4
