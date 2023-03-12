@@ -157,7 +157,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.990566, g: 0.98445386, b: 0.9765486, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -656,6 +656,10 @@ PrefabInstance:
       propertyPath: deathParticals
       value: 
       objectReference: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
+    - target: {fileID: 793930967036904727, guid: 840f67e508501413da6eea4528b1f2e3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 793930967036904745, guid: 840f67e508501413da6eea4528b1f2e3, type: 3}
       propertyPath: m_Name
       value: Red Boy (1)
