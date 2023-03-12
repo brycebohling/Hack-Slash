@@ -137,7 +137,7 @@ MonoBehaviour:
     m_Bits: 256
   health: 30
   dmgTime: 0.1
-  deathParticals: {fileID: 0}
+  deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
 --- !u!50 &793930967036904722
 Rigidbody2D:
   serializedVersion: 4

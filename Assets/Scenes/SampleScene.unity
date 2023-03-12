@@ -1580,10 +1580,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 696645491}
-    - target: {fileID: 793930967036904725, guid: 840f67e508501413da6eea4528b1f2e3, type: 3}
-      propertyPath: deathParticals
-      value: 
-      objectReference: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
     - target: {fileID: 793930967036904745, guid: 840f67e508501413da6eea4528b1f2e3, type: 3}
       propertyPath: m_Name
       value: Red Boy

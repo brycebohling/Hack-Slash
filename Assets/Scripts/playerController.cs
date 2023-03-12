@@ -338,11 +338,6 @@ public class playerController : MonoBehaviour
         }
     }
 
-    public void PlayerHeal(int healing)
-    {
-        GameManager.gameManager._playerHealth.HealUnit(healing);
-    }
-
     private void ChangeAnimationState(string newState)
     {
         if (newState == _currentState)
