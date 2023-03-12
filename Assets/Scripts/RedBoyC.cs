@@ -17,7 +17,6 @@ public class RedBoyC : MonoBehaviour
     private float movementX;
     private bool isFacingRight;
     [SerializeField] private float speed;
-    [SerializeField] private Transform target;
     [SerializeField] private float minDistance;
     Vector2 targetLocation;
 
@@ -84,7 +83,7 @@ public class RedBoyC : MonoBehaviour
 
         movementX = rb.velocity.x;
 
-        targetLocation = new Vector2(target.position.x, 0);
+        targetLocation = new Vector2(GameManager.gameManager.player.position.x, 0);
 
         Flip();
 
@@ -116,7 +115,7 @@ public class RedBoyC : MonoBehaviour
 
     private void Flip()
     {
-        if (target.position.x > transform.position.x)
+        if (GameManager.gameManager.player.position.x > transform.position.x)
         {
             if (isFacingRight)
             {
