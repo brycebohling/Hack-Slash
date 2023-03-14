@@ -3504,6 +3504,7 @@ GameObject:
   - component: {fileID: 1566964277}
   - component: {fileID: 1566964276}
   - component: {fileID: 1566964278}
+  - component: {fileID: 1566964279}
   m_Layer: 0
   m_Name: Flyer
   m_TagString: Untagged
@@ -3585,7 +3586,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566964275}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -3604,6 +3605,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5745583, y: 1.0488124}
   m_EdgeRadius: 0
+--- !u!114 &1566964279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566964275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617b653f8d00a4590be11845ac2791b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  health: 10
 --- !u!1 &1601055967
 GameObject:
   m_ObjectHideFlags: 0
@@ -3859,6 +3874,10 @@ PrefabInstance:
     - target: {fileID: 793930967036904745, guid: 840f67e508501413da6eea4528b1f2e3, type: 3}
       propertyPath: m_Name
       value: Red Boy
+      objectReference: {fileID: 0}
+    - target: {fileID: 793930967036904745, guid: 840f67e508501413da6eea4528b1f2e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 840f67e508501413da6eea4528b1f2e3, type: 3}

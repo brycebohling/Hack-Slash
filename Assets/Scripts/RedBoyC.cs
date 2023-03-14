@@ -13,8 +13,6 @@ public class RedBoyC : MonoBehaviour
     const string ENEMY_DAMAGED = "damaged";
     const string ENEMY_NORMAL = "normal";
 
-    
-
     // Movement
     private Rigidbody2D rb;
     private bool isFacingRight;
