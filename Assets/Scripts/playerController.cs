@@ -200,7 +200,7 @@ public class playerController : MonoBehaviour
         } else if (movementX != 0 && rb.velocity.y == 0)
         {
             ChangeAnimationState(PLAYER_RUN);
-        } else if (rb.velocity.y != 0) 
+        } else if (rb.velocity.y < -0.01f || rb.velocity.y > 0.01f) 
         {
             if (rb.velocity.y > 0) 
             {

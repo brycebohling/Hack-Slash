@@ -193,8 +193,8 @@ MonoBehaviour:
   ceillingCheck: {fileID: 5112000660030634530}
   headHitters:
     serializedVersion: 2
-    m_Bits: 192
-  jumpForce: 10
+    m_Bits: 704
+  jumpForce: 17
   rollWidth: 1.5
   rollHight: 1.35
   rollOffsetX: 0
