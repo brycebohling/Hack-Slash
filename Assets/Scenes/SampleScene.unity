@@ -3619,6 +3619,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   health: 10
+  attackTimer: 1
+  attackSpeed: 4
+  minDistanceX: 10
 --- !u!1 &1601055967
 GameObject:
   m_ObjectHideFlags: 0
