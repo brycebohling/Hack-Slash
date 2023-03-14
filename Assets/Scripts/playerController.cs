@@ -133,7 +133,7 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.7f, .2f), 0, groundLayer);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
 
         if (!IsAnimationPlaying(anim, PLAYER_ATTACK_1))
         {
@@ -197,9 +197,7 @@ public class playerController : MonoBehaviour
         if (movementX == 0 && rb.velocity.y == 0)
         {
             ChangeAnimationState(PLAYER_IDLE);
-        } else if (movementX != 0 && rb.velocity.y == 0)
-        {
-            ChangeAnimationState(PLAYER_RUN);
+
         } else if (rb.velocity.y < -0.01f || rb.velocity.y > 0.01f) 
         {
             if (rb.velocity.y > 0) 
@@ -209,7 +207,11 @@ public class playerController : MonoBehaviour
             {
                 ChangeAnimationState(PLAYER_FALL);
             }
-        }
+            
+        } else if (movementX != 0)
+        {
+            ChangeAnimationState(PLAYER_RUN);
+        } 
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll)
         {
@@ -315,7 +317,9 @@ public class playerController : MonoBehaviour
 
     private void OnDrawGizmos() 
     {
-        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);    
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);   
+    
+        Gizmos.DrawWireCube(groundCheck.position, new Vector2(1.5f, .2f)); 
     }
     public void PlayerTakeDmg(int dmg)
     {
