@@ -13,14 +13,26 @@ public class RedBoyC : MonoBehaviour
     const string ENEMY_DAMAGED = "damaged";
     const string ENEMY_NORMAL = "normal";
 
+    
+
+    // Movement
     private Rigidbody2D rb;
-    private float movementX;
     private bool isFacingRight;
     [SerializeField] private float speed;
     [SerializeField] private float minDistance;
-    Vector2 targetLocation;
+    Vector2 targetLocationX;
+    Vector2 targetLocationY;
+    float distanceX;
+    float distanceY;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+    private bool isGrounded;
+    [SerializeField] Transform wallCheck;
+    [SerializeField] private LayerMask wallCheackLayer;
+    private bool isWallClose;
 
     // Attack
+    [SerializeField] float attackRadius;
     [SerializeField] float attackTimer;
     float attackCountdown;
     [SerializeField] Transform attckPoint;
@@ -81,32 +93,40 @@ public class RedBoyC : MonoBehaviour
             attackCountdown -= Time.deltaTime;
         }
 
-        movementX = rb.velocity.x;
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
+        isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(0.5f, 1.5f), 0, wallCheackLayer);
+        targetLocationX = new Vector2(GameManager.gameManager.player.position.x, transform.position.y);
+        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.position.y);
+        distanceX = Vector2.Distance(transform.position, targetLocationX);
+        distanceY = Vector2.Distance(transform.position, targetLocationY);
 
-        targetLocation = new Vector2(GameManager.gameManager.player.position.x, 0);
-
+    
         Flip();
 
-        if (Vector2.Distance(transform.position, targetLocation) > minDistance && !IsAnimationPlaying(anim, ENEMY_ATTACK))
+        if (isGrounded)
         {
-            ChangeAnimationState(ENEMY_NORMAL);
-            transform.position =  Vector2.MoveTowards(transform.position, targetLocation, speed * Time.deltaTime);     
-        } else
-        {
-            if (attackCountdown <= 0)
-            {
-                ChangeAnimationState(ENEMY_ATTACK);
-                attackCountdown = attackTimer;
-            } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+            if (distanceX > minDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
             {
                 ChangeAnimationState(ENEMY_NORMAL);
+                transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
+            } else
+            { 
+                if (attackCountdown <= 0 && distanceY < 1)
+                {
+                    ChangeAnimationState(ENEMY_ATTACK);
+                    attackCountdown = attackTimer;
+                } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+                {
+                    ChangeAnimationState(ENEMY_NORMAL);
+                }
             }
         }
+        
     }
 
     public void DmgPlayer()
     {
-        canDmgPlayer = Physics2D.OverlapBox(attckPoint.position, new Vector2(2f, 2f), 0, attackLayer);
+        canDmgPlayer = Physics2D.OverlapCircle(attckPoint.position, attackRadius, attackLayer);
         if (canDmgPlayer)
         {
             PC.PlayerTakeDmg(10);
@@ -171,5 +191,12 @@ public class RedBoyC : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private void OnDrawGizmos() 
+    {   
+        Gizmos.DrawWireSphere(attckPoint.position, attackRadius);
+        Gizmos.DrawWireCube(groundCheck.position, new Vector2(2.5f, .3f));
+        Gizmos.DrawWireCube(wallCheck.position, new Vector2(0.5f, 1.5f));
     }
 }

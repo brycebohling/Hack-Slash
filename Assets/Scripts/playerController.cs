@@ -207,7 +207,7 @@ public class playerController : MonoBehaviour
             {
                 ChangeAnimationState(PLAYER_FALL);
             }
-            
+
         } else if (movementX != 0)
         {
             ChangeAnimationState(PLAYER_RUN);
@@ -315,12 +315,6 @@ public class playerController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() 
-    {
-        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);   
-    
-        Gizmos.DrawWireCube(groundCheck.position, new Vector2(1.5f, .2f)); 
-    }
     public void PlayerTakeDmg(int dmg)
     {
         
@@ -362,5 +356,12 @@ public class playerController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private void OnDrawGizmos() 
+    {
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);   
+    
+        Gizmos.DrawWireCube(groundCheck.position, new Vector2(1.5f, .2f)); 
     }
 }
