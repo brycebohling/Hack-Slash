@@ -19,7 +19,7 @@ public class RedBoyC : MonoBehaviour
     private Rigidbody2D rb;
     private bool isFacingRight;
     [SerializeField] private float speed;
-    [SerializeField] private float minDistance;
+    [SerializeField] private float minDistanceX;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
     float distanceX;
@@ -105,7 +105,7 @@ public class RedBoyC : MonoBehaviour
 
         if (isGrounded)
         {
-            if (distanceX > minDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
+            if (distanceX > minDistanceX && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
             {
                 ChangeAnimationState(ENEMY_NORMAL);
                 transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
@@ -121,6 +121,7 @@ public class RedBoyC : MonoBehaviour
                 }
             }
         }
+        // Need to add patrol code here!
         
     }
 
