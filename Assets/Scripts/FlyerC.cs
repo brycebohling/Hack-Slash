@@ -55,6 +55,7 @@ public class FlyerC : MonoBehaviour
     void Start()
     {
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
+        anim = GetComponent<Animator>();
         currentHealth = health;
     }
 
@@ -80,7 +81,7 @@ public class FlyerC : MonoBehaviour
             }            
         } else 
         {
-            // ChangeAnimationState(ENEMY_NORMAL);
+            ChangeAnimationState(ENEMY_NORMAL);
         }
 
         isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
@@ -158,7 +159,7 @@ public class FlyerC : MonoBehaviour
         {
             dmgTimerCountdown = dmgTime;
             takingDmg = true;
-            // ChangeAnimationState(ENEMY_DAMAGED);
+            ChangeAnimationState(ENEMY_DAMAGED);
         }
     }
 

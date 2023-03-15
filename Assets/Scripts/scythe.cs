@@ -16,7 +16,7 @@ public class scythe : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision.gameObject.layer == enemyLayer)
+        if (collision.gameObject.layer == 9)
         {
             GameManager.gameManager.DamageEnemy(collision, dmg);
         }

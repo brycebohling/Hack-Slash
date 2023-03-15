@@ -3627,15 +3627,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  health: 10
+  health: 20
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
   dmg: 10
   attackTimer: 1
-  attackSpeed: 1
+  attackSpeed: 4
   minDistanceX: 8
-  dmgTime: 0
+  dmgTime: 0.1
   deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
 --- !u!61 &1566964280
 BoxCollider2D:
@@ -3673,7 +3673,7 @@ Animator:
   m_GameObject: {fileID: 1566964275}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e8c73fa25cd1e421d8e505e59bb707ae, type: 2}
+  m_Controller: {fileID: 9100000, guid: 30f0408c39c62467796a69c50302776f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
