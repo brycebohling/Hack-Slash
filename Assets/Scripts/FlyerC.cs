@@ -7,7 +7,6 @@ public class FlyerC : MonoBehaviour
     playerController PC;
 
     // Physics
-    private Rigidbody2D rb;
     [SerializeField] private float speed;
     
     // Health
@@ -16,6 +15,9 @@ public class FlyerC : MonoBehaviour
 
     // Attack
 
+    [SerializeField] LayerMask playerLayer;
+    bool isTouchingPlayer;
+    [SerializeField] int dmg;
     float attackCountdown;
     [SerializeField] float attackTimer;
     [SerializeField] float attackSpeed;
@@ -37,7 +39,6 @@ public class FlyerC : MonoBehaviour
     
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
         currentHealth = health;
     }
@@ -45,6 +46,12 @@ public class FlyerC : MonoBehaviour
     
     void Update()
     {
+        isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
+
+        if (isTouchingPlayer)
+        {
+            PC.PlayerTakeDmg(dmg);
+        }
 
         targetLocationX = new Vector2(GameManager.gameManager.player.position.x, transform.position.y);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.position.y);
@@ -70,7 +77,7 @@ public class FlyerC : MonoBehaviour
             } else if (!divedOut)
             {
                 transform.position =  Vector2.Lerp(transform.position, originalPos, attackSpeed * Time.deltaTime);
-                if (Vector2.Distance(transform.position, originalPos) < 1f)
+                if (Vector2.Distance(transform.position, originalPos) < 0.05f)
                 {
                     divedOut = true;
                 }
@@ -101,5 +108,10 @@ public class FlyerC : MonoBehaviour
         yield return new WaitUntil(() => divedOut);
 
         attacking = false;
+    }
+
+     private void OnDrawGizmos() 
+    {   
+        Gizmos.DrawWireCube(transform.position, new Vector2(1.6f, 1.1f));
     }
 }

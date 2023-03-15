@@ -267,12 +267,10 @@ public class playerController : MonoBehaviour
         bcoll.size = new Vector2(rollWidth, rollHight);
         bcoll.offset = new Vector2(rollOffsetX, rollOffsetY);
         rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);
-        gameObject.layer = 10;
 
         yield return new WaitForSeconds(rollTime);
         yield return new WaitUntil(() => !isCeiling);
 
-        gameObject.layer = 8;
         bcoll.size = new Vector2(originalWidth, originalHight);
         bcoll.offset = new Vector2(originalOffsetX, originalOffsetY);
         isRolling = false;

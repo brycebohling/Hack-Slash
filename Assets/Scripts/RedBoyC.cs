@@ -30,6 +30,7 @@ public class RedBoyC : MonoBehaviour
     private bool isWallClose;
 
     // Attack
+    [SerializeField] int dmg;
     [SerializeField] float attackRadius;
     [SerializeField] float attackTimer;
     float attackCountdown;
@@ -128,7 +129,7 @@ public class RedBoyC : MonoBehaviour
         canDmgPlayer = Physics2D.OverlapCircle(attckPoint.position, attackRadius, attackLayer);
         if (canDmgPlayer)
         {
-            PC.PlayerTakeDmg(10);
+            PC.PlayerTakeDmg(dmg);
         }
     }
 
