@@ -92,7 +92,7 @@ public class RedBoyC : MonoBehaviour
         }
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
-        isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(0.5f, 1.5f), 0, wallCheackLayer);
+        isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.position.x, transform.position.y);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.position.y);
         distanceX = Vector2.Distance(transform.position, targetLocationX);
@@ -196,6 +196,6 @@ public class RedBoyC : MonoBehaviour
     {   
         Gizmos.DrawWireSphere(attckPoint.position, attackRadius);
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(2.5f, .3f));
-        Gizmos.DrawWireCube(wallCheck.position, new Vector2(0.5f, 1.5f));
+        Gizmos.DrawWireCube(wallCheck.position, new Vector2(2f, 1.5f));
     }
 }
