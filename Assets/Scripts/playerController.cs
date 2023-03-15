@@ -309,7 +309,8 @@ public class playerController : MonoBehaviour
 
         foreach (Collider2D enemyGameobject in enemy)
         {
-            enemyGameobject.GetComponent<RedBoyC>().RedBoyTakeDmg(dmg);
+            // enemyGameobject.GetComponent<RedBoyC>().DmgEnemy(dmg);
+            GameManager.gameManager.DamageEnemy(enemyGameobject, dmg);
         }
     }
 

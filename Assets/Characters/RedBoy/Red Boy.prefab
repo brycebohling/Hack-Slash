@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 793930967036904723}
   m_Layer: 9
   m_Name: Red Boy
-  m_TagString: enemy
+  m_TagString: redBoy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

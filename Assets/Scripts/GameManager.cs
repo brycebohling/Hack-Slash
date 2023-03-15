@@ -23,4 +23,17 @@ public class GameManager : MonoBehaviour
     {
 
     }
+
+    public void DamageEnemy(Collider2D enemy, int dmg)
+    {
+        if (enemy.CompareTag("redBoy"))
+        {
+            enemy.gameObject.GetComponent<RedBoyC>().DmgRedBoy(dmg);
+        }
+
+        if (enemy.CompareTag("flyer"))
+        {
+            enemy.gameObject.GetComponent<FlyerC>().DmgFlyer(dmg);
+        }
+    }
 }

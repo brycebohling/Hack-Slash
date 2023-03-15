@@ -3538,9 +3538,10 @@ GameObject:
   - component: {fileID: 1566964277}
   - component: {fileID: 1566964276}
   - component: {fileID: 1566964279}
+  - component: {fileID: 1566964280}
   m_Layer: 9
   m_Name: Flyer
-  m_TagString: Untagged
+  m_TagString: flyer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3631,8 +3632,36 @@ MonoBehaviour:
     m_Bits: 256
   dmg: 10
   attackTimer: 1
-  attackSpeed: 4
+  attackSpeed: 1
   minDistanceX: 8
+  dmgTime: 0
+  deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
+--- !u!61 &1566964280
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566964275}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0041532516, y: 0.007213831}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.49, y: 0.4999999}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 4, y: 4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.8467083, y: 1.3114667}
+  m_EdgeRadius: 0
 --- !u!1 &1601055967
 GameObject:
   m_ObjectHideFlags: 0

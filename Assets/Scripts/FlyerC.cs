@@ -36,6 +36,14 @@ public class FlyerC : MonoBehaviour
     float distance;
     [SerializeField] float minDistanceX;
 
+    // Damaged
+
+    float dmgTimerCountdown;
+    [SerializeField] float dmgTime;
+    bool isDead = false;
+    bool takingDmg = false;
+    [SerializeField] GameObject deathParticals;
+
     
     void Start()
     {
@@ -46,6 +54,25 @@ public class FlyerC : MonoBehaviour
     
     void Update()
     {
+        if (isDead)
+        {
+            Instantiate(deathParticals, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
+        if (takingDmg)
+        {
+            dmgTimerCountdown -= Time.deltaTime;
+
+            if (dmgTimerCountdown <= 0) 
+            {
+                takingDmg = false;
+            } else 
+            {
+                return;
+            }            
+        }
+
         isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
 
         if (isTouchingPlayer)
@@ -108,6 +135,20 @@ public class FlyerC : MonoBehaviour
         yield return new WaitUntil(() => divedOut);
 
         attacking = false;
+    }
+
+    public void DmgFlyer(int dmg)
+    {
+        currentHealth -= dmg;   
+
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+        } else
+        {
+            dmgTimerCountdown = dmgTime;
+            takingDmg = true;
+        }
     }
 
      private void OnDrawGizmos() 

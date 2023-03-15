@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - enemy
+  - redBoy
+  - flyer
   layers:
   - Default
   - TransparentFX

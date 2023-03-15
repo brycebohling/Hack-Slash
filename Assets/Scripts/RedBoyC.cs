@@ -49,10 +49,7 @@ public class RedBoyC : MonoBehaviour
     float dmgTimerCountdown;
     [SerializeField] float dmgTime;
 
-    // Death
-
     bool isDead;
-
     [SerializeField] GameObject deathParticals;
 
 
@@ -156,7 +153,7 @@ public class RedBoyC : MonoBehaviour
         }
     }
 
-    public void RedBoyTakeDmg(int dmg)
+    public void DmgRedBoy(int dmg)
     {
         currentHealth -= dmg;   
 
