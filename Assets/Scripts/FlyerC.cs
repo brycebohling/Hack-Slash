@@ -5,6 +5,13 @@ using UnityEngine;
 public class FlyerC : MonoBehaviour
 {
     playerController PC;
+    
+    // Animation
+
+    private Animator anim;
+    string _currentState;
+    const string ENEMY_NORMAL = "normal";
+    const string ENEMY_DAMAGED = "damaged";
 
     // Physics
     [SerializeField] private float speed;
@@ -71,6 +78,9 @@ public class FlyerC : MonoBehaviour
             {
                 return;
             }            
+        } else 
+        {
+            // ChangeAnimationState(ENEMY_NORMAL);
         }
 
         isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
@@ -148,6 +158,29 @@ public class FlyerC : MonoBehaviour
         {
             dmgTimerCountdown = dmgTime;
             takingDmg = true;
+            // ChangeAnimationState(ENEMY_DAMAGED);
+        }
+    }
+
+    private void ChangeAnimationState(string newState)
+    {
+        if (newState == _currentState)
+        {
+            return;
+        }
+
+        anim.Play(newState);
+        _currentState = newState;
+    }
+
+    private bool IsAnimationPlaying(Animator animator, string stateName)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            return true;
+        } else
+        {
+            return false;
         }
     }
 
