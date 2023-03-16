@@ -3632,9 +3632,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   dmg: 10
-  attackTimer: 2.5
+  attackTimer: 0
   attackSpeed: 4
-  minDistanceX: 8
+  attackWaitTime: 1
+  minDistance: 8
   dmgTime: 0.1
   deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
 --- !u!61 &1566964280

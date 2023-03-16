@@ -25,23 +25,23 @@ public class FlyerC : MonoBehaviour
     [SerializeField] LayerMask playerLayer;
     bool isTouchingPlayer;
     [SerializeField] int dmg;
-    float attackCountdown;
-    [SerializeField] float attackTimer;
     [SerializeField] float attackSpeed;
     bool attacking;
     bool divedIn;
     bool divedOut;
-    Vector3 originalPos;
-    Vector3 attackPlayerPos;
+    [SerializeField] float attackWaitTime;
+    bool canDive;
 
     // Movement 
     
     Vector2 targetLocationX;
     Vector2 targetLocationY;
+    Vector3 originalPos;
+    Vector3 attackPlayerPos;
     float distanceX;
     float distanceY;
     float distance;
-    [SerializeField] float minDistanceX;
+    [SerializeField] float minDistance;
 
     // Damaged
 
@@ -97,55 +97,60 @@ public class FlyerC : MonoBehaviour
         distanceX = Vector2.Distance(transform.position, targetLocationX);
         distanceY = Vector2.Distance(transform.position, targetLocationY);
 
-        if (attackCountdown > 0)
-        {
-            attackCountdown -= Time.deltaTime;
-        }
-
         if (attacking)
         {   
-            if (!divedIn)
-            {   
-                transform.position =  Vector2.Lerp(transform.position, attackPlayerPos, attackSpeed * Time.deltaTime);
-                if (Vector2.Distance(transform.position, attackPlayerPos) < 1)
-                {
-                    divedIn = true;
-                }
-
-            } else if (!divedOut)
+            if (canDive)
             {
-                transform.position =  Vector2.Lerp(transform.position, originalPos, attackSpeed * Time.deltaTime);
-                if (Vector2.Distance(transform.position, originalPos) < 0.05f)
+                if (!divedIn)
+                {   
+                    transform.position =  Vector2.Lerp(transform.position, attackPlayerPos, attackSpeed * Time.deltaTime);
+                    if (Vector2.Distance(transform.position, attackPlayerPos) < 1)
+                    {
+                        divedIn = true;
+                    }
+
+                } else if (!divedOut)
                 {
-                    divedOut = true;
+                    transform.position =  Vector2.Lerp(transform.position, originalPos, attackSpeed * Time.deltaTime);
+                    if (Vector2.Distance(transform.position, originalPos) < 0.05f)
+                    {
+                        divedOut = true;
+                    }
                 }
             }
+    
             return;
         }
                 
-        if (distanceX > minDistanceX)
+        if (distance > minDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, GameManager.gameManager.player.position, speed * Time.deltaTime);
 
-        } else if (attackCountdown <= 0 && distanceY < 5)
+        } else
         {
             attacking = true;
-            attackCountdown = attackTimer;
             StartCoroutine(AttackPlayer());   
         }
     }
 
     private IEnumerator AttackPlayer()
     {
-        originalPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        attackPlayerPos = new Vector3(GameManager.gameManager.player.position.x, GameManager.gameManager.player.position.y, GameManager.gameManager.player.position.z);
-        divedIn = false;
-        divedOut = false;
+        yield return new WaitForSeconds(attackWaitTime);
 
-        yield return new WaitUntil(() => divedIn);
-        yield return new WaitUntil(() => divedOut);
+        if (distance < minDistance)
+        {
+            originalPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            attackPlayerPos = new Vector3(GameManager.gameManager.player.position.x, GameManager.gameManager.player.position.y, GameManager.gameManager.player.position.z);
+            divedIn = false;
+            divedOut = false;
+            canDive = true;
+
+            yield return new WaitUntil(() => divedIn);
+            yield return new WaitUntil(() => divedOut);
+        }
 
         attacking = false;
+        canDive = false;
     }
 
     public void DmgFlyer(int dmg)
