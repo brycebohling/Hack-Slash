@@ -3632,7 +3632,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   dmg: 10
-  attackTimer: 1
+  attackTimer: 2.5
   attackSpeed: 4
   minDistanceX: 8
   dmgTime: 0.1

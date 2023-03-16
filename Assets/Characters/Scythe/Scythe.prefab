@@ -144,9 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   dmg: 10
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  enemyLayerNum: 9
 --- !u!58 &7277538931909624049
 CircleCollider2D:
   m_ObjectHideFlags: 0

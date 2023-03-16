@@ -6,7 +6,8 @@ public class scythe : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] int dmg;
-    [SerializeField] LayerMask enemyLayer;
+
+    [SerializeField] int enemyLayerNum;
     private Rigidbody2D rb;
     void Start()
     {
@@ -16,7 +17,7 @@ public class scythe : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == enemyLayerNum)
         {
             GameManager.gameManager.DamageEnemy(collision, dmg);
         }
