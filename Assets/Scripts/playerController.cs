@@ -83,6 +83,7 @@ public class playerController : MonoBehaviour
 
     // Death
     bool isDead = false;
+    [SerializeField] GameObject deathParticals;
 
     private void Start()
     {
@@ -97,7 +98,8 @@ public class playerController : MonoBehaviour
     {   
         if (isDead)
         {
-            rb.velocity = new Vector2(0,0);
+            Instantiate(deathParticals, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
             return;
         }
 

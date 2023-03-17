@@ -248,6 +248,7 @@ MonoBehaviour:
   iFrameTime: 0.5
   HB: {fileID: 0}
   dmgTime: 0.1
+  deathParticals: {fileID: 901058660515239618, guid: c5a709f6b82a8405ba918cc50f8c4f77, type: 3}
 --- !u!50 &5112000661765236303
 Rigidbody2D:
   serializedVersion: 4

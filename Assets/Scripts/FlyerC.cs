@@ -42,6 +42,7 @@ public class FlyerC : MonoBehaviour
     float distanceY;
     float distance;
     [SerializeField] float minDistance;
+    [SerializeField] LayerMask groundLayer;
 
     // Damaged
 
@@ -51,14 +52,13 @@ public class FlyerC : MonoBehaviour
     bool takingDmg = false;
     [SerializeField] GameObject deathParticals;
 
-    
+
     void Start()
     {
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
         anim = GetComponent<Animator>();
         currentHealth = health;
     }
-
     
     void Update()
     {
@@ -97,6 +97,10 @@ public class FlyerC : MonoBehaviour
         distanceX = Vector2.Distance(transform.position, targetLocationX);
         distanceY = Vector2.Distance(transform.position, targetLocationY);
 
+        Vector3 dir = GameManager.gameManager.player.position - transform.position;
+        RaycastHit2D groundInWay = Physics2D.Raycast(transform.position, dir, distance, groundLayer);
+        Debug.DrawRay(transform.position, dir, Color.red);
+
         if (attacking)
         {   
             if (canDive)
@@ -121,15 +125,18 @@ public class FlyerC : MonoBehaviour
     
             return;
         }
-                
-        if (distance > minDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, GameManager.gameManager.player.position, speed * Time.deltaTime);
+        
+        if (groundInWay.collider == null)
+        {  
+            if (distance > minDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, GameManager.gameManager.player.position, speed * Time.deltaTime);
 
-        } else
-        {
-            attacking = true;
-            StartCoroutine(AttackPlayer());   
+            } else
+            {
+                attacking = true;
+                StartCoroutine(AttackPlayer());   
+            }
         }
     }
 
