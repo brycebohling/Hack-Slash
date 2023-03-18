@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UIC : MonoBehaviour
 {
+    
+
     public void Play()
     {
         SceneC.LoadScene(1);
@@ -12,5 +14,10 @@ public class UIC : MonoBehaviour
     public void Restart()
     {
         SceneC.Restart();
+    }
+
+    public void Menu()
+    {
+        SceneC.Menu();
     }
 }

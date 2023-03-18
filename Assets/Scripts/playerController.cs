@@ -84,6 +84,7 @@ public class playerController : MonoBehaviour
     // Death
     bool isDead = false;
     [SerializeField] GameObject deathParticals;
+    [SerializeField] GameObject deathScreen;
 
     private void Start()
     {
@@ -99,6 +100,7 @@ public class playerController : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
+            deathScreen.SetActive(true);
             gameObject.SetActive(false);
             return;
         }
