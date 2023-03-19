@@ -15,6 +15,7 @@ public class FlyerC : MonoBehaviour
 
     // Physics
     [SerializeField] private float speed;
+    Rigidbody2D rb;
     
     // Health
     int currentHealth;
@@ -38,8 +39,6 @@ public class FlyerC : MonoBehaviour
     Vector2 targetLocationY;
     Vector3 originalPos;
     Vector3 attackPlayerPos;
-    float distanceX;
-    float distanceY;
     float distance;
     [SerializeField] float minDistance;
     [SerializeField] LayerMask groundLayer;
@@ -51,22 +50,39 @@ public class FlyerC : MonoBehaviour
     bool isDead = false;
     bool takingDmg = false;
     [SerializeField] GameObject deathParticals;
+    [SerializeField] float knockbackPower;
+    [SerializeField] float knockbackTime;
+    bool beingKnockedBack = false;
 
 
     void Start()
     {
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
         currentHealth = health;
     }
     
     void Update()
     {
+        if (beingKnockedBack)
+        {
+            return;
+        }
+
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+
+        targetLocationX = new Vector2(GameManager.gameManager.player.position.x, transform.position.y);
+        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.position.y);
+        distance = Vector2.Distance(transform.position, GameManager.gameManager.player.position);
+
+        Vector2 playerDir = GameManager.gameManager.player.position - transform.position;
+        RaycastHit2D groundInWay = Physics2D.Raycast(transform.position, playerDir, distance, groundLayer);
+        Debug.DrawRay(transform.position, playerDir, Color.red);
 
         if (takingDmg)
         {
@@ -90,16 +106,6 @@ public class FlyerC : MonoBehaviour
         {
             PC.PlayerTakeDmg(dmg);
         }
-
-        targetLocationX = new Vector2(GameManager.gameManager.player.position.x, transform.position.y);
-        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.position.y);
-        distance = Vector2.Distance(transform.position, GameManager.gameManager.player.position);
-        distanceX = Vector2.Distance(transform.position, targetLocationX);
-        distanceY = Vector2.Distance(transform.position, targetLocationY);
-
-        Vector3 dir = GameManager.gameManager.player.position - transform.position;
-        RaycastHit2D groundInWay = Physics2D.Raycast(transform.position, dir, distance, groundLayer);
-        Debug.DrawRay(transform.position, dir, Color.red);
 
         if (attacking)
         {   
@@ -125,7 +131,7 @@ public class FlyerC : MonoBehaviour
     
             return;
         }
-        
+
         if (groundInWay.collider == null)
         {  
             if (distance > minDistance)
@@ -160,11 +166,11 @@ public class FlyerC : MonoBehaviour
         canDive = false;
     }
 
-    public void DmgFlyer(int dmg)
+    public void DmgFlyer(int dmg, GameObject attacker)
     {
         currentHealth -= dmg;   
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0) 
         {
             isDead = true;
         } else
@@ -172,7 +178,27 @@ public class FlyerC : MonoBehaviour
             dmgTimerCountdown = dmgTime;
             takingDmg = true;
             ChangeAnimationState(ENEMY_DAMAGED);
+            Knockback(attacker);
         }
+    }
+
+    private void Knockback(GameObject attacker)
+    {
+        StopAllCoroutines();
+        Vector2 hitDir = (transform.position - attacker.transform.position).normalized;
+        rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
+        beingKnockedBack = true;
+        StartCoroutine(CancelKnockback());
+        attacking = false;
+        divedIn = false;
+        divedOut = false;
+    }
+
+    private IEnumerator CancelKnockback()
+    {
+        yield return new WaitForSeconds(knockbackTime);
+        beingKnockedBack = false;
+        rb.velocity = Vector3.zero;
     }
 
     private void ChangeAnimationState(string newState)

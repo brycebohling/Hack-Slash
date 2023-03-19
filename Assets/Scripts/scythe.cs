@@ -19,7 +19,7 @@ public class scythe : MonoBehaviour
     {
         if (collision.gameObject.layer == enemyLayerNum)
         {
-            GameManager.gameManager.DamageEnemy(collision, dmg);
+            GameManager.gameManager.DamageEnemy(collision, dmg, gameObject);
         }
         Destroy(gameObject);
     }

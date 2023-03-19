@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DamageEnemy(Collider2D enemy, int dmg)
+    public void DamageEnemy(Collider2D enemy, int dmg, GameObject attacker)
     {
         if (enemy.CompareTag("redBoy"))
         {
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
         if (enemy.CompareTag("flyer"))
         {
-            enemy.gameObject.GetComponent<FlyerC>().DmgFlyer(dmg);
+            enemy.gameObject.GetComponent<FlyerC>().DmgFlyer(dmg, attacker);
         }
     }
 

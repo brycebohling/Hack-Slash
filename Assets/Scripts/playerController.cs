@@ -317,7 +317,7 @@ public class playerController : MonoBehaviour
 
         foreach (Collider2D enemyGameobject in enemy)
         {
-            GameManager.gameManager.DamageEnemy(enemyGameobject, dmg);
+            GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, gameObject);
         }
     }
 
