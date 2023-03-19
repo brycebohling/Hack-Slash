@@ -85,7 +85,6 @@ public class RedBoyC : MonoBehaviour
                 takingDmg = false;
             } else 
             {
-                rb.velocity = new Vector2(0,0);
                 return;
             }            
         }
@@ -126,10 +125,6 @@ public class RedBoyC : MonoBehaviour
                     ChangeAnimationState(ENEMY_NORMAL);
                 }
             }
-            // if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
-            // {
-            //     ChangeAnimationState(ENEMY_NORMAL);
-            // }
         }
         // Need to add patrol code here!
         
@@ -187,6 +182,8 @@ public class RedBoyC : MonoBehaviour
     {
         StopAllCoroutines();
         Vector2 hitDir = (transform.position - attacker.position).normalized;
+        Debug.Log(hitDir);
+        // transform.position = new Vector2(transform.position.x, transform.position.y + 0.5f); 
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
         StartCoroutine(CancelKnockback());
         beingKnockedback = true;
