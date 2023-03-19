@@ -48,7 +48,12 @@ public class RedBoyC : MonoBehaviour
     bool takingDmg;
     float dmgTimerCountdown;
     [SerializeField] float dmgTime;
+    [SerializeField] float knockbackPower;
+    [SerializeField] float knockbackTime;
+    bool beingKnockedback;
 
+
+    // Death
     bool isDead;
     [SerializeField] GameObject deathParticals;
 
@@ -76,6 +81,7 @@ public class RedBoyC : MonoBehaviour
 
             if (dmgTimerCountdown <= 0) 
             {
+                ChangeAnimationState(ENEMY_NORMAL);
                 takingDmg = false;
             } else 
             {
@@ -96,7 +102,11 @@ public class RedBoyC : MonoBehaviour
         distanceX = Vector2.Distance(transform.position, targetLocationX);
         distanceY = Vector2.Distance(transform.position, targetLocationY);
 
-    
+        if (beingKnockedback)
+        {
+            return;
+        }
+
         Flip();
 
         if (isGrounded)
@@ -116,6 +126,10 @@ public class RedBoyC : MonoBehaviour
                     ChangeAnimationState(ENEMY_NORMAL);
                 }
             }
+            // if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+            // {
+            //     ChangeAnimationState(ENEMY_NORMAL);
+            // }
         }
         // Need to add patrol code here!
         
@@ -153,7 +167,7 @@ public class RedBoyC : MonoBehaviour
         }
     }
 
-    public void DmgRedBoy(int dmg)
+    public void DmgRedBoy(int dmg, Transform attacker)
     {
         currentHealth -= dmg;   
 
@@ -165,7 +179,24 @@ public class RedBoyC : MonoBehaviour
             dmgTimerCountdown = dmgTime;
             takingDmg = true;
             ChangeAnimationState(ENEMY_DAMAGED);
+            Knockback(attacker);
         }
+    }
+
+    private void Knockback(Transform attacker)
+    {
+        StopAllCoroutines();
+        Vector2 hitDir = (transform.position - attacker.position).normalized;
+        rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
+        StartCoroutine(CancelKnockback());
+        beingKnockedback = true;
+    }
+
+    private IEnumerator CancelKnockback()
+    {
+        yield return new WaitForSeconds(knockbackTime);
+        beingKnockedback = false;
+        rb.velocity = Vector3.zero;
     }
 
     private void ChangeAnimationState(string newState)

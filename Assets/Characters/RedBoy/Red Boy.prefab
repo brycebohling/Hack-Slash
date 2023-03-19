@@ -201,15 +201,17 @@ MonoBehaviour:
   wallCheackLayer:
     serializedVersion: 2
     m_Bits: 64
-  dmg: 10
+  dmg: 1
   attackRadius: 1
   attackTimer: 1
   attckPoint: {fileID: 793930968396810382}
   attackLayer:
     serializedVersion: 2
     m_Bits: 256
-  health: 30
+  health: 1000
   dmgTime: 0.1
+  knockbackPower: 16
+  knockbackTime: 0.2
   deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
 --- !u!50 &793930967036904722
 Rigidbody2D:

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
         if (enemy.CompareTag("redBoy"))
         {
-            enemy.gameObject.GetComponent<RedBoyC>().DmgRedBoy(dmg);
+            enemy.gameObject.GetComponent<RedBoyC>().DmgRedBoy(dmg, attacker);
         }
 
         if (enemy.CompareTag("flyer"))

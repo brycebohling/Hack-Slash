@@ -52,7 +52,7 @@ public class FlyerC : MonoBehaviour
     [SerializeField] GameObject deathParticals;
     [SerializeField] float knockbackPower;
     [SerializeField] float knockbackTime;
-    bool beingKnockedBack = false;
+    bool beingKnockedback = false;
 
 
     void Start()
@@ -65,11 +65,6 @@ public class FlyerC : MonoBehaviour
     
     void Update()
     {
-        // if (beingKnockedBack)
-        // {
-        //     return;
-        // }
-
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
@@ -100,7 +95,7 @@ public class FlyerC : MonoBehaviour
             ChangeAnimationState(ENEMY_NORMAL);
         }
 
-        if (beingKnockedBack)
+        if (beingKnockedback)
         {
             return;
         }
@@ -199,7 +194,7 @@ public class FlyerC : MonoBehaviour
         StopAllCoroutines();
         Vector2 hitDir = (transform.position - attacker.position).normalized;
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
-        beingKnockedBack = true;
+        beingKnockedback = true;
         attacking = false;
         divedIn = false;
         divedOut = false;
@@ -211,7 +206,7 @@ public class FlyerC : MonoBehaviour
     private IEnumerator CancelKnockback()
     {
         yield return new WaitForSeconds(knockbackTime);
-        beingKnockedBack = false;
+        beingKnockedback = false;
         rb.velocity = Vector3.zero;
     }
 

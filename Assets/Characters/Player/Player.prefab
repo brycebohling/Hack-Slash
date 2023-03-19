@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514e7efddb4f14d17b1ab5b05c3d6923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camC: {fileID: 0}
   speed: 12
   isFacingRight: 1
   groundCheck: {fileID: 5112000660462136679}
@@ -249,6 +250,7 @@ MonoBehaviour:
   HB: {fileID: 0}
   dmgTime: 0.1
   deathParticals: {fileID: 901058660515239618, guid: c5a709f6b82a8405ba918cc50f8c4f77, type: 3}
+  deathScreen: {fileID: 0}
 --- !u!50 &5112000661765236303
 Rigidbody2D:
   serializedVersion: 4

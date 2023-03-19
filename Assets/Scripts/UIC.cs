@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIC : MonoBehaviour
 {
-    
-
     public void Play()
     {
         SceneC.LoadScene(1);
@@ -20,4 +19,11 @@ public class UIC : MonoBehaviour
     {
         SceneC.Menu();
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    
 }
