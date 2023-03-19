@@ -65,10 +65,10 @@ public class FlyerC : MonoBehaviour
     
     void Update()
     {
-        if (beingKnockedBack)
-        {
-            return;
-        }
+        // if (beingKnockedBack)
+        // {
+        //     return;
+        // }
 
         if (isDead)
         {
@@ -100,20 +100,26 @@ public class FlyerC : MonoBehaviour
             ChangeAnimationState(ENEMY_NORMAL);
         }
 
-        isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
-
-        if (isTouchingPlayer)
+        if (beingKnockedBack)
         {
-            PC.PlayerTakeDmg(dmg);
+            return;
         }
 
         if (attacking)
         {   
             if (canDive)
             {
+                isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
+
                 if (!divedIn)
                 {   
                     transform.position =  Vector2.Lerp(transform.position, attackPlayerPos, attackSpeed * Time.deltaTime);
+
+                    if (isTouchingPlayer)
+                    {
+                        PC.PlayerTakeDmg(dmg);
+                    }
+
                     if (Vector2.Distance(transform.position, attackPlayerPos) < 1)
                     {
                         divedIn = true;
@@ -122,6 +128,12 @@ public class FlyerC : MonoBehaviour
                 } else if (!divedOut)
                 {
                     transform.position =  Vector2.Lerp(transform.position, originalPos, attackSpeed * Time.deltaTime);
+
+                    if (isTouchingPlayer)
+                    {
+                        PC.PlayerTakeDmg(dmg);
+                    }
+
                     if (Vector2.Distance(transform.position, originalPos) < 0.05f)
                     {
                         divedOut = true;
@@ -149,7 +161,7 @@ public class FlyerC : MonoBehaviour
     private IEnumerator AttackPlayer()
     {
         yield return new WaitForSeconds(attackWaitTime);
-
+        
         if (distance < minDistance)
         {
             originalPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
@@ -166,7 +178,7 @@ public class FlyerC : MonoBehaviour
         canDive = false;
     }
 
-    public void DmgFlyer(int dmg, GameObject attacker)
+    public void DmgFlyer(int dmg, Transform attacker)
     {
         currentHealth -= dmg;   
 
@@ -182,16 +194,18 @@ public class FlyerC : MonoBehaviour
         }
     }
 
-    private void Knockback(GameObject attacker)
+    private void Knockback(Transform attacker)
     {
         StopAllCoroutines();
-        Vector2 hitDir = (transform.position - attacker.transform.position).normalized;
+        Vector2 hitDir = (transform.position - attacker.position).normalized;
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
         beingKnockedBack = true;
-        StartCoroutine(CancelKnockback());
         attacking = false;
         divedIn = false;
         divedOut = false;
+        canDive = false;
+
+        StartCoroutine(CancelKnockback());
     }
 
     private IEnumerator CancelKnockback()

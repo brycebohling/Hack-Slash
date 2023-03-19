@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DamageEnemy(Collider2D enemy, int dmg, GameObject attacker)
+    public void DamageEnemy(Collider2D enemy, int dmg, Transform attacker)
     {
         if (enemy.CompareTag("redBoy"))
         {
