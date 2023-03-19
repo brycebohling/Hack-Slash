@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour
 {
+    [SerializeField] CameraC camC;
+
     // Movement
     private float movementX;
     [SerializeField] private float speed;
@@ -91,6 +93,7 @@ public class playerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         bcoll = GetComponent<BoxCollider2D>();
+        camC = GameObject.FindGameObjectWithTag("vcam").GetComponent<CameraC>();
         currentHealth = health;
     }
 
@@ -107,6 +110,7 @@ public class playerController : MonoBehaviour
 
         if (takingDmg)
         {
+            
             dmgTimerCountdown -= Time.deltaTime;
 
             if (dmgTimerCountdown <= 0) 
@@ -330,6 +334,7 @@ public class playerController : MonoBehaviour
                 isDead = true;
             } else
             {
+                camC.CameraStartShake(2, 2);
                 dmgTimerCountdown = dmgTime;
                 iFrameCountdown = iFrameTime;
                 takingDmg = true;

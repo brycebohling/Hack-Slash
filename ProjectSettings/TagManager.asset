@@ -7,6 +7,7 @@ TagManager:
   - enemy
   - redBoy
   - flyer
+  - vcam
   layers:
   - Default
   - TransparentFX

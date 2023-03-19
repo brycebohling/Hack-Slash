@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager { get; private set; }
 
     public Transform player;
+    public Camera noise;
 
     void Awake()
     {
@@ -17,11 +18,6 @@ public class GameManager : MonoBehaviour
         {
             gameManager = this;
         }
-    }
-
-    private void Update()
-    {
-
     }
 
     public void DamageEnemy(Collider2D enemy, int dmg)
@@ -36,4 +32,5 @@ public class GameManager : MonoBehaviour
             enemy.gameObject.GetComponent<FlyerC>().DmgFlyer(dmg);
         }
     }
+
 }
