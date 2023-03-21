@@ -117,43 +117,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: damaged 0
+      name: Reaper-damaged_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfa0863aa34bc4a459e8a6c0b13f7ec4
-      internalID: -342711969
+      spriteID: 6224a5d83b73f4aba8387afb91ce9b59
+      internalID: -1546308210
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: damaged 1
+      name: Reaper-damaged_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 106
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfef8ee3131fb42b5a0888264c9f7a4d
-      internalID: 1829595656
+      spriteID: fb45f05517c894e8589ef5cd4047faa7
+      internalID: -122140457
       vertices: []
       indices: 
       edges: []
@@ -169,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      damaged 0: -342711969
-      damaged 1: 1829595656
+      Reaper-damaged_0: -1546308210
+      Reaper-damaged_1: -122140457
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
