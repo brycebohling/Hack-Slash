@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c110f6d9d764f49bebd714d0b6a9cab9
+guid: 4431be92691274adb8c226b68d605472
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,127 +117,232 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attack 0
+      name: Reaper-attaack3_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 156
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63fbd3cd412e345db8978d852c2e69b5
-      internalID: -1036461225
+      spriteID: 7dedaa304e69d477cad9165b272dbfde
+      internalID: -629440175
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack 1
+      name: Reaper-attaack3_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 106
+        y: 156
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73c825f110db94fadbdce3fd8ddc0055
-      internalID: 482715179
+      spriteID: ace63b3412a1248e19e5b89ee78e9db6
+      internalID: -2135052704
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack 2
+      name: Reaper-attaack3_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
+        x: 212
+        y: 156
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ffe592fe58f04da1b82ca2bf535ee7f
-      internalID: 155452917
+      spriteID: 26dcc65d3b12746dfafb62ea25e2dfed
+      internalID: 1318499712
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack 3
+      name: Reaper-attaack3_3
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 156
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9d59a248b21e46299de6473ad828e13
+      internalID: -740542108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attaack3_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 78
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b1b9901db29423e85b1c24987b47e4
+      internalID: -25912593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attaack3_5
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 78
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4d445b76185f42b29c6a399ee1e2b8b
+      internalID: 1297699492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attaack3_6
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 78
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aca3b472fa15f4c08a5618a92a844146
+      internalID: -1495109745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attaack3_7
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 78
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a0629d65679d4f4a8ca6b0b511938b5
+      internalID: 1848166707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attaack3_8
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f46cca5126463434fa153d562e941057
-      internalID: -2019093832
+      spriteID: 3209dd8d301444386b5d54e6d5fe0216
+      internalID: 70887047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack 4
+      name: Reaper-attaack3_9
       rect:
         serializedVersion: 2
-        x: 64
+        x: 106
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f605b5abe4f35492bac2e0c9315ae318
-      internalID: -509320663
+      spriteID: 78b2d0272ae404ebf81dd985bef50390
+      internalID: 1058915145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack 5
+      name: Reaper-attaack3_10
       rect:
         serializedVersion: 2
-        x: 128
+        x: 212
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8900457fbc823424696e8cb546a9b91b
-      internalID: -1006828503
+      spriteID: e6fbb78e454e641da9930f07232fd303
+      internalID: -1228990094
       vertices: []
       indices: 
       edges: []
@@ -253,12 +358,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      attack 4: -509320663
-      attack 0: -1036461225
-      attack 2: 155452917
-      attack 3: -2019093832
-      attack 5: -1006828503
-      attack 1: 482715179
+      Reaper-attaack3_6: -1495109745
+      Reaper-attaack3_2: 1318499712
+      Reaper-attaack3_1: -2135052704
+      Reaper-attaack3_10: -1228990094
+      Reaper-attaack3_3: -740542108
+      Reaper-attaack3_7: 1848166707
+      Reaper-attaack3_9: 1058915145
+      Reaper-attaack3_8: 70887047
+      Reaper-attaack3_5: 1297699492
+      Reaper-attaack3_0: -629440175
+      Reaper-attaack3_4: -25912593
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

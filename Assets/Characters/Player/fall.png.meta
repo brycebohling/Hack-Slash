@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f0c6b0cb8c7b14f6998123bb67e238e2
+guid: 28b32e6e0210c4a5895c3121f6825170
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 23
+  spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -117,22 +117,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: falling
+      name: fall_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca66d8e3047b4489b8be2869ffaef47c
-      internalID: 1047479012
+      spriteID: 24e12673327ef400fa19cc5fb3b52d55
+      internalID: -497060423
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      falling: 1047479012
+      fall_0: -497060423
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

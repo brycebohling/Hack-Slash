@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 64e869189a1d04b0d992d6e24b9640b2
+guid: 5a3a7c3224be546a0a85942a2dcd554e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,148 +117,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: roll 0
+      name: Reaper-roll_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 78
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba726162b2cd646f7bba5f33d20a9338
-      internalID: -32064502
+      spriteID: 24e08608c89c14f25a48536095b343fc
+      internalID: 1545653734
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: roll 1
+      name: Reaper-roll_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 106
+        y: 78
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3406c4a48e4cc4df6a5e2dbde89c9e62
-      internalID: -1132803153
+      spriteID: 1dad4fa92d65d463c9eb44fe76e0729c
+      internalID: 11560948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: roll 2
+      name: Reaper-roll_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 212
+        y: 78
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 754f3e0a9d9404cf09be544a3e508bf0
-      internalID: -898195791
+      spriteID: 3ef3634b40dcd4dc68635ab7c85ba797
+      internalID: 277334689
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: roll 3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.37, y: 0.31}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 11d3735668d974909b4a8b4293f7519a
-      internalID: -1915282217
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: roll 4
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.37, y: 0.31}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c9a16b46245f48da947cd40b97906b8
-      internalID: -993211073
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: roll 5
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.37, y: 0.31}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d60be5c037ea744149a84e274eb31a0e
-      internalID: -830103414
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: roll 6
+      name: Reaper-roll_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c9e84ed3a0a74eb0bd5f742fd544ee5
-      internalID: -2088505079
+      spriteID: 0444e1cd4db844ad989562dda74c261d
+      internalID: -510855085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-roll_4
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 0
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8451834c19fe14be8a9149da5fd7ffb1
+      internalID: -623195620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-roll_5
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 0
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ffed5f70594d44a881e1ceca345494b
+      internalID: -348402419
       vertices: []
       indices: 
       edges: []
@@ -274,13 +253,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      roll 2: -898195791
-      roll 3: -1915282217
-      roll 0: -32064502
-      roll 4: -993211073
-      roll 1: -1132803153
-      roll 5: -830103414
-      roll 6: -2088505079
+      Reaper-roll_2: 277334689
+      Reaper-roll_5: -348402419
+      Reaper-roll_1: 11560948
+      Reaper-roll_4: -623195620
+      Reaper-roll_3: -510855085
+      Reaper-roll_0: 1545653734
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

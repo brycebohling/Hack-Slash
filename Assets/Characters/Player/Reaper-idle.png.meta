@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 64fa9ef43b28240e49ea1272fc23db5d
+guid: 0fe07f03fc5ad47bd9722be9f9c6b608
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,85 +117,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: running 1
+      name: Reaper-idle_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 78
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48e22bb367d93433d97fdfa6d46a84dc
-      internalID: -1853140906
+      spriteID: c1f656f87cdf34c468aa14bbee6c7745
+      internalID: 2077118203
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running 2
+      name: Reaper-idle_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 106
+        y: 78
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49fe48a05446645438c667a158cf678e
-      internalID: 2053206771
+      spriteID: 5cb290132f5244abcad9637deee2a37c
+      internalID: 42825169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running 3
+      name: Reaper-idle_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 701575712600b4e58a9b48f4c0328f78
-      internalID: -1979468699
+      spriteID: a97cb358e28174d559530a77b3c93dc4
+      internalID: 1369011262
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: running 4
+      name: Reaper-idle_3
       rect:
         serializedVersion: 2
-        x: 64
+        x: 106
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9aeffbd482fb445689ee39af3100282
-      internalID: 824277498
+      spriteID: 2f50f0e9075a34769b4488fe9f15d4ed
+      internalID: -691911754
       vertices: []
       indices: 
       edges: []
@@ -211,10 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      running 3: -1979468699
-      running 4: 824277498
-      running 2: 2053206771
-      running 1: -1853140906
+      Reaper-idle_2: 1369011262
+      Reaper-idle_3: -691911754
+      Reaper-idle_1: 42825169
+      Reaper-idle_0: 2077118203
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

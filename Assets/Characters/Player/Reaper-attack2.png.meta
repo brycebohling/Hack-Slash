@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e93c5f1cee442472fae9f7bf5874796f
+guid: df6da393440c842b48968403f9392299
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,85 +117,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: idle 1
+      name: Reaper-attack2_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 156
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f017957e61bbc4a14a9f9f86fc00bf1e
-      internalID: -262174530
+      spriteID: f625abcf76fc84cd791b554d4f146a9b
+      internalID: 274379507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle 2
+      name: Reaper-attack2_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 106
+        y: 156
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c548774644ece4eadb942b2c62a84423
-      internalID: 1354726743
+      spriteID: 7071c77f1cfb5400d8a0cd2f3d42a455
+      internalID: -1077388032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle 3
+      name: Reaper-attack2_2
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 156
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f7d7b26a1a024710a4b651cf2543c1b
+      internalID: 1768675376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attack2_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 78
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e580048d17c74997965441448deec44
+      internalID: 1196841527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attack2_4
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 78
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1dfb5d0d9112c4363af481794a9fefb3
+      internalID: 932995215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attack2_5
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 78
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11fc34f37b6eb43d8b12555e576927be
+      internalID: -1556486681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attack2_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37c595f7bbd554d19959f5e6b65f5716
-      internalID: -496935734
+      spriteID: 407f0653fb88b4bb2bf38566696e8127
+      internalID: 1119896335
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: idle 4
+      name: Reaper-attack2_7
       rect:
         serializedVersion: 2
-        x: 64
+        x: 106
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77fb5dd95ed2f4e15a8af4cec844514a
-      internalID: -1934992485
+      spriteID: 871959d543f8e4900b196b967899c734
+      internalID: 1782053787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reaper-attack2_8
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 0
+        width: 106
+        height: 78
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d698e1efb8f744e98e906888239586e
+      internalID: 330268823
       vertices: []
       indices: 
       edges: []
@@ -211,10 +316,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      idle 3: -496935734
-      idle 2: 1354726743
-      idle 1: -262174530
-      idle 4: -1934992485
+      Reaper-attack2_3: 1196841527
+      Reaper-attack2_2: 1768675376
+      Reaper-attack2_6: 1119896335
+      Reaper-attack2_1: -1077388032
+      Reaper-attack2_0: 274379507
+      Reaper-attack2_7: 1782053787
+      Reaper-attack2_4: 932995215
+      Reaper-attack2_5: -1556486681
+      Reaper-attack2_8: 330268823
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

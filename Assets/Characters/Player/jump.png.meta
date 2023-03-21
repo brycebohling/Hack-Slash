@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3fa566782b3234127af0a0789d312708
+guid: 9889ca03c37724fda81d7139072742d5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,22 +117,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jumping
+      name: jump_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 106
+        height: 78
       alignment: 9
-      pivot: {x: 0.37, y: 0.31}
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 240cc235048a84317ab63e330bccfb9e
-      internalID: -707829695
+      spriteID: 3d313545bf928458eaefc1934bd914c7
+      internalID: 793190910
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      jumping: -707829695
+      jump_0: 793190910
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
