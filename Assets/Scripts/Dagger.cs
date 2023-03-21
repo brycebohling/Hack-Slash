@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Dagger : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private float speed;
+    [SerializeField] int dmg;
+
+    [SerializeField] int enemyLayerNum;
+    private Rigidbody2D rb;
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * speed;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision) 
     {
-        
+        if (collision.gameObject.layer == enemyLayerNum)
+        {
+            GameManager.gameManager.DamageEnemy(collision, dmg, transform);
+        }
+        Destroy(gameObject);
     }
 }

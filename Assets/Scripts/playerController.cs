@@ -69,6 +69,7 @@ public class playerController : MonoBehaviour
     private Vector2 location;
     [SerializeField] private float throwCooldown;
     private float throwCountdown;
+    [SerializeField] Transform daggerSpawnPoint;
 
     // Health
 
@@ -230,8 +231,8 @@ public class playerController : MonoBehaviour
         {
             if (isFacingRight) 
             {
-                location = new Vector2(transform.position.x + 3f, transform.position.y + .55f);
-                Instantiate(scythe, location, Quaternion.identity);
+                location = new Vector2(daggerSpawnPoint);
+                Instantiate(scythe, daggerSpawnPoint, Quaternion.identity);
                 
             } else
             {

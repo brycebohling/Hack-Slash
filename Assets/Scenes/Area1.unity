@@ -14924,6 +14924,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 994854165}
     - target: {fileID: 5112000661765236288, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
+      propertyPath: scythe
+      value: 
+      objectReference: {fileID: 384279646069958479, guid: 8a577a68b208140cfb9a5d4f7efb9f58, type: 3}
+    - target: {fileID: 5112000661765236288, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 1284478551}
