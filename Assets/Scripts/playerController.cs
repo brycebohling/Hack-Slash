@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour
 {
-    [SerializeField] CameraC camC;
+    CameraC camC;
 
     // Movement
     private float movementX;
@@ -231,12 +231,12 @@ public class playerController : MonoBehaviour
         {
             if (isFacingRight) 
             {
-                location = new Vector2(daggerSpawnPoint);
-                Instantiate(scythe, daggerSpawnPoint, Quaternion.identity);
+                location = new Vector2(daggerSpawnPoint.position.x, daggerSpawnPoint.position.y);
+                Instantiate(scythe, location, Quaternion.identity);
                 
             } else
             {
-                location = new Vector2(transform.position.x - 3, transform.position.y + .55f);
+                location = new Vector2(daggerSpawnPoint.position.x, daggerSpawnPoint.position.y);
                 Instantiate(scythe, location, transform.rotation * Quaternion.Euler (0f, 180f, 0f));
             }
             throwCountdown = throwCooldown;

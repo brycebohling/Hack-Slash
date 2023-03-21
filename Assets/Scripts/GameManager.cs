@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager { get; private set; }
 
     public Transform player;
-    public Camera noise;
 
     void Awake()
     {
