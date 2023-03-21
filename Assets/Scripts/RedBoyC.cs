@@ -182,8 +182,6 @@ public class RedBoyC : MonoBehaviour
     {
         StopAllCoroutines();
         Vector2 hitDir = (transform.position - attacker.position).normalized;
-        Debug.Log(hitDir);
-        // transform.position = new Vector2(transform.position.x, transform.position.y + 0.5f); 
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
         StartCoroutine(CancelKnockback());
         beingKnockedback = true;
