@@ -65,7 +65,7 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask enemies;
 
     // Scythe
-    public GameObject scythe;
+    public GameObject dagger;
     private Vector2 location;
     [SerializeField] private float throwCooldown;
     private float throwCountdown;
@@ -232,12 +232,12 @@ public class playerController : MonoBehaviour
             if (isFacingRight) 
             {
                 location = new Vector2(daggerSpawnPoint.position.x, daggerSpawnPoint.position.y);
-                Instantiate(scythe, location, Quaternion.identity);
+                Instantiate(dagger, location, Quaternion.identity);
                 
             } else
             {
                 location = new Vector2(daggerSpawnPoint.position.x, daggerSpawnPoint.position.y);
-                Instantiate(scythe, location, transform.rotation * Quaternion.Euler (0f, 180f, 0f));
+                Instantiate(dagger, location, transform.rotation * Quaternion.Euler (0f, 180f, 0f));
             }
             throwCountdown = throwCooldown;
             
@@ -371,5 +371,6 @@ public class playerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);   
     
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(1.5f, .2f)); 
+        Gizmos.DrawWireCube(ceillingCheck.position, new Vector2(1.3f, 1.7f));
     }
 }
