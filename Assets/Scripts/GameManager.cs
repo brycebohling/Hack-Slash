@@ -31,5 +31,4 @@ public class GameManager : MonoBehaviour
             enemy.gameObject.GetComponent<FlyerC>().DmgFlyer(dmg, attacker);
         }
     }
-
 }

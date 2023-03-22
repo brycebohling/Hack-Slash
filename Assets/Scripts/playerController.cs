@@ -89,6 +89,7 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject deathParticals;
     [SerializeField] GameObject deathScreen;
 
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
