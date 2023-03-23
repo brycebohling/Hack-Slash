@@ -91,6 +91,13 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject deathScreen;
 
 
+    [SerializeField] Transform bush;
+    bool jumpingIntoBush = false;
+    float count = 0.0f;
+    Vector3 startPoint;
+    Vector3 controlPoint;
+    Vector3 endPoint;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -103,6 +110,24 @@ public class playerController : MonoBehaviour
 
     private void Update()
     {   
+        if (jumpingIntoBush)
+        {
+            if (count < 1.0f) 
+            {
+                count += 1.0f * Time.deltaTime;
+
+                Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, count);
+                Vector3 m2 = Vector3.Lerp(controlPoint, endPoint, count );
+                transform.position = Vector3.Lerp(m1, m2, count);
+
+                return;
+            } else
+            {
+                count = 0;
+                jumpingIntoBush = false;
+            }
+        }
+
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
@@ -119,7 +144,7 @@ public class playerController : MonoBehaviour
             {
                 takingDmg = false;
             }
-            
+
             return;
         } else
         {
@@ -242,6 +267,11 @@ public class playerController : MonoBehaviour
             throwCountdown = throwCooldown;
             
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            JumpIntoBush(bush);
+        }
     }
 
     private void FixedUpdate() 
@@ -251,6 +281,16 @@ public class playerController : MonoBehaviour
             return;
         }
         rb.velocity = new Vector2(movementX * speed, rb.velocity.y);
+    }
+
+    void JumpIntoBush(Transform bush) 
+    {
+        startPoint = transform.position;
+        endPoint = bush.position;
+
+        controlPoint = startPoint +(endPoint -startPoint)/2 + Vector3.up * 5.0f;
+
+        jumpingIntoBush = true;
     }
 
     private void Flip()
