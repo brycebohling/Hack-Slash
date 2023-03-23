@@ -334,7 +334,14 @@ public class playerController : MonoBehaviour
 
         } else if (jumpingOutBush)
         {
-            endPoint = originalPos;
+            if (originalPos.x - bush.position.x > 0)
+            {
+                endPoint = new Vector3(bush.position.x + 3f, bush.position.y + 1f, bush.position.z);
+            } else
+            {
+                endPoint = new Vector3(bush.position.x - 3f, bush.position.y + 1f, bush.position.z);
+            }
+            
             controlPoint = startPoint +(endPoint -startPoint)/2 + Vector3.up * 5.0f;
 
             spriteRend.enabled = true;
