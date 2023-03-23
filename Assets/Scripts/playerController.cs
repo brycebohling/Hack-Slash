@@ -83,6 +83,7 @@ public class playerController : MonoBehaviour
     bool takingDmg = false;
     [SerializeField] float dmgTime;
     float dmgTimerCountdown;
+    [SerializeField] float knockbackPower;
 
     // Death
     bool isDead = false;
@@ -112,15 +113,13 @@ public class playerController : MonoBehaviour
 
         if (takingDmg)
         {
-            
             dmgTimerCountdown -= Time.deltaTime;
 
             if (dmgTimerCountdown <= 0) 
             {
                 takingDmg = false;
             }
-
-            rb.velocity = new Vector2(0,0);
+            
             return;
         } else
         {
@@ -323,7 +322,7 @@ public class playerController : MonoBehaviour
         }
     }
 
-    public void PlayerTakeDmg(int dmg)
+    public void PlayerTakeDmg(int dmg, Transform attacker)
     {
         
         if (iFrameCountdown <= 0)
@@ -341,8 +340,24 @@ public class playerController : MonoBehaviour
                 iFrameCountdown = iFrameTime;
                 takingDmg = true;
                 ChangeAnimationState(PLAYER_DAMAGED);
+                Knockback(attacker);
             }
         }
+    }
+
+    private void Knockback(Transform attacker)
+    {
+        StopAllCoroutines();
+        Vector2 hitDir = (transform.position - attacker.position).normalized;
+        rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
+        attacking = false;
+    
+        StartCoroutine(CancelKnockback());
+    }
+
+    private IEnumerator CancelKnockback()
+    {
+        yield return new WaitUntil(() => !takingDmg);
     }
 
     private void ChangeAnimationState(string newState)

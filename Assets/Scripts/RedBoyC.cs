@@ -135,7 +135,7 @@ public class RedBoyC : MonoBehaviour
         canDmgPlayer = Physics2D.OverlapCircle(attckPoint.position, attackRadius, attackLayer);
         if (canDmgPlayer)
         {
-            PC.PlayerTakeDmg(dmg);
+            PC.PlayerTakeDmg(dmg,transform);
         }
     }
 

@@ -112,7 +112,7 @@ public class FlyerC : MonoBehaviour
 
                     if (isTouchingPlayer)
                     {
-                        PC.PlayerTakeDmg(dmg);
+                        PC.PlayerTakeDmg(dmg, transform);
                     }
 
                     if (Vector2.Distance(transform.position, attackPlayerPos) < 1)
@@ -126,7 +126,7 @@ public class FlyerC : MonoBehaviour
 
                     if (isTouchingPlayer)
                     {
-                        PC.PlayerTakeDmg(dmg);
+                        PC.PlayerTakeDmg(dmg, transform);
                     }
 
                     if (Vector2.Distance(transform.position, originalPos) < 0.05f)
