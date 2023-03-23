@@ -92,7 +92,6 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject deathScreen;
 
     // Bush mechanics
-    [SerializeField] Transform bush;
     bool jumpingIntoBush = false;
     bool jumpingOutBush = false;
     float bushLerp = 0.0f;
@@ -102,6 +101,13 @@ public class playerController : MonoBehaviour
     Vector3 controlPoint;
     Vector3 endPoint;
     Vector3 originalPos;
+    [SerializeField] Vector2 bushCheckSize;
+    [SerializeField] LayerMask bushLayer;
+    bushC bushScript;
+    Transform closestBushTransform;
+
+
+
 
     private void Start()
     {
@@ -120,6 +126,7 @@ public class playerController : MonoBehaviour
         {
             if (bushLerp < 1.0f) 
             {
+                ChangeAnimationState(PLAYER_START_ROLL);
                 bushLerp += 1.0f * Time.deltaTime;
 
                 Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
@@ -129,18 +136,18 @@ public class playerController : MonoBehaviour
             } else
             {
                 spriteRend.enabled = false;
-
+                
                 if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
                 {
                     bushLerp = 0f;
                     timeInBush = 0f;
                     jumpingIntoBush = false;
                     jumpingOutBush = true;
-                    JumpBush(bush);
+                    JumpBush(closestBushTransform);
                 } else 
                 {
                     timeInBush += Time.deltaTime;
-                    transform.position = bush.position;
+                    transform.position = closestBushTransform.position;
                 }
             }
 
@@ -151,6 +158,7 @@ public class playerController : MonoBehaviour
         {
             if (bushLerp < 1.0f) 
             {
+                ChangeAnimationState(PLAYER_START_ROLL);
                 bushLerp += 1.0f * Time.deltaTime;
 
                 Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
@@ -307,8 +315,26 @@ public class playerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            jumpingIntoBush = true;
-            JumpBush(bush);
+            Collider2D[] bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
+            Debug.Log(bushInRange);
+            float closestBush = 0f;
+            foreach (Collider2D bush in bushInRange)
+            {
+                float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
+                Debug.Log(bushDistance);
+                if (bushDistance > closestBush)
+                {
+                    closestBush = bushDistance;
+                    Debug.Log(closestBush);
+                    closestBushTransform = bush.gameObject.transform;
+                }
+            }
+
+            if (closestBush != 0)
+            {
+                jumpingIntoBush = true;
+                JumpBush(closestBushTransform);
+            }
         }
     }
 
@@ -330,7 +356,7 @@ public class playerController : MonoBehaviour
         {
             originalPos = transform.position;
             endPoint = bush.position;
-            controlPoint = startPoint +(endPoint -startPoint)/2 + Vector3.up * 5.0f;
+            controlPoint = startPoint + (endPoint -startPoint)/2 + Vector3.up * 5.0f;
 
         } else if (jumpingOutBush)
         {
@@ -484,5 +510,7 @@ public class playerController : MonoBehaviour
     
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(1.5f, .2f)); 
         Gizmos.DrawWireCube(ceillingCheck.position, new Vector2(1.3f, 1.7f));
+
+        Gizmos.DrawWireCube(transform.position, bushCheckSize);
     }
 }
