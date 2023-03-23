@@ -14942,6 +14942,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1101981703109605621, guid: 13b4fa2a3d1e7423ea74a6c04c2532df, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13b4fa2a3d1e7423ea74a6c04c2532df, type: 3}
 --- !u!1001 &5112000661387596088
@@ -14960,12 +14964,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2136200711}
     - target: {fileID: 5112000661765236288, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
+      propertyPath: bushTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112000661765236288, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 1284478551}
     - target: {fileID: 5112000661765236297, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112000661765236297, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112000661765236298, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5112000661765236299, guid: e8ee2b275cf17490fb4f21262365647e, type: 3}
       propertyPath: m_RootOrder

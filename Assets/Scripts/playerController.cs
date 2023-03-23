@@ -17,6 +17,7 @@ public class playerController : MonoBehaviour
 
     // Animatinon
     private Animator anim;
+    SpriteRenderer spriteRend;
     string _currentState;
     const string PLAYER_IDLE = "idle";
     const string PLAYER_RUN = "running";
@@ -90,13 +91,17 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject deathParticals;
     [SerializeField] GameObject deathScreen;
 
-
+    // Bush mechanics
     [SerializeField] Transform bush;
     bool jumpingIntoBush = false;
-    float count = 0.0f;
+    bool jumpingOutBush = false;
+    float bushLerp = 0.0f;
+    [SerializeField] float bushTime;
+    float timeInBush;
     Vector3 startPoint;
     Vector3 controlPoint;
     Vector3 endPoint;
+    Vector3 originalPos;
 
     private void Start()
     {
@@ -104,6 +109,7 @@ public class playerController : MonoBehaviour
         anim = GetComponent<Animator>();
         bcoll = GetComponent<BoxCollider2D>();
         camC = GameObject.FindGameObjectWithTag("vcam").GetComponent<CameraC>();
+        spriteRend = GetComponent<SpriteRenderer>();
         currentHealth = health;
     }
 
@@ -112,19 +118,50 @@ public class playerController : MonoBehaviour
     {   
         if (jumpingIntoBush)
         {
-            if (count < 1.0f) 
+            if (bushLerp < 1.0f) 
             {
-                count += 1.0f * Time.deltaTime;
+                bushLerp += 1.0f * Time.deltaTime;
 
-                Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, count);
-                Vector3 m2 = Vector3.Lerp(controlPoint, endPoint, count );
-                transform.position = Vector3.Lerp(m1, m2, count);
+                Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
+                Vector3 m2 = Vector3.Lerp(controlPoint, endPoint, bushLerp );
+                transform.position = Vector3.Lerp(m1, m2, bushLerp);
+
+            } else
+            {
+                spriteRend.enabled = false;
+
+                if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
+                {
+                    bushLerp = 0f;
+                    timeInBush = 0f;
+                    jumpingIntoBush = false;
+                    jumpingOutBush = true;
+                    JumpBush(bush);
+                } else 
+                {
+                    timeInBush += Time.deltaTime;
+                    transform.position = bush.position;
+                }
+            }
+
+            return;
+        }
+
+        if (jumpingOutBush)
+        {
+            if (bushLerp < 1.0f) 
+            {
+                bushLerp += 1.0f * Time.deltaTime;
+
+                Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
+                Vector3 m2 = Vector3.Lerp(controlPoint, endPoint, bushLerp );
+                transform.position = Vector3.Lerp(m1, m2, bushLerp);
 
                 return;
             } else
             {
-                count = 0;
-                jumpingIntoBush = false;
+                bushLerp = 0;
+                jumpingOutBush = false;
             }
         }
 
@@ -270,7 +307,8 @@ public class playerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            JumpIntoBush(bush);
+            jumpingIntoBush = true;
+            JumpBush(bush);
         }
     }
 
@@ -283,14 +321,25 @@ public class playerController : MonoBehaviour
         rb.velocity = new Vector2(movementX * speed, rb.velocity.y);
     }
 
-    void JumpIntoBush(Transform bush) 
+    void JumpBush(Transform bush) 
     {
+        StopAllCoroutines();
         startPoint = transform.position;
-        endPoint = bush.position;
+        
+        if (jumpingIntoBush)
+        {
+            originalPos = transform.position;
+            endPoint = bush.position;
+            controlPoint = startPoint +(endPoint -startPoint)/2 + Vector3.up * 5.0f;
 
-        controlPoint = startPoint +(endPoint -startPoint)/2 + Vector3.up * 5.0f;
+        } else if (jumpingOutBush)
+        {
+            endPoint = originalPos;
+            controlPoint = startPoint +(endPoint -startPoint)/2 + Vector3.up * 5.0f;
 
-        jumpingIntoBush = true;
+            spriteRend.enabled = true;
+        }
+        
     }
 
     private void Flip()
