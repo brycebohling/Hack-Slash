@@ -9,11 +9,12 @@ public class Dagger : MonoBehaviour
     [SerializeField] float rotationSpeed;
     bool isRotating = false;
     float angle;
-    [SerializeField] LayerMask playerEnemy;
+    [SerializeField] LayerMask enemyLayer;
     bool isTouchingEnemy;
     [SerializeField] int enemyLayerNum;
     private Rigidbody2D rb;
-    Vector2 direction;
+    GameObject enemyObject;
+
 
     void Start()
     {
@@ -25,39 +26,35 @@ public class Dagger : MonoBehaviour
     {
         if (isRotating)
         {
-            // transform.rotation = Quaternion.Euler(Vector3.forward * angle);
-            
-            // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y, angle), Time.deltaTime * rotationSpeed);
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = rotation;
 
-            // rb.velocity = Vector3.RotateTowards(rb.velocity, direction, speed * Time.deltaTime * Mathf.Deg2Rad, 0);            
-            rb.velocity = direction.normalized * rb.velocity;
+            rb.velocity = transform.right * speed;
         }  
         
-        isTouchingEnemy = Physics2D.OverlapBox(transform.position, new Vector2(1f, 0.5f), transform.rotation.z, playerEnemy);
+        isTouchingEnemy = Physics2D.OverlapBox(transform.position, new Vector2(1f, 0.5f), transform.rotation.z, enemyLayer);
 
         if (isTouchingEnemy)
         {
-            Collider2D[] enemy = Physics2D.OverlapBoxAll(transform.position, new Vector2(1f, 0.5f), playerEnemy);
+            Collider2D[] enemy = Physics2D.OverlapBoxAll(transform.position, new Vector2(1f, 0.5f), enemyLayer);
 
             foreach (Collider2D enemyGameobject in enemy)
             {
                 GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, transform);
             }
+            Destroy(gameObject);
         }
-        
     } 
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
         if (collision.gameObject.layer == enemyLayerNum)
         {
+            enemyObject = collision.gameObject;
+
             Vector2 daggerPos = new Vector2(transform.position.x, transform.position.y);
-            
-            Vector2 collisionPos = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
-            
-            direction = collisionPos - daggerPos;
+            Vector2 collisionPos = new Vector2(enemyObject.transform.position.x, enemyObject.transform.position.y);
+            Vector2 direction = collisionPos - daggerPos;
             
             angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 

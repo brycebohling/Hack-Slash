@@ -120,10 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58afdf2e6cc484ac4aefb6920e221692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 20
   dmg: 10
-  rotationSpeed: 3
-  playerEnemy:
+  rotationSpeed: 10
+  enemyLayer:
     serializedVersion: 2
     m_Bits: 512
   enemyLayerNum: 9
@@ -156,8 +156,8 @@ PolygonCollider2D:
       - {x: 0, y: 0}
       - {x: 0, y: 0}
       - {x: 0, y: -0.3}
-      - {x: 12, y: -6}
-      - {x: 12, y: 6}
+      - {x: 10, y: -6}
+      - {x: 10, y: 6}
       - {x: 0, y: 0.3}
       - {x: 0, y: 0}
       - {x: 0, y: 0}
