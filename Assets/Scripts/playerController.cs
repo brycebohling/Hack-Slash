@@ -105,6 +105,7 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask bushLayer;
     bushC bushScript;
     Transform closestBushTransform;
+    bool didShake = false;
 
 
 
@@ -127,6 +128,7 @@ public class playerController : MonoBehaviour
             if (bushLerp < 1.0f) 
             {
                 ChangeAnimationState(PLAYER_START_ROLL);
+                
                 bushLerp += 1.0f * Time.deltaTime;
 
                 Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
@@ -136,13 +138,20 @@ public class playerController : MonoBehaviour
             } else
             {
                 spriteRend.enabled = false;
-                
+
+                if (!didShake)
+                {
+                    bushScript.BushShake();
+                    didShake = true;
+                }
+
                 if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
                 {
                     bushLerp = 0f;
                     timeInBush = 0f;
                     jumpingIntoBush = false;
                     jumpingOutBush = true;
+                    didShake = false;
                     JumpBush(closestBushTransform);
                 } else 
                 {
@@ -158,7 +167,14 @@ public class playerController : MonoBehaviour
         {
             if (bushLerp < 1.0f) 
             {
+                if (!didShake)
+                {
+                    bushScript.BushShake();
+                    didShake = true;
+                }
+        
                 ChangeAnimationState(PLAYER_START_ROLL);
+
                 bushLerp += 1.0f * Time.deltaTime;
 
                 Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
@@ -170,6 +186,7 @@ public class playerController : MonoBehaviour
             {
                 bushLerp = 0;
                 jumpingOutBush = false;
+                didShake = false;
             }
         }
 
@@ -316,17 +333,18 @@ public class playerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Collider2D[] bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
-            Debug.Log(bushInRange);
             float closestBush = 0f;
+
             foreach (Collider2D bush in bushInRange)
             {
                 float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
-                Debug.Log(bushDistance);
+    
                 if (bushDistance > closestBush)
                 {
                     closestBush = bushDistance;
                     Debug.Log(closestBush);
                     closestBushTransform = bush.gameObject.transform;
+                    bushScript = closestBushTransform.GetComponent<bushC>();
                 }
             }
 

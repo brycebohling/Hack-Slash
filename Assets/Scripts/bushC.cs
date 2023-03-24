@@ -9,23 +9,34 @@ public class bushC : MonoBehaviour
     string _currentState;
     string bushShakeAnim = "shake";
     string bushNormalAnim = "normal";
+    bool isPlayingShake;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-        ChangeAnimationState(bushNormalAnim);
-
     }
 
     void Update()
     {
-        
+        if (!IsAnimationPlaying(anim, bushShakeAnim))
+        {
+            ChangeAnimationState(bushNormalAnim);
+        }
     }
 
     public void BushShake()
     {
+        // StopAllCoroutines();
         ChangeAnimationState(bushShakeAnim);
+        // StartCoroutine(WaitToChange());
+        
     }
+
+    // private IEnumerator WaitToChange()
+    // {
+    //     yield return new WaitForSeconds(1f);
+    //     ChangeAnimationState(bushNormalAnim);
+    // }
 
     private void ChangeAnimationState(string newState)
     {
