@@ -10,6 +10,7 @@ public class bushC : MonoBehaviour
     string bushShakeAnim = "shake";
     string bushNormalAnim = "normal";
     bool isPlayingShake;
+    [SerializeField] Transform shakeParticals;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class bushC : MonoBehaviour
     public void BushShake()
     {
         // StopAllCoroutines();
+        Instantiate(shakeParticals, transform.position, Quaternion.identity);
         ChangeAnimationState(bushShakeAnim);
         // StartCoroutine(WaitToChange());
         
