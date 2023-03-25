@@ -27,18 +27,10 @@ public class bushC : MonoBehaviour
 
     public void BushShake()
     {
-        // StopAllCoroutines();
         Instantiate(shakeParticals, transform.position, Quaternion.identity);
         ChangeAnimationState(bushShakeAnim);
-        // StartCoroutine(WaitToChange());
         
     }
-
-    // private IEnumerator WaitToChange()
-    // {
-    //     yield return new WaitForSeconds(1f);
-    //     ChangeAnimationState(bushNormalAnim);
-    // }
 
     private void ChangeAnimationState(string newState)
     {
