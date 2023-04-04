@@ -71,11 +71,11 @@ public class FlyerC : MonoBehaviour
             Destroy(gameObject);
         }
 
-        targetLocationX = new Vector2(GameManager.gameManager.player.position.x, transform.position.y);
-        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.position.y);
-        distance = Vector2.Distance(transform.position, GameManager.gameManager.player.position);
+        targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
+        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
+        distance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
 
-        Vector2 playerDir = GameManager.gameManager.player.position - transform.position;
+        Vector2 playerDir = GameManager.gameManager.player.transform.position - transform.position;
         RaycastHit2D groundInWay = Physics2D.Raycast(transform.position, playerDir, distance, groundLayer);
         Debug.DrawRay(transform.position, playerDir, Color.red);
 
@@ -139,11 +139,11 @@ public class FlyerC : MonoBehaviour
             return;
         }
 
-        if (groundInWay.collider == null)
+        if (groundInWay.collider == null && GameManager.gameManager.isPlayerRendered)
         {  
             if (distance > minDistance)
             {
-                transform.position = Vector2.MoveTowards(transform.position, GameManager.gameManager.player.position, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, GameManager.gameManager.player.transform.position, speed * Time.deltaTime);
 
             } else
             {
@@ -160,7 +160,7 @@ public class FlyerC : MonoBehaviour
         if (distance < minDistance)
         {
             originalPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-            attackPlayerPos = new Vector3(GameManager.gameManager.player.position.x, GameManager.gameManager.player.position.y, GameManager.gameManager.player.position.z);
+            attackPlayerPos = new Vector3(GameManager.gameManager.player.transform.position.x, GameManager.gameManager.player.transform.position.y, GameManager.gameManager.player.transform.position.z);
             divedIn = false;
             divedOut = false;
             canDive = true;

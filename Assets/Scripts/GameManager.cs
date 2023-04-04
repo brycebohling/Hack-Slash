@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
 
-    public Transform player;
+    public GameObject player;
+    Renderer playerRenderer;
+    public bool isPlayerRendered;
 
     void Awake()
     {
@@ -16,6 +18,24 @@ public class GameManager : MonoBehaviour
         } else
         {
             gameManager = this;
+        }
+    }
+
+    void Start()
+    {
+        player = GameObject.Find("Player");
+        playerRenderer = player.GetComponent<Renderer>();
+    }
+
+    void Update()
+    {
+        if (playerRenderer.enabled == true)
+        {
+            isPlayerRendered = true;
+            
+        } else
+        {
+            isPlayerRendered = false;
         }
     }
 

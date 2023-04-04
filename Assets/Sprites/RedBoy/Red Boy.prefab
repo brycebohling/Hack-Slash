@@ -201,7 +201,7 @@ MonoBehaviour:
   wallCheackLayer:
     serializedVersion: 2
     m_Bits: 64
-  dmg: 1
+  dmg: 10
   attackRadius: 1
   attackTimer: 1
   attckPoint: {fileID: 793930968396810382}

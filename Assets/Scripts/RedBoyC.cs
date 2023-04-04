@@ -96,8 +96,8 @@ public class RedBoyC : MonoBehaviour
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
-        targetLocationX = new Vector2(GameManager.gameManager.player.position.x, transform.position.y);
-        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.position.y);
+        targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
+        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
         distanceX = Vector2.Distance(transform.position, targetLocationX);
         distanceY = Vector2.Distance(transform.position, targetLocationY);
 
@@ -108,7 +108,7 @@ public class RedBoyC : MonoBehaviour
 
         Flip();
 
-        if (isGrounded)
+        if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
             if (distanceX > minDistanceX && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
             {
@@ -141,7 +141,7 @@ public class RedBoyC : MonoBehaviour
 
     private void Flip()
     {
-        if (GameManager.gameManager.player.position.x > transform.position.x)
+        if (GameManager.gameManager.player.transform.position.x > transform.position.x)
         {
             if (isFacingRight)
             {

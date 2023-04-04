@@ -90,7 +90,6 @@ public class playerController : MonoBehaviour
     // Death
     bool isDead = false;
     [SerializeField] GameObject deathParticals;
-    [SerializeField] GameObject deathScreen;
 
     // Bush mechanics
     float bushJumpHeight = 5f;
@@ -109,8 +108,9 @@ public class playerController : MonoBehaviour
     Transform closestBushTransform;
     bool didShake = false;
 
-
-
+    // UI
+    [SerializeField] GameObject deathScreenUI;
+    [SerializeField] GameObject bushInRangeUI;
 
     private void Start()
     {
@@ -121,7 +121,7 @@ public class playerController : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
         currentHealth = health;
     }
-
+    
 
     private void Update()
     {   
@@ -199,7 +199,7 @@ public class playerController : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
-            deathScreen.SetActive(true);
+            deathScreenUI.SetActive(true);
             gameObject.SetActive(false);
             return;
         }
@@ -330,15 +330,25 @@ public class playerController : MonoBehaviour
             } else
             {
                 location = new Vector2(daggerSpawnPoint.position.x, daggerSpawnPoint.position.y);
-                Instantiate(dagger, location, transform.rotation * Quaternion.Euler (0f, 180f, 0f));
+                Instantiate(dagger, location, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
             }
             throwCountdown = throwCooldown;
             
         }
 
+        Collider2D[] bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
+        if (bushInRange.Length > 0)
+        {
+            bushInRangeUI.SetActive(true);
+        } else
+        {
+            bushInRangeUI.SetActive(false);
+        }
+
+
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Collider2D[] bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
+            
             float closestBush = 0f;
 
             foreach (Collider2D bush in bushInRange)
@@ -493,11 +503,10 @@ public class playerController : MonoBehaviour
 
     private void Knockback(Transform attacker)
     {
-        
         Vector2 hitDir = (transform.position - attacker.position).normalized;
         rb.velocity = Vector2.zero;
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
-        attacking = false;
+        attacking = false;        
     }
 
     private void ChangeAnimationState(string newState)

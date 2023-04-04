@@ -24,4 +24,6 @@ public class UIC : MonoBehaviour
     {
         Application.Quit();
     }
+
+    
 }
