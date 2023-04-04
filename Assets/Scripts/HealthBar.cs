@@ -20,6 +20,6 @@ public class HealthBar : MonoBehaviour
     
     public void SetHealth(int health)
     {
-        _healthSlider.value = health;
+        _healthSlider.value = health;    
     }
 }

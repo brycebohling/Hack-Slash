@@ -204,7 +204,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 2077118203, guid: 0fe07f03fc5ad47bd9722be9f9c6b608, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -254,6 +254,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  ceillingCheckSize: {x: 1.15, y: 2}
   ceillingCheck: {fileID: 5112000660030634530}
   headHitters:
     serializedVersion: 2
@@ -270,7 +271,7 @@ MonoBehaviour:
   maxComboDelay: 1
   attackMovementSpeed: 1
   attackPoint: {fileID: 1969756911}
-  attackRadius: 1.51
+  attackRadius: 1.5
   enemies:
     serializedVersion: 2
     m_Bits: 512

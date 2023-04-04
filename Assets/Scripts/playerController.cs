@@ -35,6 +35,7 @@ public class playerController : MonoBehaviour
     private bool isGrounded;
 
     // Ceilling check
+    [SerializeField] Vector2 ceillingCheckSize;
     [SerializeField] Transform ceillingCheck;
     [SerializeField] private LayerMask headHitters;
     private bool isCeiling;
@@ -92,6 +93,7 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject deathScreen;
 
     // Bush mechanics
+    float bushJumpHeight = 5f;
     bool jumpingIntoBush = false;
     bool jumpingOutBush = false;
     float bushLerp = 0.0f;
@@ -134,10 +136,14 @@ public class playerController : MonoBehaviour
                 Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
                 Vector3 m2 = Vector3.Lerp(controlPoint, endPoint, bushLerp );
                 transform.position = Vector3.Lerp(m1, m2, bushLerp);
-
+ 
+                if (bushLerp > 0.8f)
+                {
+                    spriteRend.enabled = false;
+                }
+            
             } else
             {
-                spriteRend.enabled = false;
 
                 if (!didShake)
                 {
@@ -225,7 +231,7 @@ public class playerController : MonoBehaviour
 
         if (isRolling)
         {
-            isCeiling = Physics2D.OverlapBox(ceillingCheck.position, new Vector2(1.3f, 1.7f), 0, headHitters);
+            isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
             return;
         }
 
@@ -374,7 +380,7 @@ public class playerController : MonoBehaviour
         {
             originalPos = transform.position;
             endPoint = bush.position;
-            controlPoint = startPoint + (endPoint -startPoint)/2 + Vector3.up * 5.0f;
+            controlPoint = startPoint + (endPoint - startPoint)/2 + Vector3.up * bushJumpHeight;
 
         } else if (jumpingOutBush)
         {
@@ -487,17 +493,11 @@ public class playerController : MonoBehaviour
 
     private void Knockback(Transform attacker)
     {
-        StopAllCoroutines();
+        
         Vector2 hitDir = (transform.position - attacker.position).normalized;
+        rb.velocity = Vector2.zero;
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
         attacking = false;
-    
-        StartCoroutine(CancelKnockback());
-    }
-
-    private IEnumerator CancelKnockback()
-    {
-        yield return new WaitUntil(() => !takingDmg);
     }
 
     private void ChangeAnimationState(string newState)
@@ -527,7 +527,7 @@ public class playerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);   
     
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(1.5f, .2f)); 
-        Gizmos.DrawWireCube(ceillingCheck.position, new Vector2(1.3f, 1.7f));
+        Gizmos.DrawWireCube(ceillingCheck.position, ceillingCheckSize);
 
         Gizmos.DrawWireCube(transform.position, bushCheckSize);
     }
