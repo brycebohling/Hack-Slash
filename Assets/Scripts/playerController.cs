@@ -92,21 +92,27 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject deathParticals;
 
     // Bush mechanics
+    Collider2D[] bushInRange;
     float bushJumpHeight = 5f;
     bool jumpingIntoBush = false;
     bool jumpingOutBush = false;
     float bushLerp = 0.0f;
     [SerializeField] float bushTime;
     float timeInBush;
-    Vector3 startPoint;
-    Vector3 controlPoint;
-    Vector3 endPoint;
+    Vector3 bushStartPoint;
+    Vector3 bushControlPoint;
+    Vector3 bushEndPoint;
     Vector3 originalPos;
     [SerializeField] Vector2 bushCheckSize;
     [SerializeField] LayerMask bushLayer;
     bushC bushScript;
     Transform closestBushTransform;
-    bool didShake = false;
+    bool didBushShake = false;
+
+    // Tree mechanices
+    TreeC treeScript;
+    [SerializeField] Vector2 treeCheckSize;
+    [SerializeField] LayerMask treeLayer;
 
     // UI
     [SerializeField] GameObject deathScreenUI;
@@ -133,8 +139,8 @@ public class playerController : MonoBehaviour
                 
                 bushLerp += 1.0f * Time.deltaTime;
 
-                Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
-                Vector3 m2 = Vector3.Lerp(controlPoint, endPoint, bushLerp );
+                Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
+                Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp );
                 transform.position = Vector3.Lerp(m1, m2, bushLerp);
  
                 if (bushLerp > 0.8f)
@@ -145,10 +151,10 @@ public class playerController : MonoBehaviour
             } else
             {
 
-                if (!didShake)
+                if (!didBushShake)
                 {
                     bushScript.BushShake();
-                    didShake = true;
+                    didBushShake = true;
                 }
 
                 if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
@@ -157,7 +163,7 @@ public class playerController : MonoBehaviour
                     timeInBush = 0f;
                     jumpingIntoBush = false;
                     jumpingOutBush = true;
-                    didShake = false;
+                    didBushShake = false;
                     JumpBush(closestBushTransform);
                 } else 
                 {
@@ -173,18 +179,18 @@ public class playerController : MonoBehaviour
         {
             if (bushLerp < 1.0f) 
             {
-                if (!didShake)
+                if (!didBushShake)
                 {
                     bushScript.BushShake();
-                    didShake = true;
+                    didBushShake = true;
                 }
         
                 ChangeAnimationState(PLAYER_START_ROLL);
 
                 bushLerp += 1.0f * Time.deltaTime;
 
-                Vector3 m1 = Vector3.Lerp(startPoint ,controlPoint, bushLerp);
-                Vector3 m2 = Vector3.Lerp(controlPoint, endPoint, bushLerp );
+                Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
+                Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp );
                 transform.position = Vector3.Lerp(m1, m2, bushLerp);
 
                 return;
@@ -192,7 +198,7 @@ public class playerController : MonoBehaviour
             {
                 bushLerp = 0;
                 jumpingOutBush = false;
-                didShake = false;
+                didBushShake = false;
             }
         }
 
@@ -336,7 +342,8 @@ public class playerController : MonoBehaviour
             
         }
 
-        Collider2D[] bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
+        bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
+
         if (bushInRange.Length > 0)
         {
             bushInRangeUI.SetActive(true);
@@ -348,27 +355,7 @@ public class playerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            
-            float closestBush = 0f;
-
-            foreach (Collider2D bush in bushInRange)
-            {
-                float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
-    
-                if (bushDistance > closestBush)
-                {
-                    closestBush = bushDistance;
-                    Debug.Log(closestBush);
-                    closestBushTransform = bush.gameObject.transform;
-                    bushScript = closestBushTransform.GetComponent<bushC>();
-                }
-            }
-
-            if (closestBush != 0)
-            {
-                jumpingIntoBush = true;
-                JumpBush(closestBushTransform);
-            }
+            BushJumpCheck();
         }
     }
 
@@ -381,28 +368,52 @@ public class playerController : MonoBehaviour
         rb.velocity = new Vector2(movementX * speed, rb.velocity.y);
     }
 
+    void BushJumpCheck()
+    {
+        float closestBush = 100000;
+
+        foreach (Collider2D bush in bushInRange)
+        {
+            float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
+
+            if (bushDistance < closestBush)
+            {
+                closestBush = bushDistance;
+                Debug.Log(closestBush);
+                closestBushTransform = bush.gameObject.transform;
+                bushScript = closestBushTransform.GetComponent<bushC>();
+            }
+        }
+
+        if (closestBush != 100000)
+        {
+            jumpingIntoBush = true;
+            JumpBush(closestBushTransform);
+        }
+    }
+
     void JumpBush(Transform bush) 
     {
         StopAllCoroutines();
-        startPoint = transform.position;
+        bushStartPoint = transform.position;
         
         if (jumpingIntoBush)
         {
             originalPos = transform.position;
-            endPoint = bush.position;
-            controlPoint = startPoint + (endPoint - startPoint)/2 + Vector3.up * bushJumpHeight;
+            bushEndPoint = bush.position;
+            bushControlPoint = bushStartPoint + (bushEndPoint - bushStartPoint)/2 + Vector3.up * bushJumpHeight;
 
         } else if (jumpingOutBush)
         {
             if (originalPos.x - bush.position.x > 0)
             {
-                endPoint = new Vector3(bush.position.x + 3f, bush.position.y + 1f, bush.position.z);
+                bushEndPoint = new Vector3(bush.position.x + 3f, bush.position.y + 1f, bush.position.z);
             } else
             {
-                endPoint = new Vector3(bush.position.x - 3f, bush.position.y + 1f, bush.position.z);
+                bushEndPoint = new Vector3(bush.position.x - 3f, bush.position.y + 1f, bush.position.z);
             }
             
-            controlPoint = startPoint +(endPoint -startPoint)/2 + Vector3.up * 5.0f;
+            bushControlPoint = bushStartPoint +(bushEndPoint -bushStartPoint)/2 + Vector3.up * 5.0f;
 
             spriteRend.enabled = true;
         }
