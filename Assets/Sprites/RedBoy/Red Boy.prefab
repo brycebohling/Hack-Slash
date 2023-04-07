@@ -193,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2.5
   minDistanceX: 2.5
+  maxPlayerDistance: 18
   groundCheck: {fileID: 307640402}
   groundLayer:
     serializedVersion: 2

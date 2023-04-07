@@ -18,6 +18,7 @@ public class ArcherC : MonoBehaviour
     private bool isFacingRight;
     [SerializeField] private float speed;
     [SerializeField] private float minDistanceX;
+    [SerializeField] private float playerMaxDistance;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
     float playerDistanceX;
@@ -37,7 +38,6 @@ public class ArcherC : MonoBehaviour
     [SerializeField] Transform attckPoint;
     [SerializeField] private LayerMask attackLayer;
     bool canDmgPlayer;
-    bool inAttackingState = false;
 
     // Health
 
@@ -101,25 +101,35 @@ public class ArcherC : MonoBehaviour
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
-        playerDistanceX = Vector2.Distance(transform.position, targetLocationX);
+        playerDistanceX = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
         playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
 
         Flip();
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (playerDistanceX > minDistanceX && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+            if (playerDistanceX < playerMaxDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
             {
-                ChangeAnimationState(ENEMY_WALK);
-                transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
-            } else
-            { 
+                if (playerDistanceX > minDistanceX)
+                {
+                    ChangeAnimationState(ENEMY_WALK);
+                    transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
+                } else
+                { 
                 if (attackCountdown <= 0 && playerDistanceY < 1)
                 {
                     ChangeAnimationState(ENEMY_START_ATTACK);
                     attackCountdown = attackTimer;
-                    inAttackingState = true;
+    
+                } else if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+                {
+                    ChangeAnimationState(ENEMY_NORMAL);
                 }
+
+                }
+            } else if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))   
+            {
+                ChangeAnimationState(ENEMY_NORMAL);
             }
         }
         
@@ -215,6 +225,6 @@ public class ArcherC : MonoBehaviour
 
     private void OnDrawGizmos() 
     {   
-
+        Gizmos.DrawWireSphere(transform.position, playerMaxDistance);
     }
 }

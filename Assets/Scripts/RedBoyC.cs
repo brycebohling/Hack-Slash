@@ -16,10 +16,12 @@ public class RedBoyC : MonoBehaviour
     private bool isFacingRight;
     [SerializeField] private float speed;
     [SerializeField] private float minDistanceX;
+    [SerializeField] float maxPlayerDistance;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
-    float distanceX;
-    float distanceY;
+    float playerDistanceX;
+    float playerDistanceY;
+    float playerDistance;
     [SerializeField] Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
@@ -95,8 +97,9 @@ public class RedBoyC : MonoBehaviour
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
-        distanceX = Vector2.Distance(transform.position, targetLocationX);
-        distanceY = Vector2.Distance(transform.position, targetLocationY);
+        playerDistanceX = Vector2.Distance(transform.position, targetLocationX);
+        playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
+        playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
 
         if (beingKnockedback)
         {
@@ -107,19 +110,22 @@ public class RedBoyC : MonoBehaviour
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (distanceX > minDistanceX && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
+            if (playerDistance < maxPlayerDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
             {
-                ChangeAnimationState(ENEMY_NORMAL);
-                transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
-            } else
-            { 
-                if (attackCountdown <= 0 && distanceY < 1)
-                {
-                    ChangeAnimationState(ENEMY_ATTACK);
-                    attackCountdown = attackTimer;
-                } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+                if (playerDistance > minDistanceX)
                 {
                     ChangeAnimationState(ENEMY_NORMAL);
+                    transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
+                } else
+                { 
+                    if (attackCountdown <= 0 && playerDistanceY < 1)
+                    {
+                        ChangeAnimationState(ENEMY_ATTACK);
+                        attackCountdown = attackTimer;
+                    } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+                    {
+                        ChangeAnimationState(ENEMY_NORMAL);
+                    }
                 }
             }
         }
@@ -218,5 +224,7 @@ public class RedBoyC : MonoBehaviour
         Gizmos.DrawWireSphere(attckPoint.position, attackRadius);
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(2.5f, .3f));
         Gizmos.DrawWireCube(wallCheck.position, new Vector2(2f, 1.5f));
+        Gizmos.DrawWireSphere(transform.position, maxPlayerDistance);
+        
     }
 }
