@@ -36,7 +36,6 @@ public class WaveSpawner : MonoBehaviour
     {
         if (spawnTimer <= 0f && currentWaveValue > 0f && waveTimer <= 0)
         {
-            
             int enemyIndex = Random.Range(0, enemyTypes.Length);
 
             while(enemyTypes[enemyIndex].value > currentWaveValue) 
@@ -52,7 +51,6 @@ public class WaveSpawner : MonoBehaviour
 
             spawnTimer = timeBetweenSpawns;
 
-            Debug.Log(currentWaveValue);
         } else
         {
             if (spawnTimer > 0)

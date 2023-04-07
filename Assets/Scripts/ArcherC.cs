@@ -9,6 +9,7 @@ public class ArcherC : MonoBehaviour
     string _currentState;
     const string ENEMY_START_ATTACK = "startAttack";
     const string ENEMY_ATTACKING = "attacking";
+    const string ENEMY_WALK = "walk";
     const string ENEMY_DAMAGED = "damaged";
     const string ENEMY_NORMAL = "normal";
 
@@ -19,8 +20,8 @@ public class ArcherC : MonoBehaviour
     [SerializeField] private float minDistanceX;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
-    float distanceX;
-    float distanceY;
+    float playerDistanceX;
+    float playerDistanceY;
     [SerializeField] Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
@@ -36,6 +37,7 @@ public class ArcherC : MonoBehaviour
     [SerializeField] Transform attckPoint;
     [SerializeField] private LayerMask attackLayer;
     bool canDmgPlayer;
+    bool inAttackingState = false;
 
     // Health
 
@@ -71,6 +73,11 @@ public class ArcherC : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (attackCountdown > 0)
+        {
+            attackCountdown -= Time.deltaTime;
+        }
+
         if (takingDmg)
         {
             dmgTimerCountdown -= Time.deltaTime;
@@ -90,15 +97,43 @@ public class ArcherC : MonoBehaviour
             return;
         }
 
-        if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
+        isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
+        targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
+        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
+        playerDistanceX = Vector2.Distance(transform.position, targetLocationX);
+        playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
+
+        Flip();
+
+        if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            ChangeAnimationState(ENEMY_START_ATTACK);
+            if (playerDistanceX > minDistanceX && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+            {
+                ChangeAnimationState(ENEMY_WALK);
+                transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
+            } else
+            { 
+                if (attackCountdown <= 0 && playerDistanceY < 1)
+                {
+                    ChangeAnimationState(ENEMY_START_ATTACK);
+                    attackCountdown = attackTimer;
+                    inAttackingState = true;
+                }
+            }
         }
         
     }
     public void FireArrow()
     {
-        Instantiate(arrow, attckPoint.position, Quaternion.identity);
+        if (!isFacingRight)
+        {
+            Instantiate(arrow, attckPoint.position, Quaternion.identity);
+        } else
+        {
+            Instantiate(arrow, attckPoint.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+        }
+        
     }
 
     public void DmgArcher(int dmg, Transform attacker)
