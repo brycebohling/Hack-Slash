@@ -148,3 +148,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   dmg: 10
+  groundLayerNum: 6

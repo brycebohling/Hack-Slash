@@ -6,6 +6,7 @@ public class ArrowC : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] int dmg;    
+    [SerializeField] float groundLayerNum;
     private Rigidbody2D rb;
     
 
@@ -16,17 +17,16 @@ public class ArrowC : MonoBehaviour
         rb.velocity = transform.right * speed;
     }
 
-    void Update()
-    {       
-
-    } 
-
     private void OnTriggerEnter2D(Collider2D collision) 
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.gameManager.DamagePlayer(dmg, transform);
+            Destroy(gameObject);
+        } else if (collision.gameObject.layer == groundLayerNum)
+        {
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+        
     }
 }
