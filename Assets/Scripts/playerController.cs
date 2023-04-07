@@ -353,11 +353,14 @@ public class playerController : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && bushInRange.Length > 0)
         {
             BushJumpCheck();
+            // TreeShake();
         }
     }
+
+    // -------------------------------- Fixed Update -----------------------------
 
     private void FixedUpdate() 
     {
@@ -367,6 +370,10 @@ public class playerController : MonoBehaviour
         }
         rb.velocity = new Vector2(movementX * speed, rb.velocity.y);
     }
+
+    
+    // ------------------------My homemade functions------------------------------
+    
 
     void BushJumpCheck()
     {
@@ -379,7 +386,7 @@ public class playerController : MonoBehaviour
             if (bushDistance < closestBush)
             {
                 closestBush = bushDistance;
-                Debug.Log(closestBush);
+                
                 closestBushTransform = bush.gameObject.transform;
                 bushScript = closestBushTransform.GetComponent<bushC>();
             }

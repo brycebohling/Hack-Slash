@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedBoyC : MonoBehaviour
+public class ArcherC : MonoBehaviour
 {
     // Animation
     private Animator anim;
     string _currentState;
-    const string ENEMY_ATTACK = "attack";
+    const string ENEMY_START_ATTACK = "startAttack";
+    const string ENEMY_ATTACKING = "attacking";
     const string ENEMY_DAMAGED = "damaged";
     const string ENEMY_NORMAL = "normal";
 
@@ -28,8 +29,8 @@ public class RedBoyC : MonoBehaviour
     private bool isWallClose;
 
     // Attack
-    [SerializeField] int dmg;
-    [SerializeField] float attackRadius;
+
+    [SerializeField] GameObject arrow;
     [SerializeField] float attackTimer;
     float attackCountdown;
     [SerializeField] Transform attckPoint;
@@ -50,21 +51,19 @@ public class RedBoyC : MonoBehaviour
     [SerializeField] float knockbackTime;
     bool beingKnockedback;
 
-
     // Death
     bool isDead;
     [SerializeField] GameObject deathParticals;
 
 
-
-    private void Start() 
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentHealth = health;
     }
 
-    private void Update()
+    void Update()
     {
         if (isDead)
         {
@@ -86,80 +85,23 @@ public class RedBoyC : MonoBehaviour
             }            
         }
 
-        if (attackCountdown > 0)
-        {
-            attackCountdown -= Time.deltaTime;
-        }
-
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
-        isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
-        targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
-        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
-        distanceX = Vector2.Distance(transform.position, targetLocationX);
-        distanceY = Vector2.Distance(transform.position, targetLocationY);
-
         if (beingKnockedback)
         {
             return;
         }
 
-        Flip();
-
-        if (isGrounded && GameManager.gameManager.isPlayerRendered)
+        if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
         {
-            if (distanceX > minDistanceX && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
-            {
-                ChangeAnimationState(ENEMY_NORMAL);
-                transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
-            } else
-            { 
-                if (attackCountdown <= 0 && distanceY < 1)
-                {
-                    ChangeAnimationState(ENEMY_ATTACK);
-                    attackCountdown = attackTimer;
-                } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
-                {
-                    ChangeAnimationState(ENEMY_NORMAL);
-                }
-            }
+            ChangeAnimationState(ENEMY_START_ATTACK);
         }
-        // Need to add patrol code here!
         
     }
-
-    public void DmgPlayer()
+    public void FireArrow()
     {
-        canDmgPlayer = Physics2D.OverlapCircle(attckPoint.position, attackRadius, attackLayer);
-        if (canDmgPlayer)
-        {
-            GameManager.gameManager.DamagePlayer(dmg,transform);
-        }
+        Instantiate(arrow, attckPoint.position, Quaternion.identity);
     }
 
-    private void Flip()
-    {
-        if (GameManager.gameManager.player.transform.position.x > transform.position.x)
-        {
-            if (isFacingRight)
-            {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;    
-                transform.localScale = localScale;
-            }
-        } else
-        {
-            if (!isFacingRight)
-            {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
-            }
-        }
-    }
-
-    public void DmgRedBoy(int dmg, Transform attacker)
+    public void DmgArcher(int dmg, Transform attacker)
     {
         currentHealth -= dmg;   
 
@@ -191,6 +133,29 @@ public class RedBoyC : MonoBehaviour
         rb.velocity = Vector3.zero;
     }
 
+    private void Flip()
+    {
+        if (GameManager.gameManager.player.transform.position.x > transform.position.x)
+        {
+            if (isFacingRight)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;    
+                transform.localScale = localScale;
+            }
+        } else
+        {
+            if (!isFacingRight)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
+        }
+    }
+
     private void ChangeAnimationState(string newState)
     {
         if (newState == _currentState)
@@ -215,8 +180,6 @@ public class RedBoyC : MonoBehaviour
 
     private void OnDrawGizmos() 
     {   
-        Gizmos.DrawWireSphere(attckPoint.position, attackRadius);
-        Gizmos.DrawWireCube(groundCheck.position, new Vector2(2.5f, .3f));
-        Gizmos.DrawWireCube(wallCheck.position, new Vector2(2f, 1.5f));
+
     }
 }

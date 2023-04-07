@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FlyerC : MonoBehaviour
 {
-    playerController PC;
-    
     // Animation
 
     private Animator anim;
@@ -57,7 +55,6 @@ public class FlyerC : MonoBehaviour
 
     void Start()
     {
-        PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentHealth = health;
@@ -106,14 +103,14 @@ public class FlyerC : MonoBehaviour
             {
                 isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
 
+                if (isTouchingPlayer)
+                {
+                    GameManager.gameManager.DamagePlayer(dmg,transform);
+                }    
+
                 if (!divedIn)
                 {   
                     transform.position =  Vector2.Lerp(transform.position, attackPlayerPos, attackSpeed * Time.deltaTime);
-
-                    if (isTouchingPlayer)
-                    {
-                        PC.PlayerTakeDmg(dmg, transform);
-                    }
 
                     if (Vector2.Distance(transform.position, attackPlayerPos) < 1)
                     {
@@ -123,11 +120,6 @@ public class FlyerC : MonoBehaviour
                 } else if (!divedOut)
                 {
                     transform.position =  Vector2.Lerp(transform.position, originalPos, attackSpeed * Time.deltaTime);
-
-                    if (isTouchingPlayer)
-                    {
-                        PC.PlayerTakeDmg(dmg, transform);
-                    }
 
                     if (Vector2.Distance(transform.position, originalPos) < 0.05f)
                     {
