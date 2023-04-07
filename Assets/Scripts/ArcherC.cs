@@ -21,7 +21,7 @@ public class ArcherC : MonoBehaviour
     [SerializeField] private float playerMaxDistance;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
-    float playerDistanceX;
+    float playerDistance;
     float playerDistanceY;
     [SerializeField] Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -99,18 +99,17 @@ public class ArcherC : MonoBehaviour
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
-        targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
-        playerDistanceX = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
+        playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
         playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
 
         Flip();
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (playerDistanceX < playerMaxDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+            if (playerDistance < playerMaxDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
             {
-                if (playerDistanceX > minDistanceX)
+                if (playerDistance > minDistanceX || playerDistance < minDistanceX && playerDistanceY < playerMaxDistance)
                 {
                     ChangeAnimationState(ENEMY_WALK);
                     transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
@@ -131,6 +130,9 @@ public class ArcherC : MonoBehaviour
             {
                 ChangeAnimationState(ENEMY_NORMAL);
             }
+        } else
+        {
+            ChangeAnimationState(ENEMY_NORMAL);
         }
         
     }
