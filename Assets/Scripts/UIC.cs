@@ -21,8 +21,8 @@ public class UIC : MonoBehaviour
         SceneC.Menu();
     }
 
-    public void Quit()
+    public void Hyperlinks(string link)
     {
-        Application.Quit();
+        Application.OpenURL(link);
     }
 }
