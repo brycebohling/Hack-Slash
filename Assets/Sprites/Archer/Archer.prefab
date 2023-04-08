@@ -243,8 +243,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  minDistanceX: 15
-  playerMaxDistance: 18
+  shootingRange: 15
+  seeDistance: 18
+  maxMovementDistanceY: 10
   groundCheck: {fileID: 203365290}
   groundLayer:
     serializedVersion: 2
@@ -256,9 +257,6 @@ MonoBehaviour:
   arrow: {fileID: 7531606659435691051, guid: 392c49f2deaed4702b3bad6905d56bec, type: 3}
   attackTimer: 1
   attckPoint: {fileID: 742453162884514992}
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 0
   health: 30
   dmgTime: 0.1
   knockbackPower: 6

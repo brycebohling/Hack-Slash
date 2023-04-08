@@ -17,8 +17,9 @@ public class ArcherC : MonoBehaviour
     private Rigidbody2D rb;
     private bool isFacingRight;
     [SerializeField] private float speed;
-    [SerializeField] private float minDistanceX;
-    [SerializeField] private float playerMaxDistance;
+    [SerializeField] private float shootingRange;
+    [SerializeField] private float seeDistance;
+    [SerializeField] float maxMovementDistanceY;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
     float playerDistance;
@@ -36,7 +37,6 @@ public class ArcherC : MonoBehaviour
     [SerializeField] float attackTimer;
     float attackCountdown;
     [SerializeField] Transform attckPoint;
-    [SerializeField] private LayerMask attackLayer;
     bool canDmgPlayer;
 
     // Health
@@ -100,30 +100,36 @@ public class ArcherC : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
+        targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
-        playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
+        // playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
 
-        Flip();
+        playerDistanceY = Mathf.Abs(transform.position.y - GameManager.gameManager.player.transform.position.y);
+        Debug.Log(playerDistanceY);
+        
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (playerDistance < playerMaxDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING) && playerDistanceY < maxMovementDistanceY)
             {
-                if (playerDistance > minDistanceX || playerDistance < minDistanceX && playerDistanceY < playerMaxDistance)
+                Flip();
+
+                if (playerDistance < shootingRange && playerDistanceY > 8f || playerDistance > shootingRange)
                 {
                     ChangeAnimationState(ENEMY_WALK);
-                    transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
+                    transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);
+                         
                 } else
                 { 
-                if (attackCountdown <= 0 && playerDistanceY < 1)
-                {
-                    ChangeAnimationState(ENEMY_START_ATTACK);
-                    attackCountdown = attackTimer;
-    
-                } else if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
-                {
-                    ChangeAnimationState(ENEMY_NORMAL);
-                }
+                    if (attackCountdown <= 0 && playerDistanceY < 1f)
+                    {
+                        ChangeAnimationState(ENEMY_START_ATTACK);
+                        attackCountdown = attackTimer;
+        
+                    } else if (attackCountdown <= 0 && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+                    {
+                        ChangeAnimationState(ENEMY_NORMAL);
+                    }
 
                 }
             } else if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))   
@@ -227,6 +233,8 @@ public class ArcherC : MonoBehaviour
 
     private void OnDrawGizmos() 
     {   
-        Gizmos.DrawWireSphere(transform.position, playerMaxDistance);
+        Gizmos.DrawWireCube(transform.position, new Vector2(5, maxMovementDistanceY * 2));
+        Gizmos.DrawWireSphere(transform.position, shootingRange);
+        Gizmos.DrawWireSphere(transform.position, seeDistance);
     }
 }
