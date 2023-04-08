@@ -8,28 +8,41 @@ public class TreeC : MonoBehaviour
     string _currentState;
     string treeNormalAnim = "normal";
     string treeShakeAnim = "shake";
+    [SerializeField] int hitPoints;
+    int currentHitPoint;
     [SerializeField] Transform shakeParticals;
+    bool isDead = false;
 
 
     void Start()
     {
         anim = GetComponent<Animator>();
-    }
-
-    
-    void Update()
-    {
-        if (!IsAnimationPlaying(anim, treeShakeAnim))
-        {
-            ChangeAnimationState(treeNormalAnim);
-        }
+        currentHitPoint = hitPoints;
     }
 
     public void TreeShake()
     {
-        Instantiate(shakeParticals, transform.position, Quaternion.identity);
-        ChangeAnimationState(treeShakeAnim);
-        
+        currentHitPoint--;
+
+        if (currentHitPoint <= 0)
+        {
+            isDead = true;
+            int randomNum = Random.Range(0, 1);
+            if (randomNum == 0)
+            {
+                // Instantiate(healingItem, transform.position, Quaternion.identity);
+            } else
+            {
+                // var instScript = Instantiate(flyer).GetComponent<FlyerC>();
+                // Instantiate(flyer, transform.position, Quaternion.identity);
+                // instScript.TheFlyerFunction
+            }
+            
+        } else
+        {   
+            anim.Play(treeShakeAnim);
+            // Instantiate(shakeParticals, transform.position, Quaternion.identity);
+        }
     }
 
     private void ChangeAnimationState(string newState)

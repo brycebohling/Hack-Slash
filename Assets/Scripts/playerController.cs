@@ -111,8 +111,6 @@ public class playerController : MonoBehaviour
     bool didBushShake = false;
 
     // Tree mechanices
-    TreeC treeScript;
-    [SerializeField] Vector2 treeCheckSize;
     [SerializeField] LayerMask treeLayer;
 
     // UI
@@ -494,12 +492,26 @@ public class playerController : MonoBehaviour
 
     public void PlayerAttack() 
     {
+        // Dmg Enemies 
+
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
 
         foreach (Collider2D enemyGameobject in enemy)
         {
             GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, transform);
         }
+
+        // Hit Tree
+
+        Collider2D[] trees = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, treeLayer);
+
+        foreach (Collider2D tree in trees)
+        {
+            var treeScript = tree.GetComponent<TreeC>();
+            treeScript.TreeShake();
+        }
+        
+        
     }
 
     public void PlayerTakeDmg(int dmg, Transform attacker)
