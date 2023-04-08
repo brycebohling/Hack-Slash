@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private playerController playerScript;
     Renderer playerRenderer;
     public bool isPlayerRendered;
+    public bool isPLayerInvicible;
 
     void Awake()
     {
@@ -38,6 +39,14 @@ public class GameManager : MonoBehaviour
         } else
         {
             isPlayerRendered = false;
+        }
+
+        if (playerScript.invicible)
+        {
+            isPLayerInvicible = true;
+        } else
+        {
+            isPLayerInvicible = false;
         }
     }
 

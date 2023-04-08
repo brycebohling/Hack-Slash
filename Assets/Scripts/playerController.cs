@@ -81,7 +81,7 @@ public class playerController : MonoBehaviour
     // Dmg
     [SerializeField] float iFrameTime;
     float iFrameCountdown;
-    bool invicible = false;
+    public bool invicible = false;
     [SerializeField] HealthBar HB;
     bool takingDmg = false;
     [SerializeField] float dmgTime;
@@ -358,7 +358,7 @@ public class playerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && bushInRange.Length > 0)
         {
             BushJumpCheck();
-            // TreeShake();
+            // Consume something?
         }
     }
 
@@ -492,7 +492,7 @@ public class playerController : MonoBehaviour
         }
     }
 
-    public void PlayerAttackEnemy() 
+    public void PlayerAttack() 
     {
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
 
