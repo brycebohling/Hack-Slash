@@ -21,7 +21,6 @@ public class ArcherC : MonoBehaviour
     [SerializeField] private float seeDistance;
     [SerializeField] float maxMovementDistanceY;
     Vector2 targetLocationX;
-    Vector2 targetLocationY;
     float playerDistance;
     float playerDistanceY;
     [SerializeField] Transform groundCheck;
@@ -37,7 +36,6 @@ public class ArcherC : MonoBehaviour
     [SerializeField] float attackTimer;
     float attackCountdown;
     [SerializeField] Transform attckPoint;
-    bool canDmgPlayer;
 
     // Health
 
@@ -99,13 +97,9 @@ public class ArcherC : MonoBehaviour
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
-        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
-        // playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
-
         playerDistanceY = Mathf.Abs(transform.position.y - GameManager.gameManager.player.transform.position.y);
-        Debug.Log(playerDistanceY);
         
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
