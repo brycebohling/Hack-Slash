@@ -81,6 +81,7 @@ public class playerController : MonoBehaviour
     // Dmg
     [SerializeField] float iFrameTime;
     float iFrameCountdown;
+    bool invicible = false;
     [SerializeField] HealthBar HB;
     bool takingDmg = false;
     [SerializeField] float dmgTime;
@@ -199,6 +200,7 @@ public class playerController : MonoBehaviour
                 bushLerp = 0;
                 jumpingOutBush = false;
                 didBushShake = false;
+                invicible = false;
             }
         }
 
@@ -395,6 +397,7 @@ public class playerController : MonoBehaviour
         if (closestBush != 100000)
         {
             jumpingIntoBush = true;
+            invicible = true;
             JumpBush(closestBushTransform);
         }
     }
@@ -402,6 +405,7 @@ public class playerController : MonoBehaviour
     void JumpBush(Transform bush) 
     {
         StopAllCoroutines();
+        canRoll = true;
         bushStartPoint = transform.position;
         
         if (jumpingIntoBush)
@@ -441,6 +445,7 @@ public class playerController : MonoBehaviour
     private IEnumerator Roll()
     {
         ChangeAnimationState(PLAYER_START_ROLL);
+        invicible = true;
         canRoll = false;
         isRolling = true;
         float originalWidth = bcoll.size.x;
@@ -456,6 +461,7 @@ public class playerController : MonoBehaviour
 
         bcoll.size = new Vector2(originalWidth, originalHight);
         bcoll.offset = new Vector2(originalOffsetX, originalOffsetY);
+        invicible = false;
         isRolling = false;
 
         yield return new WaitForSeconds(rollCoolDown);
@@ -499,7 +505,7 @@ public class playerController : MonoBehaviour
     public void PlayerTakeDmg(int dmg, Transform attacker)
     {
         
-        if (iFrameCountdown <= 0)
+        if (iFrameCountdown <= 0 && !invicible)
         {
             currentHealth -= dmg;
             HB.SetHealth(currentHealth);
