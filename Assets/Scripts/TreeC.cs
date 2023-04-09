@@ -10,7 +10,7 @@ public class TreeC : MonoBehaviour
     }
 
     public FlyerPoints[] flyerPoints;
-    [SerializeField] Transform flyerSpawnPoint;
+    [SerializeField] Transform itemSpawnPoint;
     [SerializeField] GameObject flyerPrefab;
     [SerializeField] float enemySpawnDelay;
     Animator anim;
@@ -19,6 +19,7 @@ public class TreeC : MonoBehaviour
     [SerializeField] int hitPoints;
     int currentHitPoint;
     [SerializeField] Transform shakeParticals;
+    [SerializeField] GameObject healingItem;
     bool isDead;
     [SerializeField] float fadeSpeed;
     SpriteRenderer rend;
@@ -72,13 +73,11 @@ public class TreeC : MonoBehaviour
         {
             isDead = true;
             
-            
             int randomNum = Random.Range(0, 2);
-
+        
             if (randomNum == 0)
             {
-                Debug.Log("healing item dropped");
-                // Instantiate(healingItem, transform.position, Quaternion.identity);
+                Instantiate(healingItem, itemSpawnPoint.position, Quaternion.identity);
             } else
             {
                 StartCoroutine(SpawnEnemy());
@@ -90,7 +89,7 @@ public class TreeC : MonoBehaviour
     private IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(enemySpawnDelay);
-        var instScript = Instantiate(flyerPrefab, flyerSpawnPoint.position, Quaternion.identity).GetComponent<FlyerC>();
+        var instScript = Instantiate(flyerPrefab, itemSpawnPoint.position, Quaternion.identity).GetComponent<FlyerC>();
         int randomNum = Random.Range(0, flyerPoints.Length);
 
         instScript.SpawningInTree(flyerPoints[randomNum].flyerPoint);

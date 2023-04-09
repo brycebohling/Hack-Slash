@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     Renderer playerRenderer;
     public bool isPlayerRendered;
     public bool isPLayerInvicible;
+    public int playerMaxHealth;
+    public int playerCurrentHealth;
 
     void Awake()
     {
@@ -28,10 +30,14 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<playerController>();
         playerRenderer = player.GetComponent<Renderer>();
+
+        playerMaxHealth = playerScript.health;
     }
 
     void Update()
     {
+        playerCurrentHealth = playerScript.currentHealth;
+
         if (playerRenderer.enabled == true)
         {
             isPlayerRendered = true;
@@ -68,5 +74,10 @@ public class GameManager : MonoBehaviour
     public void DamagePlayer(int dmg, Transform attacker)
     {
         playerScript.PlayerTakeDmg(dmg, attacker);
+    }
+
+    public void HealPlayer(int healAmount)
+    {
+        playerScript.PlayerHeal(healAmount);
     }
 }

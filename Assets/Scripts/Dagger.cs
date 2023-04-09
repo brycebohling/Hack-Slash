@@ -10,7 +10,8 @@ public class Dagger : MonoBehaviour
     bool isRotating = false;
     float angle;
     [SerializeField] LayerMask enemyLayer;
-    bool isTouchingEnemy;
+    [SerializeField] LayerMask TouchableObjects;
+    bool isTouchingObject;
     [SerializeField] int enemyLayerNum;
     private Rigidbody2D rb;
     GameObject enemyObject;
@@ -32,9 +33,9 @@ public class Dagger : MonoBehaviour
             rb.velocity = transform.right * speed;
         }  
         
-        isTouchingEnemy = Physics2D.OverlapBox(transform.position, new Vector2(1f, 0.5f), transform.rotation.z, enemyLayer);
+        isTouchingObject = Physics2D.OverlapBox(transform.position, new Vector2(1f, 0.5f), transform.rotation.z, TouchableObjects);
 
-        if (isTouchingEnemy)
+        if (isTouchingObject)
         {
             Collider2D[] enemy = Physics2D.OverlapBoxAll(transform.position, new Vector2(1f, 0.5f), enemyLayer);
 
@@ -42,6 +43,7 @@ public class Dagger : MonoBehaviour
             {
                 GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, transform);
             }
+            
             Destroy(gameObject);
         }
     } 

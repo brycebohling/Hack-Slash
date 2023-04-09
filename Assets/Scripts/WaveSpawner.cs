@@ -25,6 +25,8 @@ public class WaveSpawner : MonoBehaviour
     public float timeBetweenSpawns;
     [SerializeField] float timeBetweenWaves;
     [SerializeField] TMP_Text waveText;
+    [SerializeField] TMP_Text nextWaveTimeText;
+    float timeTillNextWave;
     float waveTimer;
     private float currentWaveValue;
     private float spawnTimer;
@@ -41,6 +43,14 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+        if (waveTimer > 0)
+        {
+            nextWaveTimeText.text = "Next wave in: " + Mathf.Round(waveTimer);
+        } else
+        {
+            nextWaveTimeText.text = "Next wave in: 0";
+        }
+
         if (spawnTimer <= 0f && currentWaveValue > 0f && waveTimer <= 0)
         {
             if (isNewWave)

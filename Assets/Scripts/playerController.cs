@@ -75,8 +75,8 @@ public class playerController : MonoBehaviour
 
     // Health
 
-    int currentHealth;
-    [SerializeField] int health;
+    public int currentHealth;
+    public int health;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -536,6 +536,18 @@ public class playerController : MonoBehaviour
                 Knockback(attacker);
             }
         }
+    }
+
+    public void PlayerHeal(int healAmount)
+    {
+        currentHealth += healAmount;
+        if (currentHealth > health)
+        {
+            currentHealth = health;
+        }
+        HB.SetHealth(currentHealth);
+
+        // Heal UI above player
     }
 
     private void Knockback(Transform attacker)
