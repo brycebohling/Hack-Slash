@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class TreeC : MonoBehaviour
 {
+    [System.Serializable] public struct FlyerPoints
+    {
+        public Transform flyerPoint;
+    }
+
+    FlyerPoints[] flyerPoints;
+    [SerializeField] GameObject flyer;
     Animator anim;
     string _currentState;
-    string treeNormalAnim = "normal";
     string treeShakeAnim = "shake";
     [SerializeField] int hitPoints;
     int currentHitPoint;
     [SerializeField] Transform shakeParticals;
-    bool isDead = false;
-
 
     void Start()
     {
@@ -26,16 +30,21 @@ public class TreeC : MonoBehaviour
 
         if (currentHitPoint <= 0)
         {
-            isDead = true;
-            int randomNum = Random.Range(0, 1);
+            // int randomNum = Random.Range(0, 1);
+            int randomNum = 1;
+
             if (randomNum == 0)
             {
                 // Instantiate(healingItem, transform.position, Quaternion.identity);
             } else
             {
-                // var instScript = Instantiate(flyer).GetComponent<FlyerC>();
-                // Instantiate(flyer, transform.position, Quaternion.identity);
-                // instScript.TheFlyerFunction
+                var instScript = Instantiate(flyer).GetComponent<FlyerC>();
+
+                Instantiate(flyer, transform.position, Quaternion.identity);
+
+                randomNum = Random.Range(0, 4);
+                instScript.SpawningInTree(flyerPoints[randomNum].flyerPoint);
+
             }
             
         } else

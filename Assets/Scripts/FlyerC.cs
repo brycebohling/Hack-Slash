@@ -145,6 +145,11 @@ public class FlyerC : MonoBehaviour
         }
     }
 
+    public void SpawningInTree(Transform point)
+    {
+        Debug.Log("we in");
+    }
+
     private IEnumerator AttackPlayer()
     {
         yield return new WaitForSeconds(attackWaitTime);
