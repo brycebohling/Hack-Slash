@@ -30,6 +30,8 @@ public class WaveSpawner : MonoBehaviour
     private float spawnTimer;
     int waveNumber = 1;
     bool isNewWave;
+    [SerializeField] float spawnPointRequiredDistance;
+    
 
     void Start()
     {
@@ -56,6 +58,11 @@ public class WaveSpawner : MonoBehaviour
 
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].spawnPoint;
 
+            while (Vector2.Distance(randomSpawnPoint.position, GameManager.gameManager.player.transform.position) < spawnPointRequiredDistance)
+            {
+                randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].spawnPoint;
+            }
+        
             GameObject newEnemy = Instantiate(enemyTypes[enemyIndex].prefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
 
             currentWaveValue -= enemyTypes[enemyIndex].value;

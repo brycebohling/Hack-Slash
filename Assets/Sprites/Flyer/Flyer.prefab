@@ -108,6 +108,7 @@ MonoBehaviour:
   dmg: 10
   attackSpeed: 4
   attackWaitTime: 1.5
+  seeDistance: 18
   minDistance: 8
   groundLayer:
     serializedVersion: 2

@@ -30,6 +30,7 @@ public class FlyerC : MonoBehaviour
     bool divedOut;
     [SerializeField] float attackWaitTime;
     bool canDive;
+    [SerializeField] float seeDistance;
 
     // Movement 
     
@@ -45,12 +46,16 @@ public class FlyerC : MonoBehaviour
 
     float dmgTimerCountdown;
     [SerializeField] float dmgTime;
-    bool isDead = false;
-    bool takingDmg = false;
+    bool isDead;
+    bool takingDmg;
     [SerializeField] GameObject deathParticals;
     [SerializeField] float knockbackPower;
     [SerializeField] float knockbackTime;
-    bool beingKnockedback = false;
+    bool beingKnockedback;
+
+    // Spawning with tree
+    bool spawningFromTree;
+    Transform goToPoint;
 
 
     void Start()
@@ -97,6 +102,15 @@ public class FlyerC : MonoBehaviour
             return;
         }
 
+        if (spawningFromTree)
+        {
+            transform.position =  Vector2.Lerp(transform.position, goToPoint.position, speed * Time.deltaTime);
+            if (Vector2.Distance(transform.position, goToPoint.position) < 0.1f)
+            {
+                spawningFromTree = false;
+            }
+        }
+
         if (attacking)
         {   
             if (canDive)
@@ -131,7 +145,7 @@ public class FlyerC : MonoBehaviour
             return;
         }
 
-        if (groundInWay.collider == null && GameManager.gameManager.isPlayerRendered)
+        if (groundInWay.collider == null && GameManager.gameManager.isPlayerRendered && Vector2.Distance(GameManager.gameManager.player.transform.position, transform.position) < seeDistance)
         {  
             if (distance > minDistance)
             {
@@ -147,7 +161,9 @@ public class FlyerC : MonoBehaviour
 
     public void SpawningInTree(Transform point)
     {
-        Debug.Log("we in");
+        spawningFromTree = true;
+        
+        goToPoint = point;
     }
 
     private IEnumerator AttackPlayer()
@@ -229,8 +245,10 @@ public class FlyerC : MonoBehaviour
         }
     }
 
-     private void OnDrawGizmos() 
+    private void OnDrawGizmos() 
     {   
         Gizmos.DrawWireCube(transform.position, new Vector2(1.6f, 1.1f));
+        Gizmos.DrawWireSphere(transform.position, seeDistance);
+        
     }
 }

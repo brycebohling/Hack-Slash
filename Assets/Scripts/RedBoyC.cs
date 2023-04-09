@@ -16,7 +16,7 @@ public class RedBoyC : MonoBehaviour
     private bool isFacingRight;
     [SerializeField] private float speed;
     [SerializeField] private float minDistanceX;
-    [SerializeField] float maxPlayerDistance;
+    [SerializeField] float seeDistance;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
     float playerDistanceX;
@@ -110,7 +110,7 @@ public class RedBoyC : MonoBehaviour
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (playerDistance < maxPlayerDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
+            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
             {
                 if (playerDistance > minDistanceX)
                 {
@@ -224,7 +224,7 @@ public class RedBoyC : MonoBehaviour
         Gizmos.DrawWireSphere(attckPoint.position, attackRadius);
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(2.5f, .3f));
         Gizmos.DrawWireCube(wallCheck.position, new Vector2(2f, 1.5f));
-        Gizmos.DrawWireSphere(transform.position, maxPlayerDistance);
+        Gizmos.DrawWireSphere(transform.position, seeDistance);
         
     }
 }

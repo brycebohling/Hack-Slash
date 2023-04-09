@@ -117,6 +117,7 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject deathScreenUI;
     [SerializeField] GameObject bushInRangeUI;
 
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
