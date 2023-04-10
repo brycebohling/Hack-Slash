@@ -278,7 +278,7 @@ public class playerController : MonoBehaviour
             noOfClicks = 0;
         }
  
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightShift))
         {
             AttackAnim();
             attacking = true;
@@ -302,12 +302,12 @@ public class playerController : MonoBehaviour
 
         movementX = Input.GetAxisRaw("Horizontal");
 
-        if (isGrounded && !Input.GetButton("Jump")) 
+        if (isGrounded && !Input.GetButton("Jump") && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.UpArrow)) 
         {
             doubleJump = false;   
         }
 
-        if (Input.GetButtonDown("Jump")) 
+        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) 
         {
             if (isGrounded) 
             {
@@ -340,7 +340,7 @@ public class playerController : MonoBehaviour
             ChangeAnimationState(PLAYER_RUN);
         } 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll || Input.GetKeyDown(KeyCode.S) && canRoll || Input.GetKeyDown(KeyCode.DownArrow) && canRoll)
         {
             StartCoroutine(Roll());
         }
