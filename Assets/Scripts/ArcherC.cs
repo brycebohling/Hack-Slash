@@ -50,6 +50,7 @@ public class ArcherC : MonoBehaviour
     [SerializeField] float knockbackPower;
     [SerializeField] float knockbackTime;
     bool beingKnockedback;
+    [SerializeField] GameObject dmgParticles;
 
     // Death
     bool isDead;
@@ -151,6 +152,8 @@ public class ArcherC : MonoBehaviour
     public void DmgArcher(int dmg, Transform attacker)
     {
         currentHealth -= dmg;   
+
+        Instantiate(dmgParticles, transform.position, Quaternion.identity);
 
         if (currentHealth <= 0)
         {

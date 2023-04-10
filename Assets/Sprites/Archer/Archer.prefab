@@ -261,6 +261,7 @@ MonoBehaviour:
   dmgTime: 0.1
   knockbackPower: 6
   knockbackTime: 0.2
+  dmgParticles: {fileID: 7219881533018524845, guid: a132eedcfcb0c40acb61b04c361a22ad, type: 3}
   deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
 --- !u!50 &742453162992734625
 Rigidbody2D:
