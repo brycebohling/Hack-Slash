@@ -30,7 +30,7 @@ public class WaveSpawner : MonoBehaviour
     float waveTimer;
     private float currentWaveValue;
     private float spawnTimer;
-    int waveNumber = 1;
+    public int waveNumber = 1;
     bool isNewWave;
     [SerializeField] float spawnPointRequiredDistance;
     
@@ -43,6 +43,11 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.gameManager.isPlayerDead)
+        {
+            return;
+        }
+
         if (waveTimer > 0)
         {
             nextWaveTimeText.text = "Next wave in: " + Mathf.Round(waveTimer);

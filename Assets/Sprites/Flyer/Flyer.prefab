@@ -107,8 +107,8 @@ MonoBehaviour:
     m_Bits: 256
   dmg: 10
   attackSpeed: 4
-  attackWaitTime: 1.5
-  seeDistance: 18
+  attackWaitTime: 1
+  seeDistance: 20
   minDistance: 8
   groundLayer:
     serializedVersion: 2

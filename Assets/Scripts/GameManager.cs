@@ -8,11 +8,16 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     private playerController playerScript;
+    private WaveSpawner waveScript;
     Renderer playerRenderer;
     public bool isPlayerRendered;
     public bool isPLayerInvicible;
     public int playerMaxHealth;
     public int playerCurrentHealth;
+    public bool isPlayerDead;
+
+    public int waveNum;
+
 
     void Awake()
     {
@@ -30,6 +35,7 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<playerController>();
         playerRenderer = player.GetComponent<Renderer>();
+        waveScript = GameObject.Find("GameManager").GetComponent<WaveSpawner>();
 
         playerMaxHealth = playerScript.health;
     }
@@ -37,7 +43,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         playerCurrentHealth = playerScript.currentHealth;
-
+        waveNum = waveScript.waveNumber;
+        
         if (playerRenderer.enabled == true)
         {
             isPlayerRendered = true;
@@ -53,6 +60,10 @@ public class GameManager : MonoBehaviour
         } else
         {
             isPLayerInvicible = false;
+        }
+        if (playerScript.isDead)
+        {
+            isPlayerDead = true;
         }
     }
 

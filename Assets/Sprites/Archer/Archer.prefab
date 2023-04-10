@@ -244,8 +244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   shootingRange: 15
-  seeDistance: 18
-  maxMovementDistanceY: 10
+  seeDistance: 20
+  maxSeeDistanceY: 10
   groundCheck: {fileID: 203365290}
   groundLayer:
     serializedVersion: 2

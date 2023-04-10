@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class playerController : MonoBehaviour
 {
     CameraC camC;
+    bushC bushScript;
 
     // Movement
     private float movementX;
@@ -89,7 +91,7 @@ public class playerController : MonoBehaviour
     [SerializeField] float knockbackPower;
 
     // Death
-    bool isDead = false;
+    public bool isDead;
     [SerializeField] GameObject deathParticals;
 
     // Bush mechanics
@@ -106,7 +108,6 @@ public class playerController : MonoBehaviour
     Vector3 originalPos;
     [SerializeField] Vector2 bushCheckSize;
     [SerializeField] LayerMask bushLayer;
-    bushC bushScript;
     Transform closestBushTransform;
     bool didBushShake = false;
 
@@ -116,6 +117,15 @@ public class playerController : MonoBehaviour
     // UI
     [SerializeField] GameObject deathScreenUI;
     [SerializeField] GameObject bushInRangeUI;
+    [SerializeField] TMP_Text totalWaveText;
+
+    [System.Serializable] public struct TurnOffUI
+    {
+        public GameObject UIObject;
+        
+    }
+
+    public TurnOffUI[] turnOffUI;
 
 
     private void Start()
@@ -131,6 +141,22 @@ public class playerController : MonoBehaviour
 
     private void Update()
     {   
+        if (isDead)
+        {
+            Instantiate(deathParticals, transform.position, Quaternion.identity);
+            deathScreenUI.SetActive(true);
+
+            for(int i = 0; i < turnOffUI.Length; i++)
+            {
+                turnOffUI[i].UIObject.SetActive(false);
+            }
+
+            totalWaveText.text = "You made it to Wave: " + GameManager.gameManager.waveNum;
+
+            gameObject.SetActive(false);
+            return;
+        }
+
         if (jumpingIntoBush)
         {
             if (bushLerp < 1.0f) 
@@ -201,14 +227,6 @@ public class playerController : MonoBehaviour
                 didBushShake = false;
                 invicible = false;
             }
-        }
-
-        if (isDead)
-        {
-            Instantiate(deathParticals, transform.position, Quaternion.identity);
-            deathScreenUI.SetActive(true);
-            gameObject.SetActive(false);
-            return;
         }
 
         if (takingDmg)

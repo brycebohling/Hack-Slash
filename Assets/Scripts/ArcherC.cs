@@ -19,7 +19,7 @@ public class ArcherC : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float shootingRange;
     [SerializeField] private float seeDistance;
-    [SerializeField] float maxMovementDistanceY;
+    [SerializeField] float maxSeeDistanceY;
     Vector2 targetLocationX;
     float playerDistance;
     float playerDistanceY;
@@ -105,7 +105,7 @@ public class ArcherC : MonoBehaviour
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING) && playerDistanceY < maxMovementDistanceY)
+            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING) && playerDistanceY < maxSeeDistanceY)
             {
                 Flip();
 
@@ -230,7 +230,7 @@ public class ArcherC : MonoBehaviour
 
     private void OnDrawGizmos() 
     {   
-        Gizmos.DrawWireCube(transform.position, new Vector2(5, maxMovementDistanceY * 2));
+        Gizmos.DrawWireCube(transform.position, new Vector2(5, maxSeeDistanceY * 2));
         Gizmos.DrawWireSphere(transform.position, shootingRange);
         Gizmos.DrawWireSphere(transform.position, seeDistance);
     }
