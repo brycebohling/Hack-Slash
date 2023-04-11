@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class daggerAmmoUI : MonoBehaviour
 {
+    [SerializeField] float yOffset;
     Animator anim;
     string animDaggerAmmo3 = "3ammo";
     string animDaggerAmmo2 = "2ammo";
@@ -13,6 +14,11 @@ public class daggerAmmoUI : MonoBehaviour
     private void Start() 
     {
         anim = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        transform.position = new Vector2(GameManager.gameManager.player.transform.position.x, GameManager.gameManager.player.transform.position.y + yOffset);
     }
 
  public void ChangeDaggerAmmoUI(int ammo)
