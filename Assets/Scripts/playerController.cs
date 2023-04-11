@@ -68,11 +68,16 @@ public class playerController : MonoBehaviour
     [SerializeField] float attackRadius;
     [SerializeField] LayerMask enemies;
 
-    // Scythe
+    // Dagger
     public GameObject dagger;
-    private Vector2 location;
-    [SerializeField] private float throwCooldown;
-    private float throwCountdown;
+    [SerializeField] float daggerThrowCooldown;
+    float daggerThrowCooldownTimer;
+    int daggerAmmo = 3;
+    private int currentDaggerAmmo;
+    float lastDaggerThrown;
+    [SerializeField] float daggerWaitToRechargeTime;
+    [SerializeField] float daggerRechargingTime;
+    float currentDaggerRechargingTime;
     [SerializeField] Transform daggerSpawnPoint;
 
     // Health
@@ -136,6 +141,7 @@ public class playerController : MonoBehaviour
         camC = GameObject.FindGameObjectWithTag("vcam").GetComponent<CameraC>();
         spriteRend = GetComponent<SpriteRenderer>();
         currentHealth = health;
+        currentDaggerAmmo = daggerAmmo;
     }
     
 
@@ -155,6 +161,28 @@ public class playerController : MonoBehaviour
 
             gameObject.SetActive(false);
             return;
+        }
+
+        if (iFrameCountdown > 0f)
+        {
+            iFrameCountdown -= Time.deltaTime;
+        }
+
+        if (daggerThrowCooldown > 0f)
+        {
+            daggerThrowCooldown -= Time.deltaTime;
+        }
+
+        if (currentDaggerRechargingTime > 0f)
+        {
+            currentDaggerRechargingTime -= Time.deltaTime;
+        }
+
+        if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo - 1 <= daggerAmmo)
+        {
+            currentDaggerRechargingTime = daggerRechargingTime;
+            currentDaggerAmmo++;
+            GameManager.gameManager.SetDaggerAmmoUI(currentDaggerAmmo);
         }
 
         if (jumpingIntoBush)
@@ -242,16 +270,6 @@ public class playerController : MonoBehaviour
         } else
         {
             takingDmg = false;
-        }
-
-        if (iFrameCountdown > 0)
-        {
-            iFrameCountdown -= Time.deltaTime;
-        }
-
-        if (throwCountdown > 0)
-        {
-            throwCountdown -= Time.deltaTime;
         }
 
         if (isRolling)
@@ -345,20 +363,20 @@ public class playerController : MonoBehaviour
             StartCoroutine(Roll());
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && throwCountdown <= 0)
+        if (Input.GetKeyDown(KeyCode.C) && daggerThrowCooldownTimer <= 0 && currentDaggerAmmo > 0)
         {
             if (isFacingRight) 
             {
-                location = new Vector2(daggerSpawnPoint.position.x, daggerSpawnPoint.position.y);
-                Instantiate(dagger, location, Quaternion.identity);
+                Instantiate(dagger, daggerSpawnPoint.position, Quaternion.identity);
                 
             } else
             {
-                location = new Vector2(daggerSpawnPoint.position.x, daggerSpawnPoint.position.y);
-                Instantiate(dagger, location, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+                Instantiate(dagger, daggerSpawnPoint.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
             }
-            throwCountdown = throwCooldown;
-            
+            daggerThrowCooldownTimer = daggerThrowCooldown;
+            currentDaggerAmmo -= 1;
+            lastDaggerThrown = Time.time;
+            GameManager.gameManager.SetDaggerAmmoUI(currentDaggerAmmo);
         }
 
         bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
@@ -370,7 +388,6 @@ public class playerController : MonoBehaviour
         {
             bushInRangeUI.SetActive(false);
         }
-
 
         if (Input.GetKeyDown(KeyCode.E) && bushInRange.Length > 0)
         {
@@ -389,10 +406,8 @@ public class playerController : MonoBehaviour
         }
         rb.velocity = new Vector2(movementX * speed, rb.velocity.y);
     }
-
     
     // ------------------------My homemade functions------------------------------
-    
 
     void BushJumpCheck()
     {

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     private playerController playerScript;
     private WaveSpawner waveScript;
+    private daggerAmmoUI daggerUIScript;
     Renderer playerRenderer;
     public bool isPlayerRendered;
     public bool isPLayerInvicible;
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerController>();
         playerRenderer = player.GetComponent<Renderer>();
         waveScript = GameObject.Find("GameManager").GetComponent<WaveSpawner>();
+        daggerUIScript = GameObject.Find("DaggerAmmo").GetComponent<daggerAmmoUI>();
+
 
         playerMaxHealth = playerScript.health;
     }
@@ -90,5 +93,10 @@ public class GameManager : MonoBehaviour
     public void HealPlayer(int healAmount)
     {
         playerScript.PlayerHeal(healAmount);
+    }
+
+    public void SetDaggerAmmoUI(int ammo)
+    {
+        daggerUIScript.ChangeDaggerAmmoUI(ammo);
     }
 }
