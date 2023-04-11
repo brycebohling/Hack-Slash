@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class UIC : MonoBehaviour 
 {
     public void Play()
     {
-        SceneC.LoadScene(1);
+        SceneC.LoadScene(2);
     }
 
     public void Restart()
@@ -18,7 +17,12 @@ public class UIC : MonoBehaviour
 
     public void Menu()
     {
-        SceneC.Menu();
+        SceneC.LoadScene(0);
+    }
+
+    public void Contols()
+    {
+        SceneC.LoadScene(1);
     }
 
     public void Hyperlinks(string link)

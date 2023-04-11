@@ -14,9 +14,4 @@ public static class SceneC
     {
         LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
-    public static void Menu()
-    {
-        SceneManager.LoadScene(0);
-    }
 }

@@ -298,9 +298,9 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        Flip();
-
         movementX = Input.GetAxisRaw("Horizontal");
+
+        Flip();
 
         if (isGrounded && !Input.GetButton("Jump") && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.UpArrow)) 
         {
