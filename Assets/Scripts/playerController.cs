@@ -178,7 +178,7 @@ public class playerController : MonoBehaviour
             currentDaggerRechargingTime -= Time.deltaTime;
         }
 
-        if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo - 1 <= daggerAmmo)
+        if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo + 1 <= daggerAmmo)
         {
             currentDaggerRechargingTime = daggerRechargingTime;
             currentDaggerAmmo++;
