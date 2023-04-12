@@ -31560,6 +31560,7 @@ MonoBehaviour:
   daggerWaitToRechargeTime: 2
   daggerRechargingTime: 0.5
   daggerSpawnPoint: {fileID: 5112000660476789790}
+  daggerUIObejct: {fileID: 424659906}
   currentHealth: 0
   health: 100
   iFrameTime: 0.5

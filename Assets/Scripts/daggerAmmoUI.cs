@@ -23,18 +23,21 @@ public class daggerAmmoUI : MonoBehaviour
 
  public void ChangeDaggerAmmoUI(int ammo)
     {
-        if (ammo == 3)
+        if (gameObject.activeSelf)
         {
-            anim.Play(animDaggerAmmo3);
-        } else if (ammo == 2)
-        {
-            anim.Play(animDaggerAmmo2);
-        } else if (ammo == 1)
-        {
-            anim.Play(animDaggerAmmo1);
-        } else if (ammo == 0)
-        {
-            anim.Play(animDaggerAmmo0);
+            if (ammo == 3)
+            {
+                anim.Play(animDaggerAmmo3);
+            } else if (ammo == 2)
+            {
+                anim.Play(animDaggerAmmo2);
+            } else if (ammo == 1)
+            {
+                anim.Play(animDaggerAmmo1);
+            } else if (ammo == 0)
+            {
+                anim.Play(animDaggerAmmo0);
+            }       
         }
     }
 }

@@ -79,6 +79,7 @@ public class playerController : MonoBehaviour
     [SerializeField] float daggerRechargingTime;
     float currentDaggerRechargingTime;
     [SerializeField] Transform daggerSpawnPoint;
+    [SerializeField] GameObject daggerUIObejct;
 
     // Health
 
@@ -188,6 +189,7 @@ public class playerController : MonoBehaviour
 
         if (jumpingIntoBush)
         {
+            daggerUIObejct.SetActive(false);
             if (bushLerp < 1.0f) 
             {
                 ChangeAnimationState(PLAYER_START_ROLL);
@@ -232,6 +234,8 @@ public class playerController : MonoBehaviour
 
         if (jumpingOutBush)
         {
+            daggerUIObejct.SetActive(true);
+            GameManager.gameManager.SetDaggerAmmoUI(currentDaggerAmmo);
             if (bushLerp < 1.0f) 
             {
                 if (!didBushShake)
