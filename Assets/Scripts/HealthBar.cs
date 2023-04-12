@@ -5,21 +5,49 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-   Slider _healthSlider;
+   private Image barImage;
+   private Image background;
+   private int maxHealthAmount;
+   [SerializeField] float fadeSpeed;
+   [SerializeField] float fadeWaitTime;
+   float fadeWaitTimer;
 
-    private void Start() 
+
+    private void Awake() 
     {
-        _healthSlider = GetComponent<Slider>();    
+        barImage = transform.Find("Bar").GetComponent<Image>(); 
+        background = transform.Find("Background").GetComponent<Image>();
+    }
+
+    private void Update() 
+    {
+        if (fadeWaitTimer <= 0f)
+        {   
+            if (background.fillAmount > barImage.fillAmount)
+            {
+                background.fillAmount = Mathf.Lerp(background.fillAmount, barImage.fillAmount, fadeSpeed);
+            } else
+            {
+                background.fillAmount = barImage.fillAmount;
+            }
+            
+        } else
+        {
+            fadeWaitTimer -= Time.deltaTime;
+        }
     }
 
     public void SetMaxHealth(int maxHealth)
     {
-        _healthSlider.maxValue = maxHealth;
-        _healthSlider.value = maxHealth;
+        maxHealthAmount = maxHealth;
     }
-    
-    public void SetHealth(int health)
+
+    public void SetHealth(float health)
     {
-        _healthSlider.value = health;    
+        if (barImage.fillAmount != health / maxHealthAmount)
+        {
+            barImage.fillAmount = health / maxHealthAmount;
+            fadeWaitTimer = fadeWaitTime;
+        }
     }
 }

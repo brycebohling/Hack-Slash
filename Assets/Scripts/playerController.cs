@@ -142,6 +142,7 @@ public class playerController : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
         currentHealth = health;
         currentDaggerAmmo = daggerAmmo;
+        HB.SetMaxHealth(health);
     }
     
 
@@ -194,7 +195,7 @@ public class playerController : MonoBehaviour
                 bushLerp += 1.0f * Time.deltaTime;
 
                 Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
-                Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp );
+                Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp);
                 transform.position = Vector3.Lerp(m1, m2, bushLerp);
  
                 if (bushLerp > 0.8f)
