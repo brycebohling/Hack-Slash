@@ -97,7 +97,7 @@ public class ArcherC : MonoBehaviour
         }
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
-        isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
+        isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(.5f, 1.5f), 0, wallCheackLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
         playerDistanceY = Mathf.Abs(transform.position.y - GameManager.gameManager.player.transform.position.y);
@@ -105,28 +105,31 @@ public class ArcherC : MonoBehaviour
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING) && playerDistanceY < maxSeeDistanceY)
+            if (playerDistance < seeDistance && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING) && playerDistanceY < maxSeeDistanceY)
             {
                 Flip();
-
-                if (playerDistance < shootingRange && playerDistanceY > 8f || playerDistance > shootingRange)
+                if (!isWallClose)
                 {
-                    ChangeAnimationState(ENEMY_WALK);
-                    transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);
-                         
-                } else
-                { 
-                    if (attackCountdown <= 0 && playerDistanceY < 1f)
+                    if (playerDistance < shootingRange && playerDistanceY > 8f || playerDistance > shootingRange)
                     {
-                        ChangeAnimationState(ENEMY_START_ATTACK);
-                        attackCountdown = attackTimer;
-        
-                    } else if (attackCountdown <= 0 && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
-                    {
-                        ChangeAnimationState(ENEMY_NORMAL);
-                    }
+                        ChangeAnimationState(ENEMY_WALK);
+                        transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);
+                            
+                    } else
+                    { 
+                        if (attackCountdown <= 0 && playerDistanceY < 1f)
+                        {
+                            ChangeAnimationState(ENEMY_START_ATTACK);
+                            attackCountdown = attackTimer;
+            
+                        } else if (attackCountdown <= 0 && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))
+                        {
+                            ChangeAnimationState(ENEMY_NORMAL);
+                        }
 
+                    }
                 }
+                
             } else if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))   
             {
                 ChangeAnimationState(ENEMY_NORMAL);
