@@ -104,10 +104,13 @@ public class FlyerC : MonoBehaviour
 
         if (spawningFromTree)
         {
-            transform.position =  Vector2.Lerp(transform.position, goToPoint.position, speed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, goToPoint.position) < 0.1f)
+            if (!transform)
             {
-                spawningFromTree = false;
+                transform.position =  Vector2.Lerp(transform.position, goToPoint.position, speed * Time.deltaTime);
+                if (Vector2.Distance(transform.position, goToPoint.position) < 0.1f)
+                {
+                    spawningFromTree = false;
+                }
             }
         }
 

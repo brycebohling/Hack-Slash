@@ -153,6 +153,7 @@ public class playerController : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
         currentHealth = health;
         currentDaggerAmmo = daggerAmmo;
+        currentStamina = stamina;
         HB.SetMaxHealth(health);
         SB.SetMaxStamina(stamina);
     }
