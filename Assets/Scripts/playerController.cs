@@ -7,6 +7,8 @@ public class playerController : MonoBehaviour
 {
     CameraC camC;
     bushC bushScript;
+    [SerializeField] HealthBar HB;
+    [SerializeField] StaminaBarC SB;
 
     // Movement
     private float movementX;
@@ -57,6 +59,15 @@ public class playerController : MonoBehaviour
     private bool canRoll = true;
     private bool isRolling; 
 
+    // Stamina
+
+    [SerializeField] float stamina;
+    float currentStamina;
+    [SerializeField] float staminaRechargeTime;
+    float staminaRechargeTimer;
+    [SerializeField] float staminaRechargeSpeed;
+    [SerializeField] float rollStaminaAmount;
+
     // Attack
     [SerializeField] int dmg;
     public static int noOfClicks = 0;
@@ -89,9 +100,8 @@ public class playerController : MonoBehaviour
     // Dmg
     [SerializeField] float iFrameTime;
     float iFrameCountdown;
-    public bool invicible = false;
-    [SerializeField] HealthBar HB;
-    bool takingDmg = false;
+    public bool invicible;
+    bool takingDmg;
     [SerializeField] float dmgTime;
     float dmgTimerCountdown;
     [SerializeField] float knockbackPower;
@@ -103,8 +113,8 @@ public class playerController : MonoBehaviour
     // Bush mechanics
     Collider2D[] bushInRange;
     float bushJumpHeight = 5f;
-    bool jumpingIntoBush = false;
-    bool jumpingOutBush = false;
+    bool jumpingIntoBush;
+    bool jumpingOutBush;
     float bushLerp = 0.0f;
     [SerializeField] float bushTime;
     float timeInBush;
@@ -144,6 +154,7 @@ public class playerController : MonoBehaviour
         currentHealth = health;
         currentDaggerAmmo = daggerAmmo;
         HB.SetMaxHealth(health);
+        SB.SetMaxStamina(stamina);
     }
     
 
@@ -178,6 +189,15 @@ public class playerController : MonoBehaviour
         if (currentDaggerRechargingTime > 0f)
         {
             currentDaggerRechargingTime -= Time.deltaTime;
+        }
+
+        if (staminaRechargeTimer > 0f)
+        {
+            staminaRechargeTimer -= Time.deltaTime;
+        } else if (currentStamina < stamina)
+        {
+            currentStamina += Time.deltaTime * staminaRechargeSpeed;
+            SB.SetStamina(currentStamina);
         }
 
         if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo + 1 <= daggerAmmo)
@@ -365,7 +385,11 @@ public class playerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll || Input.GetKeyDown(KeyCode.S) && canRoll || Input.GetKeyDown(KeyCode.DownArrow) && canRoll)
         {
-            StartCoroutine(Roll());
+            if (currentStamina - rollStaminaAmount >= 0f)
+            {
+                StartCoroutine(Roll());
+            }
+            
         }
 
         if (Input.GetKeyDown(KeyCode.C) && daggerThrowCooldownTimer <= 0 && currentDaggerAmmo > 0)
@@ -482,6 +506,9 @@ public class playerController : MonoBehaviour
     private IEnumerator Roll()
     {
         ChangeAnimationState(PLAYER_START_ROLL);
+        staminaRechargeTimer = staminaRechargeTime;
+        currentStamina -= rollStaminaAmount;
+        SB.SetStamina(currentStamina);
         invicible = true;
         canRoll = false;
         isRolling = true;

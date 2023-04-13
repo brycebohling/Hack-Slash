@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class StaminaBarC : MonoBehaviour
 {
     private Image barImage;
     private Image background;
-    private int maxHealthAmount;
+    private float maxStaminaAmount;
     [SerializeField] float fadeSpeed;
     [SerializeField] float fadeWaitTime;
     float fadeWaitTimer;
@@ -37,16 +37,16 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    public void SetMaxHealth(int maxHealth)
+    public void SetMaxStamina(float maxStamiina)
     {
-        maxHealthAmount = maxHealth;
+        maxStaminaAmount = maxStamiina;
     }
 
-    public void SetHealth(float health)
+    public void SetStamina(float currentStamina)
     {
-        if (barImage.fillAmount != health / maxHealthAmount)
+        if (barImage.fillAmount != currentStamina / maxStaminaAmount)
         {
-            barImage.fillAmount = health / maxHealthAmount;
+            barImage.fillAmount = currentStamina / maxStaminaAmount;
             fadeWaitTimer = fadeWaitTime;
         }
     }
