@@ -31627,7 +31627,7 @@ MonoBehaviour:
   rollCoolDown: 0.1
   stamina: 100
   staminaRechargeTime: 1.5
-  staminaRechargeSpeed: 2
+  staminaRechargeSpeed: 10
   rollStaminaAmount: 25
   dmg: 20
   maxComboDelay: 1

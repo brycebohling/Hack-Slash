@@ -93,7 +93,7 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject daggerUIObejct;
 
     // Health
-
+    
     public int currentHealth;
     public int health;
 
