@@ -9,8 +9,13 @@ public class TreeC : MonoBehaviour
         public Transform flyerPoint;
     }
 
+    [System.Serializable] public struct SpawnPoints
+    {
+        public Transform spawnPoint;
+    }
+
     public FlyerPoints[] flyerPoints;
-    [SerializeField] Transform itemSpawnPoint;
+    public SpawnPoints[] spawnPoints;
     [SerializeField] GameObject flyerPrefab;
     [SerializeField] float enemySpawnDelay;
     Animator anim;
@@ -73,23 +78,24 @@ public class TreeC : MonoBehaviour
         {
             isDead = true;
             
-            int randomNum = Random.Range(0, 2);
+            int randomReward = Random.Range(0, 2);
+            int randomSpawnPoint = Random.Range(0, spawnPoints.Length);
         
-            if (randomNum == 0)
+            if (randomReward == 0)
             {
-                Instantiate(healingItem, itemSpawnPoint.position, Quaternion.identity);
+                Instantiate(healingItem, spawnPoints[randomSpawnPoint].spawnPoint.position, Quaternion.identity);
             } else
             {
-                StartCoroutine(SpawnEnemy());
+                StartCoroutine(SpawnEnemy(randomSpawnPoint));
             }
         }
       
     }
 
-    private IEnumerator SpawnEnemy()
+    private IEnumerator SpawnEnemy(int randomSpawnPoint)
     {
         yield return new WaitForSeconds(enemySpawnDelay);
-        var instScript = Instantiate(flyerPrefab, itemSpawnPoint.position, Quaternion.identity).GetComponent<FlyerC>();
+        var instScript = Instantiate(flyerPrefab, spawnPoints[randomSpawnPoint].spawnPoint.position, Quaternion.identity).GetComponent<FlyerC>();
         int randomNum = Random.Range(0, flyerPoints.Length);
 
         instScript.SpawningInTree(flyerPoints[randomNum].flyerPoint);
