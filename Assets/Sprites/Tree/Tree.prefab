@@ -230,10 +230,12 @@ MonoBehaviour:
   - spawnPoint: {fileID: 1554912664154794006}
   - spawnPoint: {fileID: 6921021178414305030}
   - spawnPoint: {fileID: 6655951458137519827}
+  treeParticles:
+  - treeParticle: {fileID: 6510529864933311194, guid: 9a1e4f1a096bf4eafb0097a4b5d9bdf1, type: 3}
+  - treeParticle: {fileID: 6510529864933311194, guid: 3307fea64006b403e89d54620387b300, type: 3}
   flyerPrefab: {fileID: 1101981703109605618, guid: 13b4fa2a3d1e7423ea74a6c04c2532df, type: 3}
   enemySpawnDelay: 0.1
   hitPoints: 3
-  shakeParticals: {fileID: 0}
   healingItem: {fileID: 7228730728170279375, guid: 5474ef961b5204a54913479f297c1f6c, type: 3}
   fadeSpeed: 0.35
   waitForDeathTime: 1

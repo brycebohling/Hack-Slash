@@ -14,8 +14,14 @@ public class TreeC : MonoBehaviour
         public Transform spawnPoint;
     }
 
+    [System.Serializable] public struct TreeParticles
+    {
+        public Transform treeParticle;
+    }
+
     public FlyerPoints[] flyerPoints;
     public SpawnPoints[] spawnPoints;
+    public TreeParticles[] treeParticles;
     [SerializeField] GameObject flyerPrefab;
     [SerializeField] float enemySpawnDelay;
     Animator anim;
@@ -23,7 +29,6 @@ public class TreeC : MonoBehaviour
     string treeShakeAnim = "shake";
     [SerializeField] int hitPoints;
     int currentHitPoint;
-    [SerializeField] Transform shakeParticals;
     [SerializeField] GameObject healingItem;
     bool isDead;
     [SerializeField] float fadeSpeed;
@@ -72,7 +77,8 @@ public class TreeC : MonoBehaviour
         currentHitPoint--;
 
         anim.Play(treeShakeAnim);
-        // Instantiate(shakeParticals, transform.position, Quaternion.identity);
+        int randomParticle = Random.Range(0, treeParticles.Length);
+        Instantiate(treeParticles[randomParticle].treeParticle, spawnPoints[1].spawnPoint.position, Quaternion.identity);
         
         if (currentHitPoint <= 0)
         {
