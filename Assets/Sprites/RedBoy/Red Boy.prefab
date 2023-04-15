@@ -209,7 +209,7 @@ MonoBehaviour:
   attackLayer:
     serializedVersion: 2
     m_Bits: 256
-  health: 30
+  health: 40
   dmgTime: 0.1
   knockbackPower: 16
   knockbackTime: 0.2

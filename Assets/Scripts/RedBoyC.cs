@@ -30,7 +30,7 @@ public class RedBoyC : MonoBehaviour
     private bool isWallClose;
 
     // Attack
-    [SerializeField] int dmg;
+    [SerializeField] float dmg;
     [SerializeField] float attackRadius;
     [SerializeField] float attackTimer;
     float attackCountdown;
@@ -40,8 +40,8 @@ public class RedBoyC : MonoBehaviour
 
     // Health
 
-    int currentHealth;
-    [SerializeField] int health;
+    float currentHealth;
+    [SerializeField] float health;
 
     // Damaged
 
@@ -165,7 +165,7 @@ public class RedBoyC : MonoBehaviour
         }
     }
 
-    public void DmgRedBoy(int dmg, Transform attacker)
+    public void DmgRedBoy(float dmg, Transform attacker)
     {
         currentHealth -= dmg;   
 

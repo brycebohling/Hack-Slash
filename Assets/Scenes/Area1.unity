@@ -31654,6 +31654,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   jumpForce: 17
+  jumpOffJumpTime: 0.1
+  waitToCheckForJump: 0.1
   rollWidth: 1.5
   rollHight: 1.35
   rollOffsetX: -0.13
@@ -31669,10 +31671,11 @@ MonoBehaviour:
   maxComboDelay: 1
   attackMovementSpeed: 1
   attackPoint: {fileID: 5112000660639435735}
-  attackRadius: 1.5
+  attackRadius: 1.79
   enemies:
     serializedVersion: 2
     m_Bits: 512
+  critParticle: {fileID: 901058660515239617, guid: 5565d540e1da44063b004e8b1e519dea, type: 3}
   dagger: {fileID: 384279646069958479, guid: 8a577a68b208140cfb9a5d4f7efb9f58, type: 3}
   daggerThrowCooldown: 0.1
   daggerWaitToRechargeTime: 1.5
@@ -33842,7 +33845,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5112000660639435735}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.27, y: 0.12, z: 0}
+  m_LocalPosition: {x: 1.01, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

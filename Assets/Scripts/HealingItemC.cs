@@ -6,7 +6,7 @@ public class HealingItemC : MonoBehaviour
 {
     [SerializeField] LayerMask playerLayer;
     [SerializeField] Vector2 hitBoxSize;
-    [SerializeField] int healingAmount;
+    [SerializeField] float healingAmount;
     bool isTouchingPlayer;
     Animator anim;
     string _currentState;

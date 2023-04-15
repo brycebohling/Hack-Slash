@@ -39,8 +39,8 @@ public class ArcherC : MonoBehaviour
 
     // Health
 
-    int currentHealth;
-    [SerializeField] int health;
+    float currentHealth;
+    [SerializeField] float health;
 
     // Damaged
 
@@ -152,7 +152,7 @@ public class ArcherC : MonoBehaviour
         
     }
 
-    public void DmgArcher(int dmg, Transform attacker)
+    public void DmgArcher(float dmg, Transform attacker)
     {
         currentHealth -= dmg;   
 

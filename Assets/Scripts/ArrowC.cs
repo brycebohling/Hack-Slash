@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArrowC : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] int dmg;    
+    [SerializeField] float dmg;    
     [SerializeField] float groundLayerNum;
     private Rigidbody2D rb;
     

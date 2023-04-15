@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     Renderer playerRenderer;
     public bool isPlayerRendered;
     public bool isPLayerInvicible;
-    public int playerMaxHealth;
-    public int playerCurrentHealth;
+    public float playerMaxHealth;
+    public float playerCurrentHealth;
     public bool isPlayerDead;
 
     public int waveNum;
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DamageEnemy(Collider2D enemy, int dmg, Transform attacker)
+    public void DamageEnemy(Collider2D enemy, float dmg, Transform attacker)
     {
         if (enemy.CompareTag("redBoy"))
         {
@@ -85,12 +85,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DamagePlayer(int dmg, Transform attacker)
+    public void DamagePlayer(float dmg, Transform attacker)
     {
         playerScript.PlayerTakeDmg(dmg, attacker);
     }
 
-    public void HealPlayer(int healAmount)
+    public void HealPlayer(float healAmount)
     {
         playerScript.PlayerHeal(healAmount);
     }

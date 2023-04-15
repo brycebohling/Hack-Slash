@@ -5,7 +5,7 @@ using UnityEngine;
 public class Dagger : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] int dmg;
+    [SerializeField] float dmg;
     [SerializeField] float rotationSpeed;
     bool isRotating = false;
     float angle;

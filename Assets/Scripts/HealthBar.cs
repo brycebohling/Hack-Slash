@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     private Image barImage;
     private Image background;
-    private int maxHealthAmount;
+    private float maxHealthAmount;
     [SerializeField] float fadeSpeed;
     [SerializeField] float fadeWaitTime;
     float fadeWaitTimer;
@@ -37,7 +37,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    public void SetMaxHealth(int maxHealth)
+    public void SetMaxHealth(float maxHealth)
     {
         maxHealthAmount = maxHealth;
     }

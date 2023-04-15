@@ -16,14 +16,14 @@ public class FlyerC : MonoBehaviour
     Rigidbody2D rb;
     
     // Health
-    int currentHealth;
-    [SerializeField] int health;
+    float currentHealth;
+    [SerializeField] float health;
 
     // Attack
 
     [SerializeField] LayerMask playerLayer;
     bool isTouchingPlayer;
-    [SerializeField] int dmg;
+    [SerializeField] float dmg;
     [SerializeField] float attackSpeed;
     bool attacking;
     bool divedIn;
@@ -189,7 +189,7 @@ public class FlyerC : MonoBehaviour
         canDive = false;
     }
 
-    public void DmgFlyer(int dmg, Transform attacker)
+    public void DmgFlyer(float dmg, Transform attacker)
     {
         currentHealth -= dmg;   
 

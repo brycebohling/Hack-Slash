@@ -37,6 +37,7 @@ public class playerController : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
+    private bool wasGrounded;
 
     // Ceilling check
     [SerializeField] Vector2 ceillingCheckSize;
@@ -46,7 +47,11 @@ public class playerController : MonoBehaviour
 
     // Junping
     [SerializeField] private float jumpForce;
-    private bool doubleJump;
+    private bool canDoubleJump;
+    [SerializeField] float jumpOffJumpTime;
+    float jumpOffJumpTimer;
+    [SerializeField] float waitToCheckForJump;
+    float waitToCheckForJumpTimer;
 
     // Rolling 
     [SerializeField] private float rollWidth;
@@ -69,7 +74,7 @@ public class playerController : MonoBehaviour
     [SerializeField] float rollStaminaAmount;
 
     // Attack
-    [SerializeField] int dmg;
+    [SerializeField] float dmg;
     public static int noOfClicks = 0;
     private float lastClickedTime = 0;
     [SerializeField] private float maxComboDelay = 1;
@@ -78,6 +83,8 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject attackPoint;
     [SerializeField] float attackRadius;
     [SerializeField] LayerMask enemies;
+    [SerializeField] Transform critParticle;
+    bool willCrit;
 
     // Dagger
     public GameObject dagger;
@@ -94,8 +101,8 @@ public class playerController : MonoBehaviour
 
     // Health
 
-    public int currentHealth;
-    public int health;
+    public float currentHealth;
+    public float health;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -154,6 +161,8 @@ public class playerController : MonoBehaviour
         currentHealth = health;
         currentDaggerAmmo = daggerAmmo;
         currentStamina = stamina;
+        jumpOffJumpTimer = jumpOffJumpTime;
+        waitToCheckForJumpTimer = waitToCheckForJump;
         HB.SetMaxHealth(health);
         SB.SetMaxStamina(stamina);
     }
@@ -199,6 +208,34 @@ public class playerController : MonoBehaviour
         {
             currentStamina += Time.deltaTime * staminaRechargeSpeed;
             SB.SetStamina(currentStamina);
+        }
+
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
+
+        if (!isGrounded && jumpOffJumpTimer > 0f)
+        {
+            jumpOffJumpTimer -= Time.deltaTime;
+        }
+
+        if (!isGrounded && wasGrounded)
+        {
+            canDoubleJump = true;
+        }
+
+        if (isGrounded)
+        {
+            wasGrounded = true;
+        } else 
+        {
+            wasGrounded = false;
+        }
+
+        if (isGrounded && waitToCheckForJumpTimer < 0f)
+        {
+            jumpOffJumpTimer = jumpOffJumpTime;
+        } else
+        {
+            waitToCheckForJumpTimer -= Time.deltaTime;
         }
 
         if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo + 1 <= daggerAmmo)
@@ -304,8 +341,6 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
-
         if (!IsAnimationPlaying(anim, PLAYER_ATTACK_1))
         {
             if (!IsAnimationPlaying(anim, PLAYER_ATTACK_2))
@@ -346,22 +381,18 @@ public class playerController : MonoBehaviour
 
         Flip();
 
-        if (isGrounded && !Input.GetButton("Jump") && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.UpArrow)) 
-        {
-            doubleJump = false;   
-        }
-
         if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) 
         {
-            if (isGrounded) 
+            if (isGrounded || jumpOffJumpTimer > 0f) 
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                doubleJump = !doubleJump;
+                jumpOffJumpTimer = 0f;
+                waitToCheckForJumpTimer = waitToCheckForJump;
                 
-            } else if (doubleJump)
+            } else if (canDoubleJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                doubleJump = !doubleJump;
+                canDoubleJump = false;
             }
         }
 
@@ -557,31 +588,50 @@ public class playerController : MonoBehaviour
         }
     }
 
+    public void WillPlayerCrit()
+    {
+        if (rb.velocity.y < -4f)
+        {
+            willCrit = true;
+        } else
+        {
+            willCrit = false;
+        }
+    }
+
     public void PlayerAttack() 
     {
         // Dmg Enemies 
-
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
-
-        foreach (Collider2D enemyGameobject in enemy)
+        if (willCrit)
         {
-            GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, transform);
+            willCrit = false;
+            
+            foreach (Collider2D enemyGameobject in enemy)
+            {
+                GameManager.gameManager.DamageEnemy(enemyGameobject, dmg * 1.5f, transform);
+                Instantiate(critParticle, enemyGameobject.transform.position, Quaternion.identity);
+            }
+            
+        } else
+        {
+            foreach (Collider2D enemyGameobject in enemy)
+            {
+                GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, transform);
+            }
         }
-
+    
         // Hit Tree
-
         Collider2D[] trees = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, treeLayer);
 
         foreach (Collider2D tree in trees)
         {
             var treeScript = tree.GetComponent<TreeC>();
             treeScript.TreeShake();
-        }
-        
-        
+        }        
     }
 
-    public void PlayerTakeDmg(int dmg, Transform attacker)
+    public void PlayerTakeDmg(float dmg, Transform attacker)
     {
         
         if (iFrameCountdown <= 0 && !invicible)
@@ -604,7 +654,7 @@ public class playerController : MonoBehaviour
         }
     }
 
-    public void PlayerHeal(int healAmount)
+    public void PlayerHeal(float healAmount)
     {
         currentHealth += healAmount;
         if (currentHealth > health)
