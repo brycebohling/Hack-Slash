@@ -77,8 +77,12 @@ public class WaveSpawner : MonoBehaviour
             {
                 randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].spawnPoint;
             }
-        
-            GameObject newEnemy = Instantiate(enemyTypes[enemyIndex].prefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
+
+            float randomPosX = Random.Range(-2f, 2f);
+
+            Vector2 spawnLocation = new Vector2(randomSpawnPoint.position.x + randomPosX, randomSpawnPoint.position.y);
+
+            GameObject newEnemy = Instantiate(enemyTypes[enemyIndex].prefab, spawnLocation, randomSpawnPoint.rotation);
 
             currentWaveValue -= enemyTypes[enemyIndex].value;
 
