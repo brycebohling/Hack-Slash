@@ -186,6 +186,9 @@ public class playerController : MonoBehaviour
             return;
         }
 
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
+        isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
+
         if (iFrameCountdown > 0f)
         {
             iFrameCountdown -= Time.deltaTime;
@@ -209,8 +212,6 @@ public class playerController : MonoBehaviour
             currentStamina += Time.deltaTime * staminaRechargeSpeed;
             SB.SetStamina(currentStamina);
         }
-
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
 
         if (!isGrounded && jumpOffJumpTimer > 0f)
         {
@@ -335,12 +336,6 @@ public class playerController : MonoBehaviour
             takingDmg = false;
         }
 
-        if (isRolling)
-        {
-            isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
-            return;
-        }
-
         if (!IsAnimationPlaying(anim, PLAYER_ATTACK_1))
         {
             if (!IsAnimationPlaying(anim, PLAYER_ATTACK_2))
@@ -352,11 +347,53 @@ public class playerController : MonoBehaviour
             }
         }
 
+        if (attacking)
+        {
+            return;
+        }
+
         if (Time.time - lastClickedTime > maxComboDelay)
         {
             noOfClicks = 0;
         }
- 
+
+        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) 
+        {
+            if (isGrounded || jumpOffJumpTimer > 0f) 
+            {   
+                if (isRolling && !isCeiling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    jumpOffJumpTimer = 0f;
+                    waitToCheckForJumpTimer = waitToCheckForJump;
+                    ChangeAnimationState(PLAYER_JUMP);
+                } else if (!isRolling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    jumpOffJumpTimer = 0f;
+                    waitToCheckForJumpTimer = waitToCheckForJump;
+                }
+                
+            } else if (canDoubleJump)
+            {
+                if (isRolling && !isCeiling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    canDoubleJump = false;
+                    ChangeAnimationState(PLAYER_JUMP);
+                } else if (!isRolling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    canDoubleJump = false;
+                }
+            }
+        }
+
+        if (isRolling)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightShift))
         {
             AttackAnim();
@@ -372,29 +409,9 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        if (attacking)
-        {
-            return;
-        }
-
         movementX = Input.GetAxisRaw("Horizontal");
 
         Flip();
-
-        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) 
-        {
-            if (isGrounded || jumpOffJumpTimer > 0f) 
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                jumpOffJumpTimer = 0f;
-                waitToCheckForJumpTimer = waitToCheckForJump;
-                
-            } else if (canDoubleJump)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                canDoubleJump = false;
-            }
-        }
 
         if (movementX == 0 && rb.velocity.y == 0)
         {
@@ -606,7 +623,7 @@ public class playerController : MonoBehaviour
         if (willCrit)
         {
             willCrit = false;
-            
+
             foreach (Collider2D enemyGameobject in enemy)
             {
                 GameManager.gameManager.DamageEnemy(enemyGameobject, dmg * 1.5f, transform);
