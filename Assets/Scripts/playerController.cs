@@ -389,23 +389,41 @@ public class playerController : MonoBehaviour
             }
         }
 
-        if (isRolling)
-        {
-            return;
-        }
-
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightShift))
         {
-            AttackAnim();
-            attacking = true;
-            if (isGrounded)
+            if (isRolling && !isCeiling)
             {
-                rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
-            }
-            else
+                AttackAnim();
+                attacking = true;
+                if (isGrounded)
+                {
+                    rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
+                return;
+
+            } else if (!isRolling)
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                AttackAnim();
+                attacking = true;
+                if (isGrounded)
+                {
+                    rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
+                return;
             }
+           
+        }
+
+        if (isRolling)
+        {
             return;
         }
 
@@ -620,7 +638,7 @@ public class playerController : MonoBehaviour
     {
         // Dmg Enemies 
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
-        if (willCrit)
+        if (willCrit || rb.velocity.y < -4f)
         {
             willCrit = false;
 
