@@ -238,7 +238,7 @@ MonoBehaviour:
   hitPoints: 3
   healingItem: {fileID: 7228730728170279375, guid: 5474ef961b5204a54913479f297c1f6c, type: 3}
   fadeSpeed: 0.35
-  waitForDeathTime: 1
+  waitForDeathTime: 0.5
 --- !u!61 &1554912663197339020
 BoxCollider2D:
   m_ObjectHideFlags: 0
