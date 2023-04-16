@@ -60,9 +60,12 @@ public class playerController : MonoBehaviour
     [SerializeField] private float rollOffsetY;
     [SerializeField] private float rollSpeed;
     [SerializeField] private float rollTime;
-    [SerializeField] private float rollCoolDown;
     private bool canRoll = true;
     private bool isRolling; 
+    float originalWidth;
+    float originalHight;
+    float originalOffsetX;
+    float originalOffsetY;
 
     // Stamina
 
@@ -367,6 +370,7 @@ public class playerController : MonoBehaviour
                     jumpOffJumpTimer = 0f;
                     waitToCheckForJumpTimer = waitToCheckForJump;
                     ChangeAnimationState(PLAYER_JUMP);
+                    StopRoll();
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -395,6 +399,7 @@ public class playerController : MonoBehaviour
             {
                 AttackAnim();
                 attacking = true;
+                StopRoll();
                 if (isGrounded)
                 {
                     rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
@@ -579,24 +584,26 @@ public class playerController : MonoBehaviour
         invicible = true;
         canRoll = false;
         isRolling = true;
-        float originalWidth = bcoll.size.x;
-        float originalHight = bcoll.size.y;
-        float originalOffsetX = bcoll.offset.x;
-        float originalOffsetY = bcoll.offset.y;
+        originalWidth = bcoll.size.x;
+        originalHight = bcoll.size.y;
+        originalOffsetX = bcoll.offset.x;
+        originalOffsetY = bcoll.offset.y;
         bcoll.size = new Vector2(rollWidth, rollHight);
         bcoll.offset = new Vector2(rollOffsetX, rollOffsetY);
         rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);
-
+        
         yield return new WaitForSeconds(rollTime);
         yield return new WaitUntil(() => !isCeiling);
 
+        StopRoll();
+    }
+
+    private void StopRoll()
+    {
         bcoll.size = new Vector2(originalWidth, originalHight);
         bcoll.offset = new Vector2(originalOffsetX, originalOffsetY);
         invicible = false;
         isRolling = false;
-
-        yield return new WaitForSeconds(rollCoolDown);
-
         canRoll = true;
     }
 
