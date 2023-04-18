@@ -690,7 +690,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncJumpForce
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -976,7 +976,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncDodgeChance
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1446,7 +1446,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncNumberOfJumps
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31788,7 +31788,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncMaxStamina
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31943,7 +31943,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncCritDmg
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -32098,7 +32098,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncDaggerAmmo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -32656,7 +32656,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncMovementSpeed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33209,10 +33209,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514e7efddb4f14d17b1ab5b05c3d6923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgrades: {fileID: 1485688972}
   HB: {fileID: 224668762}
   SB: {fileID: 1202346391}
-  speed: 12
+  movementSpeed: 12
+  jumpForce: 17
+  maxHealth: 100
+  maxStamina: 100
+  meleeDmg: 20
+  daggerDmg: 10
+  daggerAmmo: 3
+  daggerSpeed: 15
+  critDmg: 1.25
+  rollSpeed: 18
   isFacingRight: 1
   groundCheck: {fileID: 2079964255}
   groundLayer:
@@ -33223,20 +33231,16 @@ MonoBehaviour:
   headHitters:
     serializedVersion: 2
     m_Bits: 192
-  jumpForce: 17
   jumpOffJumpTime: 0.1
   waitToCheckForJump: 0.1
   rollWidth: 1.5
   rollHight: 1.35
   rollOffsetX: -0.13
   rollOffsetY: -0.78
-  rollSpeed: 18
   rollTime: 0.5
-  stamina: 100
   staminaRechargeTime: 1.5
   staminaRechargeSpeed: 15
   rollStaminaAmount: 20
-  dmg: 20
   maxComboDelay: 1
   attackMovementSpeed: 1
   attackPoint: {fileID: 5112000660639435735}
@@ -33252,7 +33256,6 @@ MonoBehaviour:
   daggerSpawnPoint: {fileID: 5112000660476789790}
   daggerUIObejct: {fileID: 424659906}
   currentHealth: 0
-  health: 100
   iFrameTime: 0.5
   invicible: 0
   dmgTime: 0.1
@@ -33695,7 +33698,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncMaxHealth
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -33850,7 +33853,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncDmgReduction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -35333,7 +35336,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncHealthDropChance
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -35519,7 +35522,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncDaggerSpeed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -35674,7 +35677,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncRollSpeed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -35829,7 +35832,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncDaggerDmg
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -36358,27 +36361,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUps:
-  - PowerUp: {fileID: 552562185}
-  - PowerUp: {fileID: 167146922}
-  - PowerUp: {fileID: 321983679}
-  - PowerUp: {fileID: 815424514}
-  - PowerUp: {fileID: 438232891}
-  - PowerUp: {fileID: 1505642104}
-  - PowerUp: {fileID: 1418309779}
-  - PowerUp: {fileID: 454401083}
-  - PowerUp: {fileID: 1363930509}
-  - PowerUp: {fileID: 1357809133}
-  - PowerUp: {fileID: 871575203}
-  - PowerUp: {fileID: 448673838}
-  - PowerUp: {fileID: 227476097}
-  - PowerUp: {fileID: 1414068399}
-  - PowerUp: {fileID: 1556207515}
-  - PowerUp: {fileID: 1725760029}
+  - powerUp: {fileID: 552562185}
+  - powerUp: {fileID: 167146922}
+  - powerUp: {fileID: 321983679}
+  - powerUp: {fileID: 815424514}
+  - powerUp: {fileID: 438232891}
+  - powerUp: {fileID: 1505642104}
+  - powerUp: {fileID: 1418309779}
+  - powerUp: {fileID: 454401083}
+  - powerUp: {fileID: 1363930509}
+  - powerUp: {fileID: 1357809133}
+  - powerUp: {fileID: 871575203}
+  - powerUp: {fileID: 448673838}
+  - powerUp: {fileID: 227476097}
+  - powerUp: {fileID: 1414068399}
+  - powerUp: {fileID: 1556207515}
+  - powerUp: {fileID: 1725760029}
   startPoints:
   - {fileID: 627013571}
   - {fileID: 635730898}
   - {fileID: 271278217}
   cardDropOffest: 250
+  movementSpeedIncAmount: 1
+  jumpForce: 0
+  maxHealth: 0
+  maxStamina: 0
+  meleeDmg: 0
+  daggerDmg: 0
+  daggerAmmo: 3
+  daggerSpeed: 0
+  critDmg: 0
+  rollSpeed: 0
 --- !u!1 &1486996604
 GameObject:
   m_ObjectHideFlags: 0
@@ -36439,7 +36452,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  player: {fileID: 696645491}
+  player: {fileID: 696645489}
+  upgrades: {fileID: 1485688972}
   isPlayerRendered: 0
   isPLayerInvicible: 0
   playerMaxHealth: 0
@@ -36735,7 +36749,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncMeleeDmg
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -37267,7 +37281,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncMeleeSpeed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -37910,7 +37924,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1485688972}
         m_TargetAssemblyTypeName: UpgradeC, Assembly-CSharp
-        m_MethodName: IncreaseDmg
+        m_MethodName: IncHealthRegeneration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UpgradeC : MonoBehaviour
 {
+    playerController PC;
     Animator anim1;
     Animator anim2;
     Animator anim3;
@@ -25,11 +26,35 @@ public class UpgradeC : MonoBehaviour
     int randomCard2;
     int randomCard3;
 
+    // Player Stat Increase Amounts
+
+    [SerializeField] float movementSpeedIncAmount;
+    [SerializeField] float jumpForce;
+    // [SerializeField] float numberOfJumps;
+    [SerializeField] float maxHealth;
+    [SerializeField] float maxStamina;
+    [SerializeField] float meleeDmg;
+    [SerializeField] float daggerDmg;
+    [SerializeField] int daggerAmmo = 3;
+    [SerializeField] float daggerSpeed;
+    // [SerializeField] float healthDropChance;
+    // [SerializeField] float dmgReduction;
+    [SerializeField] float critDmg;
+    // [SerializeField] float dodgeChance;
+    [SerializeField] float rollSpeed;
+    // [SerializeField] float meleeSpeed;
+    // [SerializeField] float healthRegeneration;
+
+
+    private void Start() 
+    {
+        PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
+    }
 
     public async void LevelUp()
     {
         GameManager.gameManager.PauseResume();
-
+        
         randomCard1 = Random.Range(0, powerUps.Length);
         randomCard2 = Random.Range(0, powerUps.Length);
         while (randomCard2 == randomCard1)
@@ -84,11 +109,86 @@ public class UpgradeC : MonoBehaviour
         powerUps[randomCard1].powerUp.SetActive(false);
         powerUps[randomCard2].powerUp.SetActive(false);
         powerUps[randomCard3].powerUp.SetActive(false);
-
-        
     }
 
-    public void IncreaseDmg()
+    public void IncMovementSpeed()
+    {
+        CardSelected();
+
+        PC.movementSpeed += movementSpeedIncAmount;
+    }
+
+    public void IncJumpForce()
+    {
+        CardSelected();
+    }
+
+    public void IncNumberOfJumps()
+    {
+        CardSelected();
+    }
+    
+    public void IncMaxHealth()
+    {
+        CardSelected();
+    }
+
+    public void IncMaxStamina()
+    {
+        CardSelected();
+    }
+    
+    public void IncMeleeDmg()
+    {
+        CardSelected();
+    }
+
+    public void IncDaggerDmg()
+    {
+        CardSelected();
+    }
+    
+    public void IncDaggerAmmo()
+    {
+        CardSelected();
+    }
+    
+    public void IncDaggerSpeed()
+    {
+        CardSelected();
+    }
+
+    public void IncHealthDropChance()
+    {
+        CardSelected();
+    }
+
+    public void IncDmgReduction()
+    {
+        CardSelected();
+    }
+
+    public void IncCritDmg()
+    {
+        CardSelected();
+    }
+    
+    public void IncDodgeChance()
+    {
+        CardSelected();
+    }
+
+    public void IncRollSpeed()
+    {
+        CardSelected();
+    }
+
+    public void IncMeleeSpeed()
+    {
+        CardSelected();
+    }
+
+    public void IncHealthRegeneration()
     {
         CardSelected();
     }

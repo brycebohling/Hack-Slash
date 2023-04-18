@@ -7,32 +7,29 @@ public class playerController : MonoBehaviour
 {
     CameraC camC;
     bushC bushScript;
-    [SerializeField] UpgradeC upgrades;
-
     [SerializeField] HealthBar HB;
     [SerializeField] StaminaBarC SB;
 
     // Stats
     public float movementSpeed;
     public float jumpForce;
-    public float numberOfJumps;
+    // public float numberOfJumps;
     public float maxHealth;
     public float maxStamina;
     public float meleeDmg;
     public float daggerDmg;
-    public int daggerAmmo;
+    public int daggerAmmo = 3;
     public float daggerSpeed;
-    public float healthDropChance;
-    public float dmgReduction;
+    // public float healthDropChance;
+    // public float dmgReduction;
     public float critDmg;
-    public float dodgeChance;
+    // public float dodgeChance;
     public float rollSpeed;
-    public float meleeSpeed;
-    public float healthRegeneration;
+    // public float meleeSpeed;
+    // public float healthRegeneration;
 
     // Movement
     private float movementX;
-    [SerializeField] private float speed;
     public bool isFacingRight;
 
     // Physics
@@ -87,7 +84,6 @@ public class playerController : MonoBehaviour
 
     // Stamina
 
-    [SerializeField] float stamina;
     float currentStamina;
     [SerializeField] float staminaRechargeTime;
     float staminaRechargeTimer;
@@ -95,7 +91,6 @@ public class playerController : MonoBehaviour
     [SerializeField] float rollStaminaAmount;
 
     // Attack
-    [SerializeField] float dmg;
     public static int noOfClicks = 0;
     private float lastClickedTime = 0;
     [SerializeField] private float maxComboDelay = 1;
@@ -122,7 +117,6 @@ public class playerController : MonoBehaviour
     // Health
 
     public float currentHealth;
-    public float health;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -178,13 +172,13 @@ public class playerController : MonoBehaviour
         bcoll = GetComponent<BoxCollider2D>();
         camC = GameObject.FindGameObjectWithTag("vcam").GetComponent<CameraC>();
         spriteRend = GetComponent<SpriteRenderer>();
-        currentHealth = health;
+        currentHealth = maxHealth;
         currentDaggerAmmo = daggerAmmo;
-        currentStamina = stamina;
+        currentStamina = maxStamina;
         jumpOffJumpTimer = jumpOffJumpTime;
         waitToCheckForJumpTimer = waitToCheckForJump;
-        HB.SetMaxHealth(health);
-        SB.SetMaxStamina(stamina);
+        HB.SetMaxHealth(maxHealth);
+        SB.SetMaxStamina(maxStamina);
     }
     
 
@@ -227,7 +221,7 @@ public class playerController : MonoBehaviour
         if (staminaRechargeTimer > 0f)
         {
             staminaRechargeTimer -= Time.deltaTime;
-        } else if (currentStamina < stamina)
+        } else if (currentStamina < maxStamina)
         {
             currentStamina += Time.deltaTime * staminaRechargeSpeed;
             SB.SetStamina(currentStamina);
@@ -485,9 +479,6 @@ public class playerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C) && daggerThrowCooldownTimer <= 0 && currentDaggerAmmo > 0)
         {
-
-            upgrades.LevelUp();
-
             if (isFacingRight) 
             {
                 Instantiate(dagger, daggerSpawnPoint.position, Quaternion.identity);
@@ -527,7 +518,7 @@ public class playerController : MonoBehaviour
         {
             return;
         }
-        rb.velocity = new Vector2(movementX * speed, rb.velocity.y);
+        rb.velocity = new Vector2(movementX * movementSpeed, rb.velocity.y);
     }
     
     // ------------------------My homemade functions------------------------------
@@ -673,7 +664,7 @@ public class playerController : MonoBehaviour
 
             foreach (Collider2D enemyGameobject in enemy)
             {
-                GameManager.gameManager.DamageEnemy(enemyGameobject, dmg * 1.5f, transform);
+                GameManager.gameManager.DamageEnemy(enemyGameobject, meleeDmg * critDmg, transform);
                 Instantiate(critParticle, enemyGameobject.transform.position, Quaternion.identity);
             }
             
@@ -681,7 +672,7 @@ public class playerController : MonoBehaviour
         {
             foreach (Collider2D enemyGameobject in enemy)
             {
-                GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, transform);
+                GameManager.gameManager.DamageEnemy(enemyGameobject, meleeDmg, transform);
             }
         }
     
@@ -695,12 +686,12 @@ public class playerController : MonoBehaviour
         }        
     }
 
-    public void PlayerTakeDmg(float dmg, Transform attacker)
+    public void PlayerTakeDmg(float meleeDmg, Transform attacker)
     {
         
         if (iFrameCountdown <= 0 && !invicible)
         {
-            currentHealth -= dmg;
+            currentHealth -= meleeDmg;
             HB.SetHealth(currentHealth);
 
             if (currentHealth <= 0)
@@ -721,9 +712,9 @@ public class playerController : MonoBehaviour
     public void PlayerHeal(float healAmount)
     {
         currentHealth += healAmount;
-        if (currentHealth > health)
+        if (currentHealth > maxHealth)
         {
-            currentHealth = health;
+            currentHealth = maxHealth;
         }
         HB.SetHealth(currentHealth);
 

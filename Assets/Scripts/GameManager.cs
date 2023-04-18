@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private playerController playerScript;
     private WaveSpawner waveScript;
     private daggerAmmoUI daggerUIScript;
+    [SerializeField] UpgradeC upgrades;
     Renderer playerRenderer;
     public bool isPlayerRendered;
     public bool isPLayerInvicible;
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour
         daggerUIScript = GameObject.Find("DaggerAmmo").GetComponent<daggerAmmoUI>();
 
 
-        playerMaxHealth = playerScript.health;
+        playerMaxHealth = playerScript.maxHealth;
     }
 
     void Update()
@@ -70,6 +71,11 @@ public class GameManager : MonoBehaviour
         if (playerScript.isDead)
         {
             isPlayerDead = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            upgrades.LevelUp();
         }
     }
 

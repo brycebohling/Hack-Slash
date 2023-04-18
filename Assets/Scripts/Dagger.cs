@@ -19,6 +19,7 @@ public class Dagger : MonoBehaviour
 
     void Start()
     {
+        PC = GameObject.FindWithTag("Player").GetComponent<playerController>();
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * PC.daggerSpeed;
     }
