@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dagger : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    playerController PC;
     [SerializeField] float dmg;
     [SerializeField] float rotationSpeed;
     bool isRotating = false;
@@ -20,7 +20,7 @@ public class Dagger : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * speed;
+        rb.velocity = transform.right * PC.daggerSpeed;
     }
 
     void Update()
@@ -30,7 +30,7 @@ public class Dagger : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = rotation;
 
-            rb.velocity = transform.right * speed;
+            rb.velocity = transform.right * PC.daggerSpeed;
         }  
         
         isTouchingObject = Physics2D.OverlapBox(transform.position, new Vector2(1f, 0.5f), transform.rotation.z, TouchableObjects);

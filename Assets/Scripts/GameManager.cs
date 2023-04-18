@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
-
+    public UnityEvent GamePaused;
+    public UnityEvent GameResumed;
+    bool isPaused;
     public GameObject player;
     private playerController playerScript;
     private WaveSpawner waveScript;
@@ -67,6 +70,22 @@ public class GameManager : MonoBehaviour
         if (playerScript.isDead)
         {
             isPlayerDead = true;
+        }
+    }
+
+    public void PauseResume()
+    {
+        isPaused = !isPaused;
+        
+        if (isPaused)
+        {
+            Time.timeScale = 0f;
+            GamePaused.Invoke();
+
+        } else
+        {
+            Time.timeScale = 1f;
+            GameResumed.Invoke();
         }
     }
 

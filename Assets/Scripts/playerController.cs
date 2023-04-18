@@ -7,8 +7,28 @@ public class playerController : MonoBehaviour
 {
     CameraC camC;
     bushC bushScript;
+    [SerializeField] UpgradeC upgrades;
+
     [SerializeField] HealthBar HB;
     [SerializeField] StaminaBarC SB;
+
+    // Stats
+    public float movementSpeed;
+    public float jumpForce;
+    public float numberOfJumps;
+    public float maxHealth;
+    public float maxStamina;
+    public float meleeDmg;
+    public float daggerDmg;
+    public int daggerAmmo;
+    public float daggerSpeed;
+    public float healthDropChance;
+    public float dmgReduction;
+    public float critDmg;
+    public float dodgeChance;
+    public float rollSpeed;
+    public float meleeSpeed;
+    public float healthRegeneration;
 
     // Movement
     private float movementX;
@@ -46,7 +66,6 @@ public class playerController : MonoBehaviour
     private bool isCeiling;
 
     // Junping
-    [SerializeField] private float jumpForce;
     private bool canDoubleJump;
     [SerializeField] float jumpOffJumpTime;
     float jumpOffJumpTimer;
@@ -58,7 +77,6 @@ public class playerController : MonoBehaviour
     [SerializeField] private float rollHight;
     [SerializeField] private float rollOffsetX;
     [SerializeField] private float rollOffsetY;
-    [SerializeField] private float rollSpeed;
     [SerializeField] private float rollTime;
     private bool canRoll = true;
     private bool isRolling; 
@@ -93,7 +111,6 @@ public class playerController : MonoBehaviour
     public GameObject dagger;
     [SerializeField] float daggerThrowCooldown;
     float daggerThrowCooldownTimer;
-    int daggerAmmo = 3;
     private int currentDaggerAmmo;
     float lastDaggerThrown;
     [SerializeField] float daggerWaitToRechargeTime;
@@ -468,6 +485,9 @@ public class playerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C) && daggerThrowCooldownTimer <= 0 && currentDaggerAmmo > 0)
         {
+
+            upgrades.LevelUp();
+
             if (isFacingRight) 
             {
                 Instantiate(dagger, daggerSpawnPoint.position, Quaternion.identity);
