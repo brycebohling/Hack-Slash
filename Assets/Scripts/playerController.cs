@@ -22,10 +22,10 @@ public class playerController : MonoBehaviour
     public float healthDropChance;
     public float dmgReduction;
     public float critDmg;
-    // public float dodgeChance;
+    public float dodgeChance;
     public float rollSpeed;
-    // public float meleeSpeed;
-    // public float healthRegeneration;
+    public float meleeSpeed;
+    public float healthRegenerationAmount;
 
     // Movement
     private float movementX;
@@ -118,6 +118,10 @@ public class playerController : MonoBehaviour
     // Health
 
     public float currentHealth;
+    [SerializeField] float h_Regen_Wait;
+    float h_Regen_Timer;
+    [SerializeField] float h_Regen_BurstWait;
+    float h_Regen_BurstWaitTimer;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -178,6 +182,8 @@ public class playerController : MonoBehaviour
         currentStamina = maxStamina;
         jumpOffJumpTimer = jumpOffJumpTime;
         waitToCheckForJumpTimer = waitToCheckForJump;
+        h_Regen_Timer = h_Regen_Wait;
+        h_Regen_BurstWaitTimer = h_Regen_BurstWait;
         HB.SetMaxHealth(maxHealth);
         SB.SetMaxStamina(maxStamina);
     }
@@ -203,6 +209,19 @@ public class playerController : MonoBehaviour
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
         isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
+
+        if (h_Regen_Timer <= 0f && h_Regen_BurstWaitTimer <= 0f && currentHealth < maxHealth)
+        {
+            currentHealth += healthRegenerationAmount;
+            h_Regen_BurstWaitTimer = h_Regen_BurstWait;
+
+            HB.SetHealth(currentHealth);
+            
+        } else
+        {
+            h_Regen_Timer -= Time.deltaTime;
+            h_Regen_BurstWaitTimer -= Time.deltaTime;
+        }
 
         if (iFrameCountdown > 0f)
         {
@@ -358,6 +377,7 @@ public class playerController : MonoBehaviour
                 if (!IsAnimationPlaying(anim, PLAYER_ATTACK_3))
                 {
                     attacking = false;
+                    anim.speed = 1f;
                 }
             }
         }
@@ -626,6 +646,8 @@ public class playerController : MonoBehaviour
         noOfClicks++;
         noOfClicks = Mathf.Clamp(noOfClicks, 0, 3);
 
+        anim.speed = 1f + meleeSpeed;
+
         if (noOfClicks == 1 && !IsAnimationPlaying(anim, PLAYER_ATTACK_1) && !IsAnimationPlaying(anim, PLAYER_ATTACK_2) && !IsAnimationPlaying(anim, PLAYER_ATTACK_3))
         {
             ChangeAnimationState(PLAYER_ATTACK_1);
@@ -691,22 +713,32 @@ public class playerController : MonoBehaviour
         
         if (iFrameCountdown <= 0 && !invicible)
         {
-            currentHealth -= dmg * (1 - dmgReduction);
-
-            HB.SetHealth(currentHealth);
-
-            if (currentHealth <= 0)
+            float hitChance = Random.Range(0f, 1f);
+            if (hitChance >= dodgeChance)
             {
-                isDead = true;
+                currentHealth -= dmg * (1 - dmgReduction);
+
+                HB.SetHealth(currentHealth);
+
+                if (currentHealth <= 0)
+                {
+                    isDead = true;
+                } else
+                {
+                    camC.CameraStartShake(2, 2);
+                    dmgTimerCountdown = dmgTime;
+                    iFrameCountdown = iFrameTime;
+                    h_Regen_Timer = h_Regen_Wait;
+                    takingDmg = true;
+                    ChangeAnimationState(PLAYER_DAMAGED);
+                    Knockback(attacker);
+                }
             } else
             {
-                camC.CameraStartShake(2, 2);
-                dmgTimerCountdown = dmgTime;
                 iFrameCountdown = iFrameTime;
-                takingDmg = true;
-                ChangeAnimationState(PLAYER_DAMAGED);
-                Knockback(attacker);
+                // player Dodge Animation
             }
+            
         }
     }
 

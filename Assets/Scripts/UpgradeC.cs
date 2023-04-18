@@ -39,10 +39,10 @@ public class UpgradeC : MonoBehaviour
     [SerializeField] float healthDropChanceIncAmount;
     [SerializeField] float dmgReductionIncAmount;
     [SerializeField] float critDmgIncAmount;
-    // [SerializeField] float dodgeChance;
+    [SerializeField] float dodgeChanceIncAmount;
     [SerializeField] float rollSpeedIncAmount;
-    // [SerializeField] float meleeSpeed;
-    // [SerializeField] float healthRegeneration;
+    [SerializeField] float meleeSpeedIncAmount;
+    [SerializeField] float h_RegenIncAmount;
 
 
     private void Start() 
@@ -65,7 +65,7 @@ public class UpgradeC : MonoBehaviour
         {
             randomCard3 = Random.Range(0, powerUps.Length);
         }
-
+        
         anim1 = powerUps[randomCard1].powerUp.GetComponent<Animator>();
         anim2 = powerUps[randomCard2].powerUp.GetComponent<Animator>();
         anim3 = powerUps[randomCard3].powerUp.GetComponent<Animator>();
@@ -190,6 +190,8 @@ public class UpgradeC : MonoBehaviour
     public void IncDodgeChance()
     {
         CardSelected();
+
+        PC.dodgeChance += dodgeChanceIncAmount;
     }
 
     public void IncRollSpeed()
@@ -202,10 +204,14 @@ public class UpgradeC : MonoBehaviour
     public void IncMeleeSpeed()
     {
         CardSelected();
+
+        PC.meleeSpeed += meleeSpeedIncAmount;
     }
 
     public void IncHealthRegeneration()
     {
         CardSelected();
+
+        PC.healthRegenerationAmount += h_RegenIncAmount;
     }
 }

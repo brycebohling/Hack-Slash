@@ -33082,7 +33082,10 @@ MonoBehaviour:
   healthDropChance: 0
   dmgReduction: 0
   critDmg: 1.25
+  dodgeChance: 0
   rollSpeed: 18
+  meleeSpeed: 0
+  healthRegenerationAmount: 0
   isFacingRight: 1
   groundCheck: {fileID: 2079964255}
   groundLayer:
@@ -33118,6 +33121,8 @@ MonoBehaviour:
   daggerSpawnPoint: {fileID: 5112000660476789790}
   daggerUIObejct: {fileID: 424659906}
   currentHealth: 0
+  h_Regen_Wait: 30
+  h_Regen_BurstWait: 0.5
   iFrameTime: 0.5
   invicible: 0
   dmgTime: 0.1
@@ -36134,7 +36139,10 @@ MonoBehaviour:
   healthDropChanceIncAmount: 0.05
   dmgReductionIncAmount: 0.05
   critDmgIncAmount: 0.1
+  dodgeChanceIncAmount: 0.02
   rollSpeedIncAmount: 2
+  meleeSpeedIncAmount: 0.05
+  h_RegenIncAmount: 1
 --- !u!1 &1486996604
 GameObject:
   m_ObjectHideFlags: 0
