@@ -41,7 +41,7 @@ public class WaveSpawner : MonoBehaviour
         currentWaveValue = waveValue;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (GameManager.gameManager.isPlayerDead)
         {

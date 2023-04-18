@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public float playerMaxHealth;
     public float playerCurrentHealth;
     public bool isPlayerDead;
-
+    [SerializeField] Transform healthItem;
     public int waveNum;
 
 
@@ -86,12 +86,21 @@ public class GameManager : MonoBehaviour
         if (isPaused)
         {
             Time.timeScale = 0f;
-            GamePaused.Invoke();
+            // GamePaused.Invoke();
 
         } else
         {
             Time.timeScale = 1f;
-            GameResumed.Invoke();
+            // GameResumed.Invoke();
+        }
+    }
+
+    public void DropHealth(Transform attackPos)
+    {
+        float isDropingHealth = Random.Range(0f, 1f);
+        if (isDropingHealth < playerScript.healthDropChance)
+        {
+            Instantiate(healthItem, attackPos.position, Quaternion.identity);
         }
     }
 

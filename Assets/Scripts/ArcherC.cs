@@ -69,6 +69,7 @@ public class ArcherC : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
+            GameManager.gameManager.DropHealth(transform);
             Destroy(gameObject);
         }
 

@@ -13,15 +13,14 @@ public class playerController : MonoBehaviour
     // Stats
     public float movementSpeed;
     public float jumpForce;
-    // public float numberOfJumps;
+    public int numberOfJumps;
     public float maxHealth;
     public float maxStamina;
     public float meleeDmg;
     public float daggerDmg;
-    public int daggerAmmo = 3;
     public float daggerSpeed;
-    // public float healthDropChance;
-    // public float dmgReduction;
+    public float healthDropChance;
+    public float dmgReduction;
     public float critDmg;
     // public float dodgeChance;
     public float rollSpeed;
@@ -63,13 +62,14 @@ public class playerController : MonoBehaviour
     private bool isCeiling;
 
     // Junping
-    private bool canDoubleJump;
+    int currentNumOfJumps;
     [SerializeField] float jumpOffJumpTime;
     float jumpOffJumpTimer;
     [SerializeField] float waitToCheckForJump;
     float waitToCheckForJumpTimer;
 
     // Rolling 
+
     [SerializeField] private float rollWidth;
     [SerializeField] private float rollHight;
     [SerializeField] private float rollOffsetX;
@@ -104,6 +104,7 @@ public class playerController : MonoBehaviour
 
     // Dagger
     public GameObject dagger;
+    int daggerAmmo = 3;
     [SerializeField] float daggerThrowCooldown;
     float daggerThrowCooldownTimer;
     private int currentDaggerAmmo;
@@ -234,7 +235,7 @@ public class playerController : MonoBehaviour
 
         if (!isGrounded && wasGrounded)
         {
-            canDoubleJump = true;
+            currentNumOfJumps = numberOfJumps;
         }
 
         if (isGrounded)
@@ -390,17 +391,17 @@ public class playerController : MonoBehaviour
                     waitToCheckForJumpTimer = waitToCheckForJump;
                 }
                 
-            } else if (canDoubleJump)
+            } else if (currentNumOfJumps >= 1)
             {
                 if (isRolling && !isCeiling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    canDoubleJump = false;
+                    currentNumOfJumps -= 1;
                     ChangeAnimationState(PLAYER_JUMP);
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    canDoubleJump = false;
+                    currentNumOfJumps -= 1;
                 }
             }
         }
@@ -506,7 +507,6 @@ public class playerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && bushInRange.Length > 0)
         {
             BushJumpCheck();
-            // Consume something?
         }
     }
 
@@ -686,12 +686,13 @@ public class playerController : MonoBehaviour
         }        
     }
 
-    public void PlayerTakeDmg(float meleeDmg, Transform attacker)
+    public void PlayerTakeDmg(float dmg, Transform attacker)
     {
         
         if (iFrameCountdown <= 0 && !invicible)
         {
-            currentHealth -= meleeDmg;
+            currentHealth -= dmg * (1 - dmgReduction);
+
             HB.SetHealth(currentHealth);
 
             if (currentHealth <= 0)

@@ -29,19 +29,18 @@ public class UpgradeC : MonoBehaviour
     // Player Stat Increase Amounts
 
     [SerializeField] float movementSpeedIncAmount;
-    [SerializeField] float jumpForce;
-    // [SerializeField] float numberOfJumps;
-    [SerializeField] float maxHealth;
-    [SerializeField] float maxStamina;
-    [SerializeField] float meleeDmg;
-    [SerializeField] float daggerDmg;
-    [SerializeField] int daggerAmmo = 3;
-    [SerializeField] float daggerSpeed;
-    // [SerializeField] float healthDropChance;
-    // [SerializeField] float dmgReduction;
-    [SerializeField] float critDmg;
+    [SerializeField] float jumpForceIncAmount;
+    [SerializeField] int numberOfJumpsIncAmount;
+    [SerializeField] float maxHealthIncAmount;
+    [SerializeField] float maxStaminaIncAmount;
+    [SerializeField] float meleeDmgIncAmount;
+    [SerializeField] float daggerDmgIncAmount;  
+    [SerializeField] float daggerSpeedIncAmount;
+    [SerializeField] float healthDropChanceIncAmount;
+    [SerializeField] float dmgReductionIncAmount;
+    [SerializeField] float critDmgIncAmount;
     // [SerializeField] float dodgeChance;
-    [SerializeField] float rollSpeed;
+    [SerializeField] float rollSpeedIncAmount;
     // [SerializeField] float meleeSpeed;
     // [SerializeField] float healthRegeneration;
 
@@ -54,7 +53,7 @@ public class UpgradeC : MonoBehaviour
     public async void LevelUp()
     {
         GameManager.gameManager.PauseResume();
-        
+
         randomCard1 = Random.Range(0, powerUps.Length);
         randomCard2 = Random.Range(0, powerUps.Length);
         while (randomCard2 == randomCard1)
@@ -121,56 +120,71 @@ public class UpgradeC : MonoBehaviour
     public void IncJumpForce()
     {
         CardSelected();
+
+        PC.jumpForce += jumpForceIncAmount;
     }
 
     public void IncNumberOfJumps()
     {
         CardSelected();
+
+        PC.numberOfJumps += numberOfJumpsIncAmount;
     }
     
     public void IncMaxHealth()
     {
         CardSelected();
+
+        PC.maxHealth += maxHealthIncAmount;
     }
 
     public void IncMaxStamina()
     {
         CardSelected();
+
+        PC.maxStamina += maxStaminaIncAmount;
     }
     
     public void IncMeleeDmg()
     {
         CardSelected();
+
+        PC.meleeDmg += meleeDmgIncAmount;
     }
 
     public void IncDaggerDmg()
     {
         CardSelected();
-    }
-    
-    public void IncDaggerAmmo()
-    {
-        CardSelected();
+
+        PC.daggerDmg += daggerDmgIncAmount;
     }
     
     public void IncDaggerSpeed()
     {
         CardSelected();
+
+        PC.daggerSpeed += daggerSpeedIncAmount;
     }
 
     public void IncHealthDropChance()
     {
         CardSelected();
+
+        PC.healthDropChance += healthDropChanceIncAmount;
     }
 
     public void IncDmgReduction()
     {
         CardSelected();
+
+        PC.dmgReduction += dmgReductionIncAmount;
     }
 
     public void IncCritDmg()
     {
         CardSelected();
+
+        PC.critDmg += critDmgIncAmount;
     }
     
     public void IncDodgeChance()
@@ -181,6 +195,8 @@ public class UpgradeC : MonoBehaviour
     public void IncRollSpeed()
     {
         CardSelected();
+
+        PC.rollSpeed += rollSpeedIncAmount;
     }
 
     public void IncMeleeSpeed()
