@@ -14,6 +14,7 @@ public class UpgradeC : MonoBehaviour
     Button btn2;
     Button btn3;
     string CardDrop = "Drop";
+    string SelectedAnim = "Selected";
     [System.Serializable] public struct PowerUps
     {
         public GameObject powerUp;
@@ -22,6 +23,7 @@ public class UpgradeC : MonoBehaviour
     public PowerUps[] powerUps;
     [SerializeField] Transform[] startPoints;
     [SerializeField] int cardDropOffest;
+    [SerializeField] float cardUpOffset;
     int randomCard1;
     int randomCard2;
     int randomCard3;
@@ -65,7 +67,7 @@ public class UpgradeC : MonoBehaviour
         {
             randomCard3 = Random.Range(0, powerUps.Length);
         }
-        
+
         anim1 = powerUps[randomCard1].powerUp.GetComponent<Animator>();
         anim2 = powerUps[randomCard2].powerUp.GetComponent<Animator>();
         anim3 = powerUps[randomCard3].powerUp.GetComponent<Animator>();
@@ -101,117 +103,141 @@ public class UpgradeC : MonoBehaviour
         btn3.interactable = true;
     }
 
-    void CardSelected()
+    private IEnumerator CardSelected()
     {
-        GameManager.gameManager.PauseResume();
+        btn1.interactable = false;
+        btn2.interactable = false;
+        btn3.interactable = false;
+
+        anim1.Play(SelectedAnim);
+        yield return new WaitForSecondsRealtime(cardUpOffset);
+        anim2.Play(SelectedAnim);
+        yield return new WaitForSecondsRealtime(cardUpOffset);
+        anim3.Play(SelectedAnim);
+        yield return new WaitForSecondsRealtime(cardUpOffset);
+
+        yield return new WaitUntil(() => !IsAnimationPlaying(anim3, SelectedAnim));
 
         powerUps[randomCard1].powerUp.SetActive(false);
         powerUps[randomCard2].powerUp.SetActive(false);
         powerUps[randomCard3].powerUp.SetActive(false);
+        
+        GameManager.gameManager.PauseResume();
     }
 
     public void IncMovementSpeed()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.movementSpeed += movementSpeedIncAmount;
     }
 
     public void IncJumpForce()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.jumpForce += jumpForceIncAmount;
     }
 
     public void IncNumberOfJumps()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.numberOfJumps += numberOfJumpsIncAmount;
     }
     
     public void IncMaxHealth()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.maxHealth += maxHealthIncAmount;
     }
 
     public void IncMaxStamina()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.maxStamina += maxStaminaIncAmount;
     }
     
     public void IncMeleeDmg()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.meleeDmg += meleeDmgIncAmount;
     }
 
     public void IncDaggerDmg()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.daggerDmg += daggerDmgIncAmount;
     }
     
     public void IncDaggerSpeed()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.daggerSpeed += daggerSpeedIncAmount;
     }
 
     public void IncHealthDropChance()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.healthDropChance += healthDropChanceIncAmount;
     }
 
     public void IncDmgReduction()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.dmgReduction += dmgReductionIncAmount;
     }
 
     public void IncCritDmg()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.critDmg += critDmgIncAmount;
     }
     
     public void IncDodgeChance()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.dodgeChance += dodgeChanceIncAmount;
     }
 
     public void IncRollSpeed()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.rollSpeed += rollSpeedIncAmount;
     }
 
     public void IncMeleeSpeed()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.meleeSpeed += meleeSpeedIncAmount;
     }
 
     public void IncHealthRegeneration()
     {
-        CardSelected();
+        StartCoroutine(CardSelected());
 
         PC.healthRegenerationAmount += h_RegenIncAmount;
+    }
+
+    private bool IsAnimationPlaying(Animator animator, string stateName)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 }

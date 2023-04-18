@@ -32467,7 +32467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 750}
+  m_AnchoredPosition: {x: -500, y: -70}
   m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &552562187
@@ -36128,6 +36128,7 @@ MonoBehaviour:
   - {fileID: 635730898}
   - {fileID: 271278217}
   cardDropOffest: 250
+  cardUpOffset: 0.25
   movementSpeedIncAmount: 1
   jumpForceIncAmount: 1
   numberOfJumpsIncAmount: 1
