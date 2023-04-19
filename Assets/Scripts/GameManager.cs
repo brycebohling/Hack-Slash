@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
     public UnityEvent GamePaused;
     public UnityEvent GameResumed;
+    [SerializeField] GameObject PauseScreen;
     bool isPaused;
     public GameObject player;
     private playerController playerScript;
@@ -74,9 +76,19 @@ public class GameManager : MonoBehaviour
             isPlayerDead = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp)
+        if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp && !isPlayerDead)
         {
             PauseResume();
+
+            if (isPaused)
+            {
+                PauseScreen.SetActive(true);
+            } else
+            {
+                PauseScreen.SetActive(false);
+            }
+
+            // upgrades.LevelUp();
         }
     }
 
@@ -88,11 +100,13 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 0f;
             GamePaused.Invoke();
+            
 
         } else
         {
             Time.timeScale = 1f;
             GameResumed.Invoke();
+            PauseScreen.SetActive(false);
         }
     }
 

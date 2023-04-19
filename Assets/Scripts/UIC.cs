@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIC : MonoBehaviour 
 {
@@ -23,6 +22,11 @@ public class UIC : MonoBehaviour
     public void Contols()
     {
         SceneC.LoadScene(1);
+    }
+
+    public void Resume()
+    {
+        GameManager.gameManager.PauseResume();
     }
 
     public void Hyperlinks(string link)
