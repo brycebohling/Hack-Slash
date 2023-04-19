@@ -33157,12 +33157,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  groundCheckSize: {x: 0.5, y: 0.1}
   ceillingCheckSize: {x: 1.2, y: 2}
   ceillingCheck: {fileID: 1361177370}
   headHitters:
     serializedVersion: 2
     m_Bits: 192
-  jumpOffJumpTime: 0.1
+  jumpOffJumpTime: 0.2
   waitToCheckForJump: 0.1
   rollWidth: 1.5
   rollHight: 1.35

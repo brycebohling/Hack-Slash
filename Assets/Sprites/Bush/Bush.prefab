@@ -120,6 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeParticals: {fileID: 6510529864933311194, guid: cbba721640beb41d5b8d74835008198d, type: 3}
+  fadeSpeed: 0.35
+  waitForDeathTime: 0.5
+  dyingBush: 15
 --- !u!61 &3922327204375181429
 BoxCollider2D:
   m_ObjectHideFlags: 0

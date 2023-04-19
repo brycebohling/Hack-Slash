@@ -11,37 +11,51 @@ public class bushC : MonoBehaviour
     string bushNormalAnim = "normal";
     bool isPlayingShake;
     [SerializeField] Transform shakeParticals;
-    bool isDead; 
+    bool isDead;
+    [SerializeField] float fadeSpeed;
+    SpriteRenderer rend;
+    Color color;
+    [SerializeField] float waitForDeathTime;
+    float waitForDeathCountdown;
+    [SerializeField] int dyingBush;
 
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        rend = GetComponent<SpriteRenderer>();
+        color = rend.color;
     }
 
     void Update()
     {
-        // if (isDead)
-        // {
-        //     waitForDeathCountdown -= Time.deltaTime;
+        if (isDead)
+        {
+            gameObject.layer = dyingBush;
+            waitForDeathCountdown -= Time.deltaTime;
 
-        //     if (waitForDeathCountdown <= 0)
-        //     {  
-        //         color.a -= fadeSpeed * Time.deltaTime;
+            if (waitForDeathCountdown <= 0)
+            {  
+                color.a -= fadeSpeed * Time.deltaTime;
 
-        //         rend.color = color;
-        //     }   
+                rend.color = color;
+            }   
 
-        //     if (color.a <= 0)
-        //     {
-        //         Destroy(gameObject);
-        //     }
-        // }
+            if (color.a <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
 
         if (!IsAnimationPlaying(anim, bushShakeAnim))
         {
             ChangeAnimationState(bushNormalAnim);
         }
+    }
+
+    public void KillBush()
+    {
+        isDead = true;
     }
 
     public void BushShake()

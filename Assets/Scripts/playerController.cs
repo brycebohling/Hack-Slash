@@ -54,6 +54,7 @@ public class playerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
     private bool wasGrounded;
+    [SerializeField] Vector2 groundCheckSize;
 
     // Ceilling check
     [SerializeField] Vector2 ceillingCheckSize;
@@ -200,7 +201,7 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
         isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
 
         DidWaveChange();    
@@ -334,6 +335,7 @@ public class playerController : MonoBehaviour
                 jumpingOutBush = false;
                 didBushShake = false;
                 invicible = false;
+                bushScript.KillBush();
             }
         }
 
@@ -440,7 +442,6 @@ public class playerController : MonoBehaviour
                 }
                 return;
             }
-           
         }
 
         if (isRolling)
@@ -784,7 +785,7 @@ public class playerController : MonoBehaviour
     {
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);   
     
-        Gizmos.DrawWireCube(groundCheck.position, new Vector2(1.5f, .2f)); 
+        Gizmos.DrawWireCube(groundCheck.position, groundCheckSize); 
         Gizmos.DrawWireCube(ceillingCheck.position, ceillingCheckSize);
 
         Gizmos.DrawWireCube(transform.position, bushCheckSize);
