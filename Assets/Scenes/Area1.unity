@@ -36460,7 +36460,7 @@ MonoBehaviour:
   - {fileID: 627013571}
   - {fileID: 635730898}
   - {fileID: 271278217}
-  cardDropOffest: 250
+  cardDropOffest: 0.25
   cardUpOffset: 0.25
   movementSpeedIncAmount: 1
   jumpForceIncAmount: 1

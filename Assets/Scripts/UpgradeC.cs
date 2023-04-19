@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 using UnityEngine.UI;
 
 public class UpgradeC : MonoBehaviour
@@ -22,7 +21,7 @@ public class UpgradeC : MonoBehaviour
 
     public PowerUps[] powerUps;
     [SerializeField] Transform[] startPoints;
-    [SerializeField] int cardDropOffest;
+    [SerializeField] float cardDropOffest;
     [SerializeField] float cardUpOffset;
     int randomCard1;
     int randomCard2;
@@ -52,7 +51,7 @@ public class UpgradeC : MonoBehaviour
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
     }
 
-    public async void LevelUp()
+    public IEnumerator LevelUp()
     {
         GameManager.gameManager.PauseResume();
 
@@ -86,19 +85,19 @@ public class UpgradeC : MonoBehaviour
         btn1.interactable = false;
         anim1.Play(CardDrop);
 
-        await Task.Delay(cardDropOffest);
-
+        yield return new WaitForSecondsRealtime(cardDropOffest);
+        
         powerUps[randomCard2].powerUp.SetActive(true);
         btn2.interactable = false;
         anim2.Play(CardDrop);
 
-        await Task.Delay(cardDropOffest);
+        yield return new WaitForSecondsRealtime(cardDropOffest);
 
         powerUps[randomCard3].powerUp.SetActive(true);
         btn3.interactable = false;
         anim3.Play(CardDrop);
 
-        await Task.Delay(cardDropOffest);
+        yield return new WaitForSecondsRealtime(cardDropOffest);
 
         btn1.interactable = true;
         btn2.interactable = true;

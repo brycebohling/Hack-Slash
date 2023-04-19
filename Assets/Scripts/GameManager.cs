@@ -87,8 +87,6 @@ public class GameManager : MonoBehaviour
             {
                 PauseScreen.SetActive(false);
             }
-
-            // upgrades.LevelUp();
         }
     }
 

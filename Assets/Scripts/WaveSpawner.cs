@@ -53,7 +53,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveNumber - lastLeveledUpWave >= wavesToLevelUp)
         {
-            upgradeC.LevelUp();
+            StartCoroutine(upgradeC.LevelUp());
             lastLeveledUpWave = waveNumber;
         }
         
