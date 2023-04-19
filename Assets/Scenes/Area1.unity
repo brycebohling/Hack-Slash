@@ -36462,21 +36462,21 @@ MonoBehaviour:
   - {fileID: 271278217}
   cardDropOffest: 0.25
   cardUpOffset: 0.25
-  movementSpeedIncAmount: 1
+  movementSpeedIncAmount: 2
   jumpForceIncAmount: 1
   numberOfJumpsIncAmount: 1
   maxHealthIncAmount: 10
   maxStaminaIncAmount: 10
   meleeDmgIncAmount: 2
-  daggerDmgIncAmount: 1
-  daggerSpeedIncAmount: 1
+  daggerDmgIncAmount: 2
+  daggerSpeedIncAmount: 2
   healthDropChanceIncAmount: 0.05
   dmgReductionIncAmount: 0.05
-  critDmgIncAmount: 0.1
-  dodgeChanceIncAmount: 0.02
+  critDmgIncAmount: 0.2
+  dodgeChanceIncAmount: 0.05
   rollSpeedIncAmount: 2
   meleeSpeedIncAmount: 0.05
-  h_RegenIncAmount: 0.05
+  h_RegenIncAmount: 0.1
 --- !u!1 &1486996604
 GameObject:
   m_ObjectHideFlags: 0
@@ -36596,7 +36596,7 @@ MonoBehaviour:
   enemiesLeftText: {fileID: 282247895}
   waveNumber: 1
   spawnPointRequiredDistance: 10
-  wavesToLevelUp: 2
+  wavesToLevelUp: 1
   enemiesSpawned: 0
   killedEnemies: 0
 --- !u!1 &1490946650

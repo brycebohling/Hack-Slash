@@ -11,6 +11,8 @@ public class bushC : MonoBehaviour
     string bushNormalAnim = "normal";
     bool isPlayingShake;
     [SerializeField] Transform shakeParticals;
+    bool isDead; 
+
 
     void Start()
     {
@@ -19,6 +21,23 @@ public class bushC : MonoBehaviour
 
     void Update()
     {
+        // if (isDead)
+        // {
+        //     waitForDeathCountdown -= Time.deltaTime;
+
+        //     if (waitForDeathCountdown <= 0)
+        //     {  
+        //         color.a -= fadeSpeed * Time.deltaTime;
+
+        //         rend.color = color;
+        //     }   
+
+        //     if (color.a <= 0)
+        //     {
+        //         Destroy(gameObject);
+        //     }
+        // }
+
         if (!IsAnimationPlaying(anim, bushShakeAnim))
         {
             ChangeAnimationState(bushNormalAnim);
@@ -29,7 +48,6 @@ public class bushC : MonoBehaviour
     {
         Instantiate(shakeParticals, transform.position, Quaternion.identity);
         ChangeAnimationState(bushShakeAnim);
-        
     }
 
     private void ChangeAnimationState(string newState)
