@@ -150,6 +150,7 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask bushLayer;
     Transform closestBushTransform;
     bool didBushShake = false;
+    [SerializeField] float bushHealthAmount;
 
     // Tree mechanices
     [SerializeField] LayerMask treeLayer;
@@ -279,6 +280,7 @@ public class playerController : MonoBehaviour
                 if (bushLerp > 0.8f)
                 {
                     spriteRend.enabled = false;
+                    PlayerHeal(bushHealthAmount);
                 }
             
             } else
@@ -731,6 +733,7 @@ public class playerController : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+
         HB.SetHealth(currentHealth);
 
         // Heal UI above player

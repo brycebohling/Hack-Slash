@@ -33199,6 +33199,7 @@ MonoBehaviour:
   bushLayer:
     serializedVersion: 2
     m_Bits: 4096
+  bushHealthAmount: 5
   treeLayer:
     serializedVersion: 2
     m_Bits: 8192
