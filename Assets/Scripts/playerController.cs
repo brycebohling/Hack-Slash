@@ -118,7 +118,7 @@ public class playerController : MonoBehaviour
     // Health
 
     public float currentHealth;
-    private int currentWave;
+    private int currentWave = 1;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -747,13 +747,15 @@ public class playerController : MonoBehaviour
     {
         if (currentWave != GameManager.gameManager.waveNum)
         {
+            currentWave = GameManager.gameManager.waveNum;
             currentHealth += maxHealth * healthRegenerationPercent;
-        }
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        HB.SetHealth(currentHealth);
+
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            HB.SetHealth(currentHealth);
+        } 
     }
 
     private void ChangeAnimationState(string newState)

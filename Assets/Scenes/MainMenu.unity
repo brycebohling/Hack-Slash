@@ -728,10 +728,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'DISCLAIMER
 
-    This game is not close to done.
+    Just added a buff system that still needs a lot of work.
 
-    Reporting any bugs
-    would be very helpful.'
+
+    This
+    game is not close to done.
+
+    Reporting any bugs would be very helpful.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -764,7 +767,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
