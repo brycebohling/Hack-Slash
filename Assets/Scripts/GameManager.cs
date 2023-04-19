@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public float playerMaxHealth;
     public float playerCurrentHealth;
     public bool isPlayerDead;
+    public bool levelingUp;
     [SerializeField] Transform healthItem;
     public int waveNum;
 
@@ -73,9 +74,9 @@ public class GameManager : MonoBehaviour
             isPlayerDead = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp)
         {
-            upgrades.LevelUp();
+            PauseResume();
         }
     }
 
@@ -132,5 +133,10 @@ public class GameManager : MonoBehaviour
     public void SetDaggerAmmoUI(int ammo)
     {
         daggerUIScript.ChangeDaggerAmmoUI(ammo);
+    }
+
+    public void EnemyDied()
+    {
+        waveScript.killedEnemies++;
     }
 }

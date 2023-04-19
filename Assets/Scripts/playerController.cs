@@ -25,7 +25,7 @@ public class playerController : MonoBehaviour
     public float dodgeChance;
     public float rollSpeed;
     public float meleeSpeed;
-    public float healthRegenerationAmount;
+    public float healthRegenerationPercent;
 
     // Movement
     private float movementX;
@@ -118,10 +118,7 @@ public class playerController : MonoBehaviour
     // Health
 
     public float currentHealth;
-    [SerializeField] float h_Regen_Wait;
-    float h_Regen_Timer;
-    [SerializeField] float h_Regen_BurstWait;
-    float h_Regen_BurstWaitTimer;
+    private int currentWave;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -182,10 +179,6 @@ public class playerController : MonoBehaviour
         currentStamina = maxStamina;
         jumpOffJumpTimer = jumpOffJumpTime;
         waitToCheckForJumpTimer = waitToCheckForJump;
-        h_Regen_Timer = h_Regen_Wait;
-        h_Regen_BurstWaitTimer = h_Regen_BurstWait;
-        HB.SetMaxHealth(maxHealth);
-        SB.SetMaxStamina(maxStamina);
     }
     
 
@@ -210,18 +203,7 @@ public class playerController : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.5f, .2f), 0, groundLayer);
         isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
 
-        if (h_Regen_Timer <= 0f && h_Regen_BurstWaitTimer <= 0f && currentHealth < maxHealth)
-        {
-            currentHealth += healthRegenerationAmount;
-            h_Regen_BurstWaitTimer = h_Regen_BurstWait;
-
-            HB.SetHealth(currentHealth);
-            
-        } else
-        {
-            h_Regen_Timer -= Time.deltaTime;
-            h_Regen_BurstWaitTimer -= Time.deltaTime;
-        }
+        DidWaveChange();    
 
         if (iFrameCountdown > 0f)
         {
@@ -728,7 +710,6 @@ public class playerController : MonoBehaviour
                     camC.CameraStartShake(2, 2);
                     dmgTimerCountdown = dmgTime;
                     iFrameCountdown = iFrameTime;
-                    h_Regen_Timer = h_Regen_Wait;
                     takingDmg = true;
                     ChangeAnimationState(PLAYER_DAMAGED);
                     Knockback(attacker);
@@ -760,6 +741,19 @@ public class playerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
         attacking = false;        
+    }
+
+    private void DidWaveChange()
+    {
+        if (currentWave != GameManager.gameManager.waveNum)
+        {
+            currentHealth += maxHealth * healthRegenerationPercent;
+        }
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        HB.SetHealth(currentHealth);
     }
 
     private void ChangeAnimationState(string newState)

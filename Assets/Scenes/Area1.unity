@@ -257,7 +257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Max Stamina
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Crit Damage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -810,6 +810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20fb1d0b94b1748738218692c06f7147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PC: {fileID: 696645496}
   fadeSpeed: 0.1
   fadeWaitTime: 0.5
 --- !u!1001 &224843502
@@ -1113,7 +1114,7 @@ GameObject:
   - component: {fileID: 282247896}
   - component: {fileID: 282247895}
   m_Layer: 5
-  m_Name: TimeTillNextWave
+  m_Name: EnemiesLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32059,7 +32060,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Max Health
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -32194,7 +32195,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Melee Speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -32467,7 +32468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: -70}
+  m_AnchoredPosition: {x: -500, y: 750}
   m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &552562187
@@ -33085,7 +33086,7 @@ MonoBehaviour:
   dodgeChance: 0
   rollSpeed: 18
   meleeSpeed: 0
-  healthRegenerationAmount: 0
+  healthRegenerationPercent: 0
   isFacingRight: 1
   groundCheck: {fileID: 2079964255}
   groundLayer:
@@ -33121,8 +33122,6 @@ MonoBehaviour:
   daggerSpawnPoint: {fileID: 5112000660476789790}
   daggerUIObejct: {fileID: 424659906}
   currentHealth: 0
-  h_Regen_Wait: 30
-  h_Regen_BurstWait: 0.5
   iFrameTime: 0.5
   invicible: 0
   dmgTime: 0.1
@@ -33977,7 +33976,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase movement speed
+  m_text: Increase Movement Speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -34112,7 +34111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Chance for Enemy's to Drop Health
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -34278,7 +34277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Number of Jumps by 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -34413,7 +34412,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Damage Reduction
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -34648,6 +34647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f648970b32a4e4b9f6ae5899e3fe82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PC: {fileID: 696645496}
   fadeSpeed: 0.1
   fadeWaitTime: 0.5
 --- !u!1 &1273011355
@@ -35934,7 +35934,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase jump height
+  m_text: Increase Jump Height
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -36143,7 +36143,7 @@ MonoBehaviour:
   dodgeChanceIncAmount: 0.02
   rollSpeedIncAmount: 2
   meleeSpeedIncAmount: 0.05
-  h_RegenIncAmount: 1
+  h_RegenIncAmount: 0.05
 --- !u!1 &1486996604
 GameObject:
   m_ObjectHideFlags: 0
@@ -36211,6 +36211,7 @@ MonoBehaviour:
   playerMaxHealth: 0
   playerCurrentHealth: 0
   isPlayerDead: 0
+  levelingUp: 0
   healthItem: {fileID: 3163822231421272777, guid: 455cfe323b9d24dc899b434c4224f748, type: 3}
   waveNum: 0
 --- !u!4 &1486996606
@@ -36240,6 +36241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f0307232af84a198742b0e5c0254a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradeC: {fileID: 1485688972}
   spawnPoints:
   - spawnPoint: {fileID: 1423167362}
   - spawnPoint: {fileID: 1086984912}
@@ -36253,14 +36255,16 @@ MonoBehaviour:
     value: 2
   - prefab: {fileID: 742453162992734635, guid: 55afe9a7ca16049e6b53c5510274faf4, type: 3}
     value: 3
-  waveValue: 5
-  valueIncreasePerWave: 3
+  waveValue: 10
+  valueIncreasePerWave: 5
   timeBetweenSpawns: 0.5
-  timeBetweenWaves: 10
   waveText: {fileID: 2048109623}
-  nextWaveTimeText: {fileID: 282247895}
+  enemiesLeftText: {fileID: 282247895}
   waveNumber: 1
   spawnPointRequiredDistance: 10
+  wavesToLevelUp: 2
+  enemiesSpawned: 0
+  killedEnemies: 0
 --- !u!1 &1490946650
 GameObject:
   m_ObjectHideFlags: 0
@@ -36684,7 +36688,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Roll Speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -36819,7 +36823,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Dagger Damage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37343,7 +37347,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Chance to Dodge Attacks
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37895,7 +37899,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Melee Damage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -38030,7 +38034,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Health Regenteration Amount Between Waves
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -38300,7 +38304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase number of jumps by 1
+  m_text: Increase Dagger Speed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

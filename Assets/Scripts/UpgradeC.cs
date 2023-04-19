@@ -56,6 +56,8 @@ public class UpgradeC : MonoBehaviour
     {
         GameManager.gameManager.PauseResume();
 
+        GameManager.gameManager.levelingUp = true;
+
         randomCard1 = Random.Range(0, powerUps.Length);
         randomCard2 = Random.Range(0, powerUps.Length);
         while (randomCard2 == randomCard1)
@@ -122,6 +124,8 @@ public class UpgradeC : MonoBehaviour
         powerUps[randomCard2].powerUp.SetActive(false);
         powerUps[randomCard3].powerUp.SetActive(false);
         
+        GameManager.gameManager.levelingUp = false;
+
         GameManager.gameManager.PauseResume();
     }
 
@@ -227,7 +231,7 @@ public class UpgradeC : MonoBehaviour
     {
         StartCoroutine(CardSelected());
 
-        PC.healthRegenerationAmount += h_RegenIncAmount;
+        PC.healthRegenerationPercent += h_RegenIncAmount;
     }
 
     private bool IsAnimationPlaying(Animator animator, string stateName)

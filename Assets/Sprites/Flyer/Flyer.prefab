@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b653f8d00a4590be11845ac2791b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveSpawnerScript: {fileID: 0}
   speed: 4
   health: 20
   playerLayer:

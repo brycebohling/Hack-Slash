@@ -56,6 +56,7 @@ public class FlyerC : MonoBehaviour
     // Spawning with tree
     bool spawningFromTree;
     Transform goToPoint;
+    bool noAddToEnemies;
 
 
     void Start()
@@ -70,6 +71,10 @@ public class FlyerC : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
+            if (!noAddToEnemies)
+            {
+                GameManager.gameManager.EnemyDied();
+            }
             Destroy(gameObject);
         }
 
@@ -104,6 +109,8 @@ public class FlyerC : MonoBehaviour
 
         if (spawningFromTree)
         {
+            noAddToEnemies = true;
+
             if (!transform)
             {
                 transform.position =  Vector2.Lerp(transform.position, goToPoint.position, speed * Time.deltaTime);

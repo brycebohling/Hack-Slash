@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    [SerializeField] playerController PC;
     private Image barImage;
     private Image background;
     private float maxHealthAmount;
@@ -37,16 +38,11 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    public void SetMaxHealth(float maxHealth)
-    {
-        maxHealthAmount = maxHealth;
-    }
-
     public void SetHealth(float health)
     {
-        if (barImage.fillAmount != health / maxHealthAmount)
+        if (barImage.fillAmount != health / PC.maxHealth)
         {
-            barImage.fillAmount = health / maxHealthAmount;
+            barImage.fillAmount = health / PC.maxHealth;
             fadeWaitTimer = fadeWaitTime;
         }
     }

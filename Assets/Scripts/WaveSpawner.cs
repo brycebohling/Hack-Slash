@@ -5,7 +5,7 @@ using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
-
+    [SerializeField] UpgradeC upgradeC;
     [System.Serializable]
     public struct EnemyType
     {
@@ -22,17 +22,20 @@ public class WaveSpawner : MonoBehaviour
     public EnemyType[] enemyTypes; 
     [SerializeField] float waveValue;
     [SerializeField] float valueIncreasePerWave; 
-    public float timeBetweenSpawns;
-    [SerializeField] float timeBetweenWaves;
+    [SerializeField] float timeBetweenSpawns;
     [SerializeField] TMP_Text waveText;
-    [SerializeField] TMP_Text nextWaveTimeText;
-    float timeTillNextWave;
-    float waveTimer;
+    [SerializeField] TMP_Text enemiesLeftText;
     private float currentWaveValue;
     private float spawnTimer;
     public int waveNumber = 1;
     bool isNewWave;
     [SerializeField] float spawnPointRequiredDistance;
+    [SerializeField] int wavesToLevelUp;
+    int lastLeveledUpWave = 1;
+    public int enemiesSpawned;
+    public int killedEnemies;
+    int enemiesLeft;
+    bool spawnNextWave;
     
 
     void Start()
@@ -48,20 +51,36 @@ public class WaveSpawner : MonoBehaviour
             return;
         }
 
-        if (waveTimer > 0)
+        if (waveNumber - lastLeveledUpWave >= wavesToLevelUp)
         {
-            nextWaveTimeText.text = "Next wave in: " + Mathf.Round(waveTimer);
+            upgradeC.LevelUp();
+            lastLeveledUpWave = waveNumber;
+        }
+        
+        if (spawnNextWave)
+        {
+            enemiesLeftText.text = "Spawning...";
         } else
         {
-            nextWaveTimeText.text = "Next wave in: 0";
+            enemiesLeft = enemiesSpawned - killedEnemies;
+            enemiesLeftText.text = "Enemies Left: " + enemiesLeft.ToString();
+
+            if (enemiesLeft == 0)
+            {
+                spawnNextWave = true;
+            } 
         }
 
-        if (spawnTimer <= 0f && currentWaveValue > 0f && waveTimer <= 0)
+        if (spawnTimer <= 0f && spawnNextWave)
         {
             if (isNewWave)
             {
+                waveNumber++;
                 ChangeWaveNumber(waveNumber.ToString());
                 isNewWave = false;
+            } else
+            {
+
             }
 
             int enemyIndex = Random.Range(0, enemyTypes.Length);
@@ -83,10 +102,21 @@ public class WaveSpawner : MonoBehaviour
             Vector2 spawnLocation = new Vector2(randomSpawnPoint.position.x + randomPosX, randomSpawnPoint.position.y);
 
             GameObject newEnemy = Instantiate(enemyTypes[enemyIndex].prefab, spawnLocation, randomSpawnPoint.rotation);
+            enemiesSpawned++;
 
             currentWaveValue -= enemyTypes[enemyIndex].value;
 
             spawnTimer = timeBetweenSpawns;
+
+            if (currentWaveValue <= 0f)
+            {
+                waveValue += valueIncreasePerWave;
+
+                currentWaveValue = waveValue;
+                spawnTimer = 0f;
+                spawnNextWave = false;
+                isNewWave = true;
+            }
 
         } else
         {
@@ -94,26 +124,9 @@ public class WaveSpawner : MonoBehaviour
             {
                 spawnTimer -= Time.deltaTime;
             }
-
-            if (waveTimer > 0)
-            {
-                waveTimer -= Time.deltaTime;
-            }
         }
 
-        if (currentWaveValue <= 0f)
-        {
-            waveValue += valueIncreasePerWave;
-
-            currentWaveValue = waveValue;
-            spawnTimer = 0f;
-
-            waveTimer = timeBetweenWaves;
-
-            waveNumber++;
-
-            isNewWave = true;
-        }
+        
     }
 
     public void ChangeWaveNumber(string waveNumber)

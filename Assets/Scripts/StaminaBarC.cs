@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class StaminaBarC : MonoBehaviour
 {
+    [SerializeField] playerController PC;
     private Image barImage;
     private Image background;
     private float maxStaminaAmount;
@@ -37,16 +38,11 @@ public class StaminaBarC : MonoBehaviour
         }
     }
 
-    public void SetMaxStamina(float maxStamiina)
-    {
-        maxStaminaAmount = maxStamiina;
-    }
-
     public void SetStamina(float currentStamina)
     {
-        if (barImage.fillAmount != currentStamina / maxStaminaAmount)
+        if (barImage.fillAmount != currentStamina / PC.maxStamina)
         {
-            barImage.fillAmount = currentStamina / maxStaminaAmount;
+            barImage.fillAmount = currentStamina / PC.maxStamina;
             fadeWaitTimer = fadeWaitTime;
         }
     }
