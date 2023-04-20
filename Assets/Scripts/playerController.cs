@@ -48,7 +48,7 @@ public class playerController : MonoBehaviour
     const string PLAYER_ATTACK_2 = "attack-2";
     const string PLAYER_ATTACK_3 = "attack-3";
     const string PLAYER_DAMAGED = "damaged";
-
+    
     // Ground check
     [SerializeField] Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -263,7 +263,7 @@ public class playerController : MonoBehaviour
             currentDaggerAmmo++;
             GameManager.gameManager.SetDaggerAmmoUI(currentDaggerAmmo);
         }
-
+        
         if (jumpingIntoBush)
         {
             daggerUIObejct.SetActive(false);

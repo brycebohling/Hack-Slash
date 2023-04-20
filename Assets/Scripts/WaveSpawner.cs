@@ -17,7 +17,7 @@ public class WaveSpawner : MonoBehaviour
     {
         public Transform spawnPoint;
     }
-
+    
     public SpawnPoints[] spawnPoints;
     public EnemyType[] enemyTypes; 
     [SerializeField] float waveValue;

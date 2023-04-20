@@ -36596,7 +36596,7 @@ MonoBehaviour:
   timeBetweenSpawns: 0.5
   waveText: {fileID: 2048109623}
   enemiesLeftText: {fileID: 282247895}
-  waveNumber: 1
+  waveNumber: 2
   spawnPointRequiredDistance: 10
   wavesToLevelUp: 1
   enemiesSpawned: 0
