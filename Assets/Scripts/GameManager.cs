@@ -156,4 +156,9 @@ public class GameManager : MonoBehaviour
     {
         waveScript.TreeDestroyed(location);
     }
+
+    public void BushDead(Transform location)
+    {
+        waveScript.BushDestroyed(location);
+    }
 }

@@ -150,7 +150,7 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask bushLayer;
     Transform closestBushTransform;
     bool didBushShake = false;
-    [SerializeField] float bushHealthAmount;
+    float bushHealthAmount = 5;
 
     // Tree mechanices
     [SerializeField] LayerMask treeLayer;
@@ -280,7 +280,6 @@ public class playerController : MonoBehaviour
                 if (bushLerp > 0.8f)
                 {
                     spriteRend.enabled = false;
-                    PlayerHeal(bushHealthAmount);
                 }
             
             } else
@@ -290,6 +289,7 @@ public class playerController : MonoBehaviour
                 {
                     bushScript.BushShake();
                     didBushShake = true;
+                    PlayerHeal(bushHealthAmount);
                 }
 
                 if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
@@ -752,13 +752,7 @@ public class playerController : MonoBehaviour
         if (currentWave != GameManager.gameManager.waveNum)
         {
             currentWave = GameManager.gameManager.waveNum;
-            currentHealth += maxHealth * healthRegenerationPercent;
-
-            if (currentHealth > maxHealth)
-            {
-                currentHealth = maxHealth;
-            }
-            HB.SetHealth(currentHealth);
+            PlayerHeal(maxHealth * healthRegenerationPercent); 
         } 
     }
 

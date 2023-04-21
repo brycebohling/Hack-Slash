@@ -17,7 +17,7 @@ public class bushC : MonoBehaviour
     Color color;
     [SerializeField] float waitForDeathTime;
     float waitForDeathCountdown;
-    [SerializeField] int dyingBush;
+    [SerializeField] int dyingBushLayer;
 
 
     void Start()
@@ -31,7 +31,7 @@ public class bushC : MonoBehaviour
     {
         if (isDead)
         {
-            gameObject.layer = dyingBush;
+            gameObject.layer = dyingBushLayer;
             waitForDeathCountdown -= Time.deltaTime;
 
             if (waitForDeathCountdown <= 0)
@@ -43,6 +43,7 @@ public class bushC : MonoBehaviour
 
             if (color.a <= 0)
             {
+                GameManager.gameManager.BushDead(transform);
                 Destroy(gameObject);
             }
         }

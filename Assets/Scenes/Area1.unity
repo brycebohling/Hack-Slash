@@ -33166,7 +33166,6 @@ MonoBehaviour:
   bushLayer:
     serializedVersion: 2
     m_Bits: 4096
-  bushHealthAmount: 5
   treeLayer:
     serializedVersion: 2
     m_Bits: 8192
@@ -36526,6 +36525,9 @@ MonoBehaviour:
   - {fileID: 1807903718}
   tree: {fileID: 1554912663197339026, guid: fdba2da1387ab472fa9ed08bf5d8744d, type: 3}
   treeSpawnPercent: 0.2
+  bushSpawns: []
+  bush: {fileID: 0}
+  bushSpawnPercent: 0
 --- !u!1 &1490946650
 GameObject:
   m_ObjectHideFlags: 0

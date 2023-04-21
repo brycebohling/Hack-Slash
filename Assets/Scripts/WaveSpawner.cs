@@ -46,7 +46,10 @@ public class WaveSpawner : MonoBehaviour
 
     // Bush stuff
     
-
+    [SerializeField] private List<Transform> bushSpawns = new List<Transform>();
+    private List<Transform> bushPositions = new List<Transform>();
+    [SerializeField] Transform bush;
+    [SerializeField] float bushSpawnPercent;
 
 
     void Start()
@@ -164,7 +167,6 @@ public class WaveSpawner : MonoBehaviour
                         canSpawn = false;
                         break;    
                     }
-            
                 }
 
                 if (canSpawn)
@@ -173,7 +175,6 @@ public class WaveSpawner : MonoBehaviour
                     treePositions.Add(treeSpawnPoint);
                 }
             }
-            
         }
     }
 
@@ -191,7 +192,41 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnBushes()
     {
-        
+        foreach (Transform bushSpawnPoint in bushSpawns)
+        {
+            float randomPercent = Random.Range(0f, 1f);
+            bool canSpawn = true;
+
+            if (randomPercent <= bushSpawnPercent)
+            {
+                for (int i = 1; i < bushPositions.Count; i++)
+                {
+                    if(bushPositions[i].transform.position == bushSpawnPoint.position)
+                    {
+                        canSpawn = false;
+                        break;    
+                    }
+                }
+
+                if (canSpawn)
+                {
+                    Instantiate(bush, bushSpawnPoint.position, Quaternion.identity);
+                    bushPositions.Add(bushSpawnPoint);
+                }
+            }
+        }
+    }
+
+    public void BushDestroyed(Transform location)
+    {
+        for (int i = 1; i < bushPositions.Count; i++)
+        {
+            if (bushPositions[i].transform.position == location.position)
+            {
+                bushPositions.RemoveAt(i);
+            }
+    
+        }
     }
 }
 
