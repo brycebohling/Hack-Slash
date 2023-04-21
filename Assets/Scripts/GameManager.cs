@@ -151,4 +151,9 @@ public class GameManager : MonoBehaviour
     {
         waveScript.killedEnemies++;
     }
+
+    public void TreeDead(Transform location)
+    {
+        waveScript.TreeDestroyed(location);
+    }
 }

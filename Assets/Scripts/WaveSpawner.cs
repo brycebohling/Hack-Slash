@@ -36,7 +36,18 @@ public class WaveSpawner : MonoBehaviour
     public int killedEnemies;
     int enemiesLeft;
     bool spawnNextWave;
+
+    // Tree stuff
+
+    [SerializeField] private List<Transform> treeSpawns = new List<Transform>();
+    private List<Transform> treePositions = new List<Transform>();
+    [SerializeField] Transform tree;
+    [SerializeField] float treeSpawnPercent;
+
+    // Bush stuff
     
+
+
 
     void Start()
     {
@@ -78,6 +89,9 @@ public class WaveSpawner : MonoBehaviour
                 waveNumber++;
                 ChangeWaveNumber(waveNumber.ToString());
                 isNewWave = false;
+
+                SpawnTrees();
+                SpawnBushes();
             } else
             {
 
@@ -132,6 +146,52 @@ public class WaveSpawner : MonoBehaviour
     public void ChangeWaveNumber(string waveNumber)
     {
         waveText.text = "Wave: " + waveNumber;
+    }
+
+    void SpawnTrees()
+    {
+        foreach (Transform treeSpawnPoint in treeSpawns)
+        {
+            float randomPercent = Random.Range(0f, 1f);
+            bool canSpawn = true;
+
+            if (randomPercent <= treeSpawnPercent)
+            {
+                for (int i = 1; i < treePositions.Count; i++)
+                {
+                    if(treePositions[i].transform.position == treeSpawnPoint.position)
+                    {
+                        canSpawn = false;
+                        break;    
+                    }
+            
+                }
+
+                if (canSpawn)
+                {
+                    Instantiate(tree, treeSpawnPoint.position, Quaternion.identity);
+                    treePositions.Add(treeSpawnPoint);
+                }
+            }
+            
+        }
+    }
+
+    public void TreeDestroyed(Transform location)
+    {
+        for (int i = 1; i < treePositions.Count; i++)
+        {
+            if (treePositions[i].transform.position == location.position)
+            {
+                treePositions.RemoveAt(i);
+            }
+    
+        }
+    }
+
+    void SpawnBushes()
+    {
+        
     }
 }
 

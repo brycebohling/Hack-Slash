@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec89555d3a7a6404fa25849e5ec4c94e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveSpawnerScript: {fileID: 0}
   flyerPoints:
   - flyerPoint: {fileID: 1554912663270082611}
   - flyerPoint: {fileID: 1554912662542922874}

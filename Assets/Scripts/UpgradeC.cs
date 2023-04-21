@@ -27,6 +27,8 @@ public class UpgradeC : MonoBehaviour
     int randomCard2;
     int randomCard3;
 
+    [SerializeField] private List <GameObject> cards = new List<GameObject>();
+
     // Player Stat Increase Amounts
 
     [SerializeField] float movementSpeedIncAmount;
@@ -44,6 +46,22 @@ public class UpgradeC : MonoBehaviour
     [SerializeField] float rollSpeedIncAmount;
     [SerializeField] float meleeSpeedIncAmount;
     [SerializeField] float h_RegenIncAmount;
+
+    [SerializeField] float maxMovementSpeed;
+    [SerializeField] float maxJumpForce;
+    [SerializeField] int maxNumberOfJumps;
+    [SerializeField] float maxMaxHealth;
+    [SerializeField] float maxMaxStamina;
+    [SerializeField] float maxMeleeDmg;
+    [SerializeField] float maxDaggerDmg;  
+    [SerializeField] float maxDaggerSpeed;
+    [SerializeField] float maxHealthDropChance;
+    [SerializeField] float maxDmgReduction;
+    [SerializeField] float maxCritDmg;
+    [SerializeField] float maxDodgeChance;
+    [SerializeField] float maxRollSpeed;
+    [SerializeField] float maxMeleeSpeed;
+    [SerializeField] float maxH_Regen;
 
 
     private void Start() 
@@ -133,6 +151,11 @@ public class UpgradeC : MonoBehaviour
         StartCoroutine(CardSelected());
 
         PC.movementSpeed += movementSpeedIncAmount;
+
+        if (PC.movementSpeed >= maxMovementSpeed)
+        {
+            // cards.Remove();
+        }
     }
 
     public void IncJumpForce()

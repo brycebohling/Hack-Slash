@@ -62,6 +62,8 @@ public class TreeC : MonoBehaviour
 
             if (color.a <= 0)
             {
+                GameManager.gameManager.TreeDead(transform);
+
                 Destroy(gameObject);
             }
         }
