@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class StaminaBarC : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class StaminaBarC : MonoBehaviour
     [SerializeField] float fadeSpeed;
     [SerializeField] float fadeWaitTime;
     float fadeWaitTimer;
+    [SerializeField] TMP_Text staminaText;
 
 
     private void Awake() 
@@ -38,12 +40,14 @@ public class StaminaBarC : MonoBehaviour
         }
     }
 
-    public void SetStamina(float currentStamina)
+    public void SetStamina(float stamina)
     {
-        if (barImage.fillAmount != currentStamina / PC.maxStamina)
+        if (barImage.fillAmount != stamina / PC.maxStamina)
         {
-            barImage.fillAmount = currentStamina / PC.maxStamina;
+            barImage.fillAmount = stamina / PC.maxStamina;
             fadeWaitTimer = fadeWaitTime;
+
+            staminaText.text = Mathf.RoundToInt(stamina) + "/" + Mathf.RoundToInt(PC.maxHealth);
         }
     }
 }

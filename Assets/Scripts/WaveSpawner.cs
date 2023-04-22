@@ -147,8 +147,6 @@ public class WaveSpawner : MonoBehaviour
                 spawnTimer -= Time.deltaTime;
             }
         }
-
-        
     }
 
     public void ChangeWaveNumber(string waveNumber)
@@ -165,7 +163,7 @@ public class WaveSpawner : MonoBehaviour
 
             if (randomPercent <= treeSpawnPercent)
             {
-                for (int i = 1; i < treePositions.Count; i++)
+                for (int i = 0; i < treePositions.Count; i++)
                 {
                     if(treePositions[i].transform.position == treeSpawnPoint.position)
                     {
@@ -185,7 +183,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void TreeDestroyed(Transform location)
     {
-        for (int i = 1; i < treePositions.Count; i++)
+        for (int i = 0; i < treePositions.Count; i++)
         {
             if (treePositions[i].transform.position == location.position)
             {
@@ -204,7 +202,7 @@ public class WaveSpawner : MonoBehaviour
 
             if (randomPercent <= bushSpawnPercent)
             {
-                for (int i = 1; i < bushPositions.Count; i++)
+                for (int i = 0; i < bushPositions.Count; i++)
                 {
                     if(bushPositions[i].transform.position == bushSpawnPoint.position)
                     {
@@ -224,7 +222,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void BushDestroyed(Transform location)
     {
-        for (int i = 1; i < bushPositions.Count; i++)
+        for (int i = 0; i < bushPositions.Count; i++)
         {
             if (bushPositions[i].transform.position == location.position)
             {

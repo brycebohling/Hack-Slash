@@ -85,7 +85,7 @@ public class playerController : MonoBehaviour
 
     // Stamina
 
-    float currentStamina;
+    public float currentStamina;
     [SerializeField] float staminaRechargeTime;
     float staminaRechargeTimer;
     [SerializeField] float staminaRechargeSpeed;
@@ -142,6 +142,7 @@ public class playerController : MonoBehaviour
     bool jumpingOutBush;
     float bushLerp = 0.0f;
     [SerializeField] float bushTime;
+    [SerializeField] float bushLerpSpeed;
     float timeInBush;
     Vector3 bushStartPoint;
     Vector3 bushControlPoint;
@@ -229,6 +230,10 @@ public class playerController : MonoBehaviour
         } else if (currentStamina < maxStamina)
         {
             currentStamina += Time.deltaTime * staminaRechargeSpeed;
+            if (currentStamina > maxStamina)
+            {
+                currentStamina = maxStamina;
+            }
             SB.SetStamina(currentStamina);
         }
 
@@ -272,7 +277,7 @@ public class playerController : MonoBehaviour
             {
                 ChangeAnimationState(PLAYER_START_ROLL);
                 
-                bushLerp += 1.0f * Time.deltaTime;
+                bushLerp += bushLerpSpeed * Time.deltaTime;
 
                 Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
                 Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp);
@@ -325,7 +330,7 @@ public class playerController : MonoBehaviour
         
                 ChangeAnimationState(PLAYER_START_ROLL);
 
-                bushLerp += 1.0f * Time.deltaTime;
+                bushLerp += bushLerpSpeed * Time.deltaTime;
 
                 Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
                 Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp );

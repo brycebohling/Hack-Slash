@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HealthBar : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField] float fadeSpeed;
     [SerializeField] float fadeWaitTime;
     float fadeWaitTimer;
+
+    [SerializeField] TMP_Text healthText;
 
 
     private void Awake() 
@@ -44,6 +47,9 @@ public class HealthBar : MonoBehaviour
         {
             barImage.fillAmount = health / PC.maxHealth;
             fadeWaitTimer = fadeWaitTime;
+            healthText.text = Mathf.RoundToInt(health) + "/" + Mathf.RoundToInt(PC.maxHealth);
         }
+
+        
     }
 }

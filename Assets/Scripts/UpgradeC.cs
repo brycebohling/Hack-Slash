@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class UpgradeC : MonoBehaviour
 {
     playerController PC;
+    [SerializeField] HealthBar HB;
+    [SerializeField] StaminaBarC SB;
     Animator anim1;
     Animator anim2;
     Animator anim3;
@@ -190,6 +192,8 @@ public class UpgradeC : MonoBehaviour
     {
         PC.maxHealth += maxHealthIncAmount;
 
+        HB.SetHealth(PC.currentHealth);
+
         if (PC.maxHealth >= maxMaxHealth)
         {
             StartCoroutine(CardSelected(callerObject));
@@ -202,6 +206,8 @@ public class UpgradeC : MonoBehaviour
     public void IncMaxStamina(GameObject callerObject)
     {
         PC.maxStamina += maxStaminaIncAmount;
+
+        SB.SetStamina(PC.currentStamina);
 
         if (PC.maxStamina >= maxMaxStamina)
         {
