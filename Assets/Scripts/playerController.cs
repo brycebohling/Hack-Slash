@@ -120,6 +120,7 @@ public class playerController : MonoBehaviour
 
     public float currentHealth;
     private int currentWave = 1;
+    [SerializeField] Transform dodgeParticles;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -720,7 +721,7 @@ public class playerController : MonoBehaviour
             } else
             {
                 iFrameCountdown = iFrameTime;
-                // player Dodge Animation
+                Instantiate(dodgeParticles, transform.position, Quaternion.identity);
             }
             
         }

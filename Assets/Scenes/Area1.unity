@@ -133033,7 +133033,7 @@ MonoBehaviour:
   healthDropChance: 0
   dmgReduction: 0
   critDmg: 1.25
-  dodgeChance: 0
+  dodgeChance: 0.5
   rollSpeed: 18
   meleeSpeed: 0
   healthRegenerationPercent: 0
@@ -133073,6 +133073,7 @@ MonoBehaviour:
   daggerSpawnPoint: {fileID: 5112000660476789790}
   daggerUIObejct: {fileID: 424659906}
   currentHealth: 0
+  dodgeParticles: {fileID: 901058660515239617, guid: e461aea060561463b866f4484b5d6c53, type: 3}
   iFrameTime: 0.5
   invicible: 0
   dmgTime: 0.1
