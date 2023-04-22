@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
             } else
             {
                 PauseScreen.SetActive(false);
-            }
+            }    
         }
     }
 

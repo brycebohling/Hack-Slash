@@ -6,6 +6,7 @@ using TMPro;
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] UpgradeC upgradeC;
+
     [System.Serializable]
     public struct EnemyType
     {
@@ -66,8 +67,12 @@ public class WaveSpawner : MonoBehaviour
         }
 
         if (waveNumber - lastLeveledUpWave >= wavesToLevelUp)
-        {
-            StartCoroutine(upgradeC.LevelUp());
+        {   
+            if (upgradeC.powerUps.Count > 2)
+            {
+                StartCoroutine(upgradeC.LevelUp());
+            }
+
             lastLeveledUpWave = waveNumber;
         }
         

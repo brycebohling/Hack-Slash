@@ -14,12 +14,7 @@ public class UpgradeC : MonoBehaviour
     Button btn3;
     string CardDrop = "Drop";
     string SelectedAnim = "Selected";
-    [System.Serializable] public struct PowerUps
-    {
-        public GameObject powerUp;
-    }
-
-    public PowerUps[] powerUps;
+    public List <GameObject> powerUps = new List<GameObject>();
     [SerializeField] Transform[] startPoints;
     [SerializeField] float cardDropOffest;
     [SerializeField] float cardUpOffset;
@@ -27,7 +22,7 @@ public class UpgradeC : MonoBehaviour
     int randomCard2;
     int randomCard3;
 
-    [SerializeField] private List <GameObject> cards = new List<GameObject>();
+    
 
     // Player Stat Increase Amounts
 
@@ -75,43 +70,44 @@ public class UpgradeC : MonoBehaviour
 
         GameManager.gameManager.levelingUp = true;
 
-        randomCard1 = Random.Range(0, powerUps.Length);
-        randomCard2 = Random.Range(0, powerUps.Length);
+        randomCard1 = Random.Range(0, powerUps.Count);
+        randomCard2 = Random.Range(0, powerUps.Count);
         while (randomCard2 == randomCard1)
         {
-            randomCard2 = Random.Range(0, powerUps.Length);
+            randomCard2 = Random.Range(0, powerUps.Count);
         }
-        randomCard3 = Random.Range(0, powerUps.Length);
+
+        randomCard3 = Random.Range(0, powerUps.Count);
         while (randomCard3 == randomCard1 || randomCard3 == randomCard2)
         {
-            randomCard3 = Random.Range(0, powerUps.Length);
+            randomCard3 = Random.Range(0, powerUps.Count);
         }
 
-        anim1 = powerUps[randomCard1].powerUp.GetComponent<Animator>();
-        anim2 = powerUps[randomCard2].powerUp.GetComponent<Animator>();
-        anim3 = powerUps[randomCard3].powerUp.GetComponent<Animator>();
+        anim1 = powerUps[randomCard1].GetComponent<Animator>();
+        anim2 = powerUps[randomCard2].GetComponent<Animator>();
+        anim3 = powerUps[randomCard3].GetComponent<Animator>();
 
-        btn1 = powerUps[randomCard1].powerUp.GetComponent<Button>();
-        btn2 = powerUps[randomCard2].powerUp.GetComponent<Button>();
-        btn3 = powerUps[randomCard3].powerUp.GetComponent<Button>();
+        btn1 = powerUps[randomCard1].GetComponent<Button>();
+        btn2 = powerUps[randomCard2].GetComponent<Button>();
+        btn3 = powerUps[randomCard3].GetComponent<Button>();
 
-        powerUps[randomCard1].powerUp.transform.position = new Vector2(startPoints[0].position.x, startPoints[0].position.y);
-        powerUps[randomCard2].powerUp.transform.position = new Vector2(startPoints[1].position.x, startPoints[1].position.y);
-        powerUps[randomCard3].powerUp.transform.position = new Vector2(startPoints[2].position.x, startPoints[2].position.y);
+        powerUps[randomCard1].transform.position = new Vector2(startPoints[0].position.x, startPoints[0].position.y);
+        powerUps[randomCard2].transform.position = new Vector2(startPoints[1].position.x, startPoints[1].position.y);
+        powerUps[randomCard3].transform.position = new Vector2(startPoints[2].position.x, startPoints[2].position.y);
 
-        powerUps[randomCard1].powerUp.SetActive(true);
+        powerUps[randomCard1].SetActive(true);
         btn1.interactable = false;
         anim1.Play(CardDrop);
 
         yield return new WaitForSecondsRealtime(cardDropOffest);
         
-        powerUps[randomCard2].powerUp.SetActive(true);
+        powerUps[randomCard2].SetActive(true);
         btn2.interactable = false;
         anim2.Play(CardDrop);
 
         yield return new WaitForSecondsRealtime(cardDropOffest);
 
-        powerUps[randomCard3].powerUp.SetActive(true);
+        powerUps[randomCard3].SetActive(true);
         btn3.interactable = false;
         anim3.Play(CardDrop);
 
@@ -122,7 +118,7 @@ public class UpgradeC : MonoBehaviour
         btn3.interactable = true;
     }
 
-    private IEnumerator CardSelected()
+    private IEnumerator CardSelected(GameObject toRemove)
     {
         btn1.interactable = false;
         btn2.interactable = false;
@@ -137,123 +133,213 @@ public class UpgradeC : MonoBehaviour
 
         yield return new WaitUntil(() => !IsAnimationPlaying(anim3, SelectedAnim));
 
-        powerUps[randomCard1].powerUp.SetActive(false);
-        powerUps[randomCard2].powerUp.SetActive(false);
-        powerUps[randomCard3].powerUp.SetActive(false);
+        powerUps[randomCard1].SetActive(false);
+        powerUps[randomCard2].SetActive(false);
+        powerUps[randomCard3].SetActive(false);
+
+        if (toRemove != null)
+        {
+            powerUps.Remove(toRemove);
+        }
         
         GameManager.gameManager.levelingUp = false;
 
         GameManager.gameManager.PauseResume();
     }
 
-    public void IncMovementSpeed()
+    public void IncMovementSpeed(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.movementSpeed += movementSpeedIncAmount;
 
         if (PC.movementSpeed >= maxMovementSpeed)
         {
-            // cards.Remove();
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
         }
     }
 
-    public void IncJumpForce()
+    public void IncJumpForce(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.jumpForce += jumpForceIncAmount;
+
+        if (PC.jumpForce >= maxJumpForce)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncNumberOfJumps()
+    public void IncNumberOfJumps(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.numberOfJumps += numberOfJumpsIncAmount;
+
+        if (PC.numberOfJumps >= maxNumberOfJumps)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
     
-    public void IncMaxHealth()
+    public void IncMaxHealth(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.maxHealth += maxHealthIncAmount;
+
+        if (PC.maxHealth >= maxMaxHealth)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncMaxStamina()
+    public void IncMaxStamina(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.maxStamina += maxStaminaIncAmount;
+
+        if (PC.maxStamina >= maxMaxStamina)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
     
-    public void IncMeleeDmg()
+    public void IncMeleeDmg(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.meleeDmg += meleeDmgIncAmount;
+
+        if (PC.meleeDmg >= maxMeleeDmg)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncDaggerDmg()
+    public void IncDaggerDmg(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.daggerDmg += daggerDmgIncAmount;
+
+        if (PC.daggerDmg >= maxDaggerDmg)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
     
-    public void IncDaggerSpeed()
+    public void IncDaggerSpeed(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.daggerSpeed += daggerSpeedIncAmount;
+
+        if (PC.daggerSpeed >= maxDaggerSpeed)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncHealthDropChance()
+    public void IncHealthDropChance(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.healthDropChance += healthDropChanceIncAmount;
+
+        if (PC.healthDropChance >= maxHealthDropChance)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncDmgReduction()
+    public void IncDmgReduction(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.dmgReduction += dmgReductionIncAmount;
+
+        if (PC.dmgReduction >= maxDmgReduction)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncCritDmg()
+    public void IncCritDmg(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.critDmg += critDmgIncAmount;
+
+        if (PC.critDmg >= maxCritDmg)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
     
-    public void IncDodgeChance()
+    public void IncDodgeChance(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.dodgeChance += dodgeChanceIncAmount;
+
+        if (PC.dodgeChance >= maxDodgeChance)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncRollSpeed()
+    public void IncRollSpeed(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.rollSpeed += rollSpeedIncAmount;
+
+        if (PC.rollSpeed >= maxRollSpeed)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncMeleeSpeed()
+    public void IncMeleeSpeed(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.meleeSpeed += meleeSpeedIncAmount;
+
+        if (PC.meleeSpeed >= maxMeleeSpeed)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
-    public void IncHealthRegeneration()
+    public void IncHealthRegeneration(GameObject callerObject)
     {
-        StartCoroutine(CardSelected());
-
         PC.healthRegenerationPercent += h_RegenIncAmount;
+
+        if (PC.healthRegenerationPercent >= maxH_Regen)
+        {
+            StartCoroutine(CardSelected(callerObject));
+        } else
+        {
+            StartCoroutine(CardSelected(null));
+        }
     }
 
     private bool IsAnimationPlaying(Animator animator, string stateName)

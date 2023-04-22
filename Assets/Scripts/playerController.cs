@@ -133,7 +133,7 @@ public class playerController : MonoBehaviour
     // Death
     public bool isDead;
     [SerializeField] GameObject deathParticals;
-
+    
     // Bush mechanics
     Collider2D[] bushInRange;
     float bushJumpHeight = 5f;
