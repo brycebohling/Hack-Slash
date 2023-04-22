@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         playerCurrentHealth = playerScript.currentHealth;
+        playerMaxHealth = playerScript.maxHealth;
         waveNum = waveScript.waveNumber;
         
         if (playerRenderer.enabled == true)
