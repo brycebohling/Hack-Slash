@@ -121,6 +121,7 @@ public class playerController : MonoBehaviour
     public float currentHealth;
     private int currentWave = 1;
     [SerializeField] Transform dodgeParticles;
+    [SerializeField] GameObject healingText;
 
     // Dmg
     [SerializeField] float iFrameTime;
@@ -735,15 +736,28 @@ public class playerController : MonoBehaviour
 
     public void PlayerHeal(float healAmount)
     {
+        float healthToMax = maxHealth - currentHealth;
+
         currentHealth += healAmount;
-        if (currentHealth > maxHealth)
+        if (healAmount != 0 && healthToMax > 0)
         {
-            currentHealth = maxHealth;
+            float textOffsetX = 1.5f;
+            float textOffsetY = 1f;
+
+            GameObject prefab = Instantiate(healingText, new Vector2(transform.position.x + textOffsetX, transform.position.y + textOffsetY), Quaternion.identity);
+
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+
+                prefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healthToMax).ToString();
+            } else
+            {
+                prefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healAmount).ToString();
+            }
         }
-
+        
         HB.SetHealth(currentHealth);
-
-        // Heal UI above player
     }
 
     private void Knockback(Transform attacker)

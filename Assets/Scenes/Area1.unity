@@ -133098,12 +133098,13 @@ MonoBehaviour:
   daggerUIObejct: {fileID: 424659906}
   currentHealth: 0
   dodgeParticles: {fileID: 901058660515239617, guid: e461aea060561463b866f4484b5d6c53, type: 3}
+  healingText: {fileID: 7124021084714518017, guid: 3440ada6cfc064e038f8977943b9809e, type: 3}
   iFrameTime: 0.5
   invicible: 0
   dmgTime: 0.1
   knockbackPower: 8
   isDead: 0
-  deathParticals: {fileID: 901058660515239618, guid: c5a709f6b82a8405ba918cc50f8c4f77, type: 3}
+  deathParticals: {fileID: 7124021084714518017, guid: 3440ada6cfc064e038f8977943b9809e, type: 3}
   bushTime: 3
   bushLerpSpeed: 1.25
   bushCheckSize: {x: 10, y: 8}
