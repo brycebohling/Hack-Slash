@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617b653f8d00a4590be11845ac2791b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSpawnerScript: {fileID: 0}
   speed: 4
   health: 20
   playerLayer:
@@ -109,11 +108,12 @@ MonoBehaviour:
   dmg: 10
   attackSpeed: 4
   attackWaitTime: 1
-  seeDistance: 20
+  seeDistance: 16
   minDistance: 8
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  boxCastSize: {x: 1.6, y: 1.1}
   dmgTime: 0.1
   deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
   knockbackPower: 16

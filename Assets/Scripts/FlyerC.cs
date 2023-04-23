@@ -31,6 +31,7 @@ public class FlyerC : MonoBehaviour
     [SerializeField] float attackWaitTime;
     bool canDive;
     [SerializeField] float seeDistance;
+    RaycastHit2D groundInWay;
 
     // Movement 
     
@@ -41,6 +42,8 @@ public class FlyerC : MonoBehaviour
     float distance;
     [SerializeField] float minDistance;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] Vector2 boxCastSize;
+    Vector2 playerDir;
 
     // Damaged
 
@@ -80,10 +83,11 @@ public class FlyerC : MonoBehaviour
 
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
-        distance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
+        distance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position); 
+        playerDir = GameManager.gameManager.player.transform.position - transform.position;
+        
+        groundInWay = Physics2D.BoxCast(transform.position, boxCastSize, 0, playerDir, distance, groundLayer);
 
-        Vector2 playerDir = GameManager.gameManager.player.transform.position - transform.position;
-        RaycastHit2D groundInWay = Physics2D.Raycast(transform.position, playerDir, distance, groundLayer);
         Debug.DrawRay(transform.position, playerDir, Color.red);
 
         if (takingDmg)
@@ -180,7 +184,7 @@ public class FlyerC : MonoBehaviour
     {
         yield return new WaitForSeconds(attackWaitTime);
         
-        if (distance < minDistance)
+        if (distance < minDistance && !groundInWay)
         {
             originalPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             attackPlayerPos = new Vector3(GameManager.gameManager.player.transform.position.x, GameManager.gameManager.player.transform.position.y, GameManager.gameManager.player.transform.position.z);
@@ -259,6 +263,5 @@ public class FlyerC : MonoBehaviour
     {   
         Gizmos.DrawWireCube(transform.position, new Vector2(1.6f, 1.1f));
         Gizmos.DrawWireSphere(transform.position, seeDistance);
-        
     }
 }

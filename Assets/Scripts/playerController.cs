@@ -529,6 +529,7 @@ public class playerController : MonoBehaviour
         {
             return;
         }
+
         rb.velocity = new Vector2(movementX * movementSpeed, rb.velocity.y);
     }
     
