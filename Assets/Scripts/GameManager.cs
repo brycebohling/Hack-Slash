@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject statBackground;
     public List<GameObject> statsText = new List<GameObject>();
     bool showingStats;
+    [SerializeField] float statShowOffset;
+    bool showingStatsAnim;
 
 
     void Awake()
@@ -92,7 +94,7 @@ public class GameManager : MonoBehaviour
             isPlayerDead = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp && !isPlayerDead && !showingStats)
+        if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp && !isPlayerDead && !showingStats && !showingStatsAnim)
         {
             PauseResume();
 
@@ -105,9 +107,9 @@ public class GameManager : MonoBehaviour
             }    
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead)
+        if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead && !showingStatsAnim)
         {
-            ShowStats();
+            StartCoroutine(ShowStats());
         }
 
         if (incScoreWaitTimer < 0f)
@@ -240,20 +242,56 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
     }
 
-    private void ShowStats()
+    private IEnumerator ShowStats()
     {
         showingStats = !showingStats;
 
-        PauseResume();
-
         if (showingStats)
         {
+            PauseResume();
+            showingStatsAnim = true;
+
             statsText[0].SetActive(true);
             statsText[1].SetActive(true);
+
+            for(int i = 2; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                statsText[i].SetActive(true);
+                yield return new WaitForSecondsRealtime(statShowOffset);
+            }
+
+            showingStatsAnim = false;
+
         } else
         {
-            statsText[0].SetActive(false);
-            statsText[1].SetActive(false);
+            showingStatsAnim = true;
+
+            for(int i = 2; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                statsText[i].GetComponent<Animator>().Play("hide");
+                yield return new WaitForSecondsRealtime(statShowOffset);
+            }
+
+            yield return new WaitUntil(() => !IsAnimationPlaying(statsText[statsText.Count - 1].GetComponent<Animator>(), "hide"));
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                statsText[i].SetActive(false);
+            }
+
+            showingStatsAnim = false;
+            PauseResume();
+        }
+    }
+
+    private bool IsAnimationPlaying(Animator animator, string stateName)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            return true;
+        } else
+        {
+            return false;
         }
     }
 }

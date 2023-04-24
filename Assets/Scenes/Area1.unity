@@ -531,13 +531,14 @@ GameObject:
   - component: {fileID: 83515764}
   - component: {fileID: 83515766}
   - component: {fileID: 83515765}
+  - component: {fileID: 83515767}
   m_Layer: 5
   m_Name: DodgeChance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &83515764
 RectTransform:
   m_ObjectHideFlags: 0
@@ -655,6 +656,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83515763}
   m_CullTransparentMesh: 1
+--- !u!95 &83515767
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83515763}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &148144572
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,13 +687,14 @@ GameObject:
   - component: {fileID: 148144573}
   - component: {fileID: 148144575}
   - component: {fileID: 148144574}
+  - component: {fileID: 148144576}
   m_Layer: 5
   m_Name: MaxHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &148144573
 RectTransform:
   m_ObjectHideFlags: 0
@@ -790,6 +812,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148144572}
   m_CullTransparentMesh: 1
+--- !u!95 &148144576
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148144572}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &153105445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,13 +1267,14 @@ GameObject:
   - component: {fileID: 167912108}
   - component: {fileID: 167912110}
   - component: {fileID: 167912109}
+  - component: {fileID: 167912111}
   m_Layer: 5
   m_Name: CritDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &167912108
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1349,6 +1392,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167912107}
   m_CullTransparentMesh: 1
+--- !u!95 &167912111
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167912107}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &224668760
 GameObject:
   m_ObjectHideFlags: 0
@@ -132747,13 +132810,14 @@ GameObject:
   - component: {fileID: 483888945}
   - component: {fileID: 483888947}
   - component: {fileID: 483888946}
+  - component: {fileID: 483888948}
   m_Layer: 5
   m_Name: Stats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &483888945
 RectTransform:
   m_ObjectHideFlags: 0
@@ -132829,7 +132893,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -132871,6 +132935,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483888944}
   m_CullTransparentMesh: 1
+--- !u!95 &483888948
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483888944}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -134090,13 +134174,14 @@ GameObject:
   - component: {fileID: 804048636}
   - component: {fileID: 804048638}
   - component: {fileID: 804048637}
+  - component: {fileID: 804048639}
   m_Layer: 5
   m_Name: DaggerDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &804048636
 RectTransform:
   m_ObjectHideFlags: 0
@@ -134214,6 +134299,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804048635}
   m_CullTransparentMesh: 1
+--- !u!95 &804048639
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804048635}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &804415615
 GameObject:
   m_ObjectHideFlags: 0
@@ -134225,13 +134330,14 @@ GameObject:
   - component: {fileID: 804415616}
   - component: {fileID: 804415618}
   - component: {fileID: 804415617}
+  - component: {fileID: 804415619}
   m_Layer: 5
   m_Name: MeleeSpeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &804415616
 RectTransform:
   m_ObjectHideFlags: 0
@@ -134349,6 +134455,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804415615}
   m_CullTransparentMesh: 1
+--- !u!95 &804415619
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804415615}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &807543273
 GameObject:
   m_ObjectHideFlags: 0
@@ -134360,13 +134486,14 @@ GameObject:
   - component: {fileID: 807543274}
   - component: {fileID: 807543276}
   - component: {fileID: 807543275}
+  - component: {fileID: 807543277}
   m_Layer: 5
   m_Name: MovementSpeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &807543274
 RectTransform:
   m_ObjectHideFlags: 0
@@ -134484,6 +134611,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807543273}
   m_CullTransparentMesh: 1
+--- !u!95 &807543277
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807543273}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &815424514
 GameObject:
   m_ObjectHideFlags: 0
@@ -134805,13 +134952,14 @@ GameObject:
   - component: {fileID: 887141815}
   - component: {fileID: 887141817}
   - component: {fileID: 887141816}
+  - component: {fileID: 887141818}
   m_Layer: 5
   m_Name: DaggerSpeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &887141815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -134929,6 +135077,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 887141814}
   m_CullTransparentMesh: 1
+--- !u!95 &887141818
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887141814}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &891530441
 GameObject:
   m_ObjectHideFlags: 0
@@ -135044,13 +135212,14 @@ GameObject:
   - component: {fileID: 906953221}
   - component: {fileID: 906953223}
   - component: {fileID: 906953222}
+  - component: {fileID: 906953224}
   m_Layer: 5
   m_Name: DamageReduction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &906953221
 RectTransform:
   m_ObjectHideFlags: 0
@@ -135168,6 +135337,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906953220}
   m_CullTransparentMesh: 1
+--- !u!95 &906953224
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906953220}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &952568506
 GameObject:
   m_ObjectHideFlags: 0
@@ -135216,13 +135405,14 @@ GameObject:
   - component: {fileID: 958975531}
   - component: {fileID: 958975533}
   - component: {fileID: 958975532}
+  - component: {fileID: 958975534}
   m_Layer: 5
   m_Name: MaxStamina
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &958975531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -135340,6 +135530,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958975530}
   m_CullTransparentMesh: 1
+--- !u!95 &958975534
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958975530}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &978626422
 GameObject:
   m_ObjectHideFlags: 0
@@ -136031,13 +136241,14 @@ GameObject:
   - component: {fileID: 1099308364}
   - component: {fileID: 1099308366}
   - component: {fileID: 1099308365}
+  - component: {fileID: 1099308367}
   m_Layer: 5
   m_Name: '#OfJumps'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1099308364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -136078,7 +136289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Number of Jumps: 1'
+  m_text: 'Number of Extra Jumps: 1'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}
   m_sharedMaterial: {fileID: -3600672583327299092, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}
@@ -136155,6 +136366,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099308363}
   m_CullTransparentMesh: 1
+--- !u!95 &1099308367
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099308363}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1135656410
 GameObject:
   m_ObjectHideFlags: 0
@@ -136733,13 +136964,14 @@ GameObject:
   - component: {fileID: 1209589195}
   - component: {fileID: 1209589197}
   - component: {fileID: 1209589196}
+  - component: {fileID: 1209589198}
   m_Layer: 5
   m_Name: HealthRegeneration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1209589195
 RectTransform:
   m_ObjectHideFlags: 0
@@ -136857,6 +137089,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209589194}
   m_CullTransparentMesh: 1
+--- !u!95 &1209589198
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209589194}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1258219733
 GameObject:
   m_ObjectHideFlags: 0
@@ -137189,13 +137441,14 @@ GameObject:
   - component: {fileID: 1325727678}
   - component: {fileID: 1325727680}
   - component: {fileID: 1325727679}
+  - component: {fileID: 1325727681}
   m_Layer: 5
   m_Name: JumpForce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1325727678
 RectTransform:
   m_ObjectHideFlags: 0
@@ -137313,6 +137566,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325727677}
   m_CullTransparentMesh: 1
+--- !u!95 &1325727681
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325727677}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1332754334
 GameObject:
   m_ObjectHideFlags: 0
@@ -138883,6 +139156,7 @@ MonoBehaviour:
   - {fileID: 1892974848}
   - {fileID: 804415615}
   - {fileID: 1209589194}
+  statShowOffset: 0.05
 --- !u!4 &1486996606
 Transform:
   m_ObjectHideFlags: 0
@@ -140146,13 +140420,14 @@ GameObject:
   - component: {fileID: 1631446561}
   - component: {fileID: 1631446563}
   - component: {fileID: 1631446562}
+  - component: {fileID: 1631446564}
   m_Layer: 5
   m_Name: MeleeDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1631446561
 RectTransform:
   m_ObjectHideFlags: 0
@@ -140270,6 +140545,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631446560}
   m_CullTransparentMesh: 1
+--- !u!95 &1631446564
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631446560}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1644644676
 GameObject:
   m_ObjectHideFlags: 0
@@ -140281,13 +140576,14 @@ GameObject:
   - component: {fileID: 1644644677}
   - component: {fileID: 1644644679}
   - component: {fileID: 1644644678}
+  - component: {fileID: 1644644680}
   m_Layer: 5
   m_Name: HealthDropChance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1644644677
 RectTransform:
   m_ObjectHideFlags: 0
@@ -140405,6 +140701,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1644644676}
   m_CullTransparentMesh: 1
+--- !u!95 &1644644680
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644644676}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1693756107
 GameObject:
   m_ObjectHideFlags: 0
@@ -141094,13 +141410,14 @@ GameObject:
   - component: {fileID: 1892974849}
   - component: {fileID: 1892974851}
   - component: {fileID: 1892974850}
+  - component: {fileID: 1892974852}
   m_Layer: 5
   m_Name: RollSpeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1892974849
 RectTransform:
   m_ObjectHideFlags: 0
@@ -141218,6 +141535,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892974848}
   m_CullTransparentMesh: 1
+--- !u!95 &1892974852
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892974848}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 470d40e8eca104a4b875e7c80fb1e7b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1904896962
 GameObject:
   m_ObjectHideFlags: 0
