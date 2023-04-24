@@ -137004,7 +137004,7 @@ MonoBehaviour:
   waveNum: 0
   scoreText: {fileID: 1438925910}
   scoreIncText: {fileID: 6169474903868245156, guid: b1032188b7ada4f50bf80eff2f6e288b, type: 3}
-  socreTextPos: {x: 0, y: 400}
+  socreTextPos: {x: 0, y: 430}
   killStreak: 0
   canvas: {fileID: 1693756111}
   incScoreWaitTime: 0.1
