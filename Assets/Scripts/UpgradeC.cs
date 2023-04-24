@@ -72,7 +72,8 @@ public class UpgradeC : MonoBehaviour
 
         GameManager.gameManager.levelingUp = true;
 
-        randomCard1 = Random.Range(0, powerUps.Count);
+        // randomCard1 = Random.Range(0, powerUps.Count);
+        randomCard1 = 3;
         randomCard2 = Random.Range(0, powerUps.Count);
         while (randomCard2 == randomCard1)
         {

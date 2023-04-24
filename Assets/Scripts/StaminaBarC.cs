@@ -47,7 +47,7 @@ public class StaminaBarC : MonoBehaviour
             barImage.fillAmount = stamina / PC.maxStamina;
             fadeWaitTimer = fadeWaitTime;
 
-            staminaText.text = Mathf.RoundToInt(stamina) + "/" + Mathf.RoundToInt(PC.maxHealth);
+            staminaText.text = Mathf.RoundToInt(stamina) + "/" + Mathf.RoundToInt(PC.maxStamina);
         }
     }
 }
