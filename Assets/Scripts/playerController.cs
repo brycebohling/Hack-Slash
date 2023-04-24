@@ -710,8 +710,10 @@ public class playerController : MonoBehaviour
             if (hitChance >= dodgeChance)
             {
                 currentHealth -= dmg * (1 - dmgReduction);
-
+                
                 HB.SetHealth(currentHealth);
+            
+                GameManager.gameManager.killStreak = 0;
 
                 if (currentHealth <= 0)
                 {
@@ -745,7 +747,7 @@ public class playerController : MonoBehaviour
             float textOffsetY = 1f;
 
             GameObject prefab = Instantiate(healingText, new Vector2(transform.position.x + textOffsetX, transform.position.y + textOffsetY), Quaternion.identity);
-
+            
             if (currentHealth > maxHealth)
             {
                 currentHealth = maxHealth;
@@ -754,7 +756,7 @@ public class playerController : MonoBehaviour
             } else
             {
                 prefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healAmount).ToString();
-            }
+            }            
         }
         
         HB.SetHealth(currentHealth);

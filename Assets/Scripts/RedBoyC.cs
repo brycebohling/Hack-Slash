@@ -71,7 +71,7 @@ public class RedBoyC : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
-            GameManager.gameManager.EnemyDied();
+            GameManager.gameManager.EnemyDied(50);
             Destroy(gameObject);
         }
 

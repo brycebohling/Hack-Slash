@@ -76,7 +76,7 @@ public class FlyerC : MonoBehaviour
             Instantiate(deathParticals, transform.position, Quaternion.identity);
             if (!noAddToEnemies)
             {
-                GameManager.gameManager.EnemyDied();
+                GameManager.gameManager.EnemyDied(75);
             }
             Destroy(gameObject);
         }

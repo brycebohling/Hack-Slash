@@ -49,7 +49,5 @@ public class HealthBar : MonoBehaviour
             fadeWaitTimer = fadeWaitTime;
             healthText.text = Mathf.RoundToInt(health) + "/" + Mathf.RoundToInt(PC.maxHealth);
         }
-
-        
     }
 }

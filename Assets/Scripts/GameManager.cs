@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,16 @@ public class GameManager : MonoBehaviour
     public bool levelingUp;
     [SerializeField] Transform healthItem;
     public int waveNum;
+    float score;
+    float incScoreValue;
+    [SerializeField] TMP_Text scoreText;
+    [SerializeField] GameObject scoreIncText;
+    [SerializeField] Vector2 socreTextPos;
+    public int killStreak;
+    [SerializeField] Transform canvas;
+    [SerializeField] float incScoreWaitTime;
+    float incScoreWaitTimer;
+    [SerializeField] TMP_Text killStreakText;
 
 
     void Awake()
@@ -46,8 +57,8 @@ public class GameManager : MonoBehaviour
         waveScript = GameObject.Find("GameManager").GetComponent<WaveSpawner>();
         daggerUIScript = GameObject.Find("DaggerAmmo").GetComponent<daggerAmmoUI>();
 
-
         playerMaxHealth = playerScript.maxHealth;
+        incScoreWaitTimer = incScoreWaitTime;
     }
 
     void Update()
@@ -55,6 +66,7 @@ public class GameManager : MonoBehaviour
         playerCurrentHealth = playerScript.currentHealth;
         playerMaxHealth = playerScript.maxHealth;
         waveNum = waveScript.waveNumber;
+        killStreakText.text = killStreak.ToString();
         
         if (playerRenderer.enabled == true)
         {
@@ -88,6 +100,39 @@ public class GameManager : MonoBehaviour
             {
                 PauseScreen.SetActive(false);
             }    
+        }
+
+        if (incScoreWaitTimer < 0f)
+        {
+            if (incScoreValue > 0)
+            {
+                GameObject prefab = Instantiate(scoreIncText, socreTextPos, Quaternion.identity);
+
+                prefab.transform.SetParent(canvas.transform, false);
+
+                prefab.GetComponent<TMP_Text>().text = incScoreValue.ToString();
+
+                if (killStreak >= 50)
+                {
+                    prefab.GetComponent<Animator>().Play("dropOrange");
+
+                } else if (killStreak >= 20)
+                {
+                    prefab.GetComponent<Animator>().Play("dropYellow");
+
+                } else
+                {
+                    prefab.GetComponent<Animator>().Play("dropWhite");
+                }
+
+                incScoreValue = 0;
+            }
+
+            incScoreWaitTimer = incScoreWaitTime;
+
+        } else
+        {
+            incScoreWaitTimer -= Time.deltaTime;
         }
     }
 
@@ -148,9 +193,11 @@ public class GameManager : MonoBehaviour
         daggerUIScript.ChangeDaggerAmmoUI(ammo);
     }
 
-    public void EnemyDied()
+    public void EnemyDied(int scoreValue)
     {
         waveScript.killedEnemies++;
+
+        IncScore(scoreValue);
     }
 
     public void TreeDead(Transform location)
@@ -161,5 +208,28 @@ public class GameManager : MonoBehaviour
     public void BushDead(Transform location)
     {
         waveScript.BushDestroyed(location);
+    }
+
+    public void IncScore(int value)
+    {
+        killStreak++;
+
+        if (killStreak >= 50)
+        {
+            score += value * 1.5f;
+            incScoreValue += value * 1.5f;
+
+        } else if (killStreak >= 3)
+        {
+            score += value * 1.2f;
+            incScoreValue += value * 1.2f;
+
+        } else
+        {
+            score += value;
+            incScoreValue += value;
+        }
+
+        scoreText.text = "Score: " + score.ToString();
     }
 }

@@ -70,7 +70,7 @@ public class ArcherC : MonoBehaviour
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
             GameManager.gameManager.DropHealth(transform);
-            GameManager.gameManager.EnemyDied();
+            GameManager.gameManager.EnemyDied(100);
             Destroy(gameObject);
         }
 
