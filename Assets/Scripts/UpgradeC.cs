@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UpgradeC : MonoBehaviour
 {
@@ -72,8 +73,7 @@ public class UpgradeC : MonoBehaviour
 
         GameManager.gameManager.levelingUp = true;
 
-        // randomCard1 = Random.Range(0, powerUps.Count);
-        randomCard1 = 3;
+        randomCard1 = Random.Range(0, powerUps.Count);
         randomCard2 = Random.Range(0, powerUps.Count);
         while (randomCard2 == randomCard1)
         {
@@ -161,6 +161,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "MovementSpeed") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Movement Speed: " + PC.movementSpeed;
+                break;
+            }
+        }
     }
 
     public void IncJumpForce(GameObject callerObject)
@@ -174,6 +183,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "JumpForce") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Jump Force: " + PC.jumpForce;
+                break;
+            }
+        }
     }
 
     public void IncNumberOfJumps(GameObject callerObject)
@@ -186,6 +204,15 @@ public class UpgradeC : MonoBehaviour
         } else
         {
             StartCoroutine(CardSelected(null));
+        }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "#OfJumps") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Number of Jumps: " + PC.numberOfJumps;
+                break;
+            }
         }
     }
     
@@ -202,6 +229,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "MaxHealth") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Max Health: " + PC.maxHealth;
+                break;
+            }
+        }
     }
 
     public void IncMaxStamina(GameObject callerObject)
@@ -217,6 +253,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "MaxStamina") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Max Stamina: " + PC.maxStamina;
+                break;
+            }
+        }
     }
     
     public void IncMeleeDmg(GameObject callerObject)
@@ -229,6 +274,15 @@ public class UpgradeC : MonoBehaviour
         } else
         {
             StartCoroutine(CardSelected(null));
+        }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "MeleeDamage") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Melee Damage: " + PC.meleeDmg;
+                break;
+            }
         }
     }
 
@@ -243,6 +297,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "DaggerDamage") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dagger Damage: " + PC.daggerDmg;
+                break;
+            }
+        }
     }
     
     public void IncDaggerSpeed(GameObject callerObject)
@@ -255,6 +318,15 @@ public class UpgradeC : MonoBehaviour
         } else
         {
             StartCoroutine(CardSelected(null));
+        }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "DaggerSpeed") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dagger Speed: " + PC.daggerSpeed;
+                break;
+            }
         }
     }
 
@@ -269,6 +341,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "HealthDropChance") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Health Drop Chance: " + PC.healthDropChance * 100 + "%";
+                break;
+            }
+        }
     }
 
     public void IncDmgReduction(GameObject callerObject)
@@ -281,6 +362,15 @@ public class UpgradeC : MonoBehaviour
         } else
         {
             StartCoroutine(CardSelected(null));
+        }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "DamageReduction") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Damage Reduction: " + PC.dmgReduction * 100 + "%";
+                break;
+            }
         }
     }
 
@@ -295,6 +385,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "CritDamage") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Crit Damage: " + PC.critDmg * 100 + "%";
+                break;
+            }
+        }
     }
     
     public void IncDodgeChance(GameObject callerObject)
@@ -307,6 +406,15 @@ public class UpgradeC : MonoBehaviour
         } else
         {
             StartCoroutine(CardSelected(null));
+        }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "DodgeChance") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dodge Chance: " + PC.dodgeChance * 100 + "%";
+                break;
+            }
         }
     }
 
@@ -321,6 +429,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "RollSpeed") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Roll Speed: " + PC.rollSpeed;
+                break;
+            }
+        }
     }
 
     public void IncMeleeSpeed(GameObject callerObject)
@@ -334,6 +451,15 @@ public class UpgradeC : MonoBehaviour
         {
             StartCoroutine(CardSelected(null));
         }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "MeleeSpeed") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "MeleeSpeed: " + PC.meleeSpeed * 100 + "%";
+                break;
+            }
+        }
     }
 
     public void IncHealthRegeneration(GameObject callerObject)
@@ -346,6 +472,15 @@ public class UpgradeC : MonoBehaviour
         } else
         {
             StartCoroutine(CardSelected(null));
+        }
+
+        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+        {
+            if (GameManager.gameManager.statsText[i].name == "HealthRegeneration") 
+            {
+                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Health Regeneration: " + PC.healthRegenerationPercent * 100 + "%";
+                break;
+            }
         }
     }
 

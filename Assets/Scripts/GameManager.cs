@@ -37,7 +37,8 @@ public class GameManager : MonoBehaviour
     float incScoreWaitTimer;
     [SerializeField] TMP_Text killStreakText;
     [SerializeField] GameObject statBackground;
-    [SerializeField] GameObject[] statsText;
+    public List<GameObject> statsText = new List<GameObject>();
+    bool showingStats;
 
 
     void Awake()
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
             isPlayerDead = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp && !isPlayerDead)
+        if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp && !isPlayerDead && !showingStats)
         {
             PauseResume();
 
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead)
         {
-
+            ShowStats();
         }
 
         if (incScoreWaitTimer < 0f)
@@ -241,6 +242,18 @@ public class GameManager : MonoBehaviour
 
     private void ShowStats()
     {
+        showingStats = !showingStats;
 
+        PauseResume();
+
+        if (showingStats)
+        {
+            statsText[0].SetActive(true);
+            statsText[1].SetActive(true);
+        } else
+        {
+            statsText[0].SetActive(false);
+            statsText[1].SetActive(false);
+        }
     }
 }

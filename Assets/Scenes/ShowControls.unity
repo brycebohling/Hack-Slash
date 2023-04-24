@@ -448,7 +448,9 @@ MonoBehaviour:
 
     C - Throw Dagger
 
-    Pause - Escape'
+    Tab - View Stats
+
+    ESC - Pause'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}
   m_sharedMaterial: {fileID: -3600672583327299092, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}

@@ -1387,7 +1387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -378, y: 500}
+  m_AnchoredPosition: {x: -378, y: 600}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1595963723
@@ -1412,17 +1412,19 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Update features!
 
+    - Tab to view stats
+
     - Bush and Tree respawning
 
-    - Bushes heal for
-    5 health
+    -
+    Bushes heal for 5 health
 
     - Health and stamina numbers
 
     - Dodge particles
 
-    - Map
-    changes
+    -
+    Map changes
 
     - Score
 

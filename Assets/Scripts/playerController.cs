@@ -639,7 +639,7 @@ public class playerController : MonoBehaviour
         noOfClicks++;
         noOfClicks = Mathf.Clamp(noOfClicks, 0, 3);
 
-        anim.speed = 1f + meleeSpeed;
+        anim.speed = meleeSpeed;
 
         if (noOfClicks == 1 && !IsAnimationPlaying(anim, PLAYER_ATTACK_1) && !IsAnimationPlaying(anim, PLAYER_ATTACK_2) && !IsAnimationPlaying(anim, PLAYER_ATTACK_3))
         {
@@ -732,17 +732,17 @@ public class playerController : MonoBehaviour
                 iFrameCountdown = iFrameTime;
                 Instantiate(dodgeParticles, transform.position, Quaternion.identity);
             }
-            
         }
     }
 
     public void PlayerHeal(float healAmount)
     {
         float healthToMax = maxHealth - currentHealth;
-
-        currentHealth += healAmount;
+        
         if (healAmount != 0 && healthToMax > 0)
         {
+            currentHealth += healAmount;
+
             float textOffsetX = 1.5f;
             float textOffsetY = 1f;
 
