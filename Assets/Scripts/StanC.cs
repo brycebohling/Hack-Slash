@@ -20,7 +20,6 @@ public class StanC : MonoBehaviour
     [SerializeField] float seeDistance;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
-    float playerDistanceX;
     float playerDistanceY;
     float playerDistance;
     [SerializeField] Transform groundCheck;
@@ -99,9 +98,6 @@ public class StanC : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
         isWallClose = Physics2D.OverlapBox(wallCheck.position, wallCheckSize, 0, wallCheckLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
-        targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
-        playerDistanceX = Vector2.Distance(transform.position, targetLocationX);
-        playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
         playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
 
         if (beingKnockedback)
@@ -113,15 +109,15 @@ public class StanC : MonoBehaviour
 
         if (isGrounded && GameManager.gameManager.isPlayerRendered)
         {
-            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ATTACK))
+            if (playerDistance < seeDistance && !IsAnimationPlaying(anim, ATTACK))
             {
-                if (playerDistance > minAttackDisX)
+                if (playerDistance > minAttackDisX && !isWallClose)
                 {
                     ChangeAnimationState(WALK);
                     transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
                 } else
                 { 
-                    if (attackCountdown <= 0 && playerDistanceY < 1)
+                    if (attackCountdown <= 0)
                     {
                         ChangeAnimationState(ATTACK);
                         attackCountdown = attackTimer;
@@ -130,8 +126,11 @@ public class StanC : MonoBehaviour
                         ChangeAnimationState(NORMAL);
                     }
                 }
+            } else if (!IsAnimationPlaying(anim, ATTACK))
+            {
+                ChangeAnimationState(NORMAL);
             }
-            
+
         } else
         {
             ChangeAnimationState(NORMAL);
