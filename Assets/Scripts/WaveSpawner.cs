@@ -24,6 +24,8 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] float waveValue;
     [SerializeField] float valueIncreasePerWave; 
     [SerializeField] float timeBetweenSpawns;
+    [SerializeField] float spawnSpeedReductionTime;
+    [SerializeField] float minSpawnSpeed;
     [SerializeField] TMP_Text waveText;
     [SerializeField] TMP_Text enemiesLeftText;
     private float currentWaveValue;
@@ -129,6 +131,11 @@ public class WaveSpawner : MonoBehaviour
             currentWaveValue -= enemyTypes[enemyIndex].value;
 
             spawnTimer = timeBetweenSpawns;
+
+            if (timeBetweenSpawns > minSpawnSpeed)
+            {
+                timeBetweenSpawns -= spawnSpeedReductionTime;
+            }
 
             if (currentWaveValue <= 0f)
             {

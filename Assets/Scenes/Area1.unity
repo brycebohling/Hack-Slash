@@ -139180,6 +139180,8 @@ MonoBehaviour:
   waveValue: 10
   valueIncreasePerWave: 5
   timeBetweenSpawns: 0.5
+  spawnSpeedReductionTime: 0.01
+  minSpawnSpeed: 0.1
   waveText: {fileID: 2048109623}
   enemiesLeftText: {fileID: 282247895}
   waveNumber: 1
