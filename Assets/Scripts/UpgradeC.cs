@@ -121,28 +121,54 @@ public class UpgradeC : MonoBehaviour
         btn3.interactable = true;
     }
 
-    private IEnumerator CardSelected(GameObject toRemove)
+    private IEnumerator CardSelected(GameObject caller, bool shouldRemove)
     {
         btn1.interactable = false;
         btn2.interactable = false;
         btn3.interactable = false;
 
-        anim1.Play(SelectedAnim);
-        yield return new WaitForSecondsRealtime(cardUpOffset);
-        anim2.Play(SelectedAnim);
-        yield return new WaitForSecondsRealtime(cardUpOffset);
-        anim3.Play(SelectedAnim);
-        yield return new WaitForSecondsRealtime(cardUpOffset);
+        if (caller == powerUps[randomCard1])
+        {
+            anim1.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+            anim2.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+            anim3.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
 
-        yield return new WaitUntil(() => !IsAnimationPlaying(anim3, SelectedAnim));
+            yield return new WaitUntil(() => !IsAnimationPlaying(anim3, SelectedAnim));
+
+        } else if (caller == powerUps[randomCard2])
+        {
+            anim2.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+            anim1.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+            anim3.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+
+            yield return new WaitUntil(() => !IsAnimationPlaying(anim3, SelectedAnim));
+
+        } else
+        {
+            anim3.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+            anim2.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+            anim1.Play(SelectedAnim);
+            yield return new WaitForSecondsRealtime(cardUpOffset);
+
+            yield return new WaitUntil(() => !IsAnimationPlaying(anim1, SelectedAnim));
+
+        }
 
         powerUps[randomCard1].SetActive(false);
         powerUps[randomCard2].SetActive(false);
         powerUps[randomCard3].SetActive(false);
 
-        if (toRemove != null)
+        if (shouldRemove)
         {
-            powerUps.Remove(toRemove);
+            powerUps.Remove(caller);
         }
         
         GameManager.gameManager.levelingUp = false;
@@ -156,10 +182,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.movementSpeed >= maxMovementSpeed)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -178,10 +204,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.jumpForce >= maxJumpForce)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -200,10 +226,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.numberOfJumps >= maxNumberOfJumps)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -226,10 +252,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.maxHealth >= maxMaxHealth)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -250,10 +276,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.maxStamina >= maxMaxStamina)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -272,10 +298,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.meleeDmg >= maxMeleeDmg)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -294,10 +320,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.daggerDmg >= maxDaggerDmg)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -316,10 +342,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.daggerSpeed >= maxDaggerSpeed)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -338,10 +364,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.healthDropChance >= maxHealthDropChance)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -360,10 +386,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.dmgReduction >= maxDmgReduction)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -382,10 +408,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.critDmg >= maxCritDmg)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -404,10 +430,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.dodgeChance >= maxDodgeChance)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -426,10 +452,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.rollSpeed >= maxRollSpeed)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -448,10 +474,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.meleeSpeed >= maxMeleeSpeed)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
@@ -470,10 +496,10 @@ public class UpgradeC : MonoBehaviour
 
         if (PC.healthRegenerationPercent >= maxH_Regen)
         {
-            StartCoroutine(CardSelected(callerObject));
+            StartCoroutine(CardSelected(callerObject, true));
         } else
         {
-            StartCoroutine(CardSelected(null));
+            StartCoroutine(CardSelected(callerObject, false));
         }
 
         for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)

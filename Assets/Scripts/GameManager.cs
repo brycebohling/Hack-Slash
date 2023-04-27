@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
             } else
             {
                 PauseScreen.SetActive(false);
-            } 
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead && !showingStatsAnim && !showPauseMenu)

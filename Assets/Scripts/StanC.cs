@@ -52,12 +52,10 @@ public class StanC : MonoBehaviour
     [SerializeField] float knockbackTime;
     bool beingKnockedback;
 
-
     // Death
     bool isDead;
     [SerializeField] GameObject deathParticals;
-    int scoreValue = 50;
-
+    int scoreValue = 150;
 
 
     private void Start() 
