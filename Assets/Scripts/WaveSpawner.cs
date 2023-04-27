@@ -107,7 +107,7 @@ public class WaveSpawner : MonoBehaviour
 
             int enemyIndex = Random.Range(0, enemyTypes.Length);
 
-            while(enemyTypes[enemyIndex].value > currentWaveValue) 
+            while (enemyTypes[enemyIndex].value > currentWaveValue || !CanSpawnEnemyType(enemyIndex)) 
             {
                 enemyIndex = Random.Range(0, enemyTypes.Length);
             }
@@ -152,6 +152,17 @@ public class WaveSpawner : MonoBehaviour
     public void ChangeWaveNumber(string waveNumber)
     {
         waveText.text = "Wave: " + waveNumber;
+    }
+
+    bool CanSpawnEnemyType(int index)
+    {
+        if (waveNumber < 5 && enemyTypes[index].prefab.name == "Stan")
+        {
+            return false;
+        } else 
+        {
+            return true;
+        }
     }
 
     void SpawnTrees()

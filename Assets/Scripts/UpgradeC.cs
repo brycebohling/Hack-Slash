@@ -220,6 +220,8 @@ public class UpgradeC : MonoBehaviour
     {
         PC.maxHealth += maxHealthIncAmount;
 
+        HB.SetHealth(PC.currentHealth);
+
         PC.PlayerHeal(maxHealthIncAmount);
 
         if (PC.maxHealth >= maxMaxHealth)
@@ -244,7 +246,6 @@ public class UpgradeC : MonoBehaviour
     {
         PC.maxStamina += maxStaminaIncAmount;
 
-        PC.currentStamina += maxStaminaIncAmount;
         SB.SetStamina(PC.currentStamina);
 
         if (PC.maxStamina >= maxMaxStamina)

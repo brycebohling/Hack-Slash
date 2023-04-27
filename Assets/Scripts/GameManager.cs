@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     bool showingStats;
     [SerializeField] float statShowOffset;
     bool showingStatsAnim;
+    bool showPauseMenu;
 
 
     void Awake()
@@ -103,13 +104,14 @@ public class GameManager : MonoBehaviour
             if (isPaused)
             {
                 PauseScreen.SetActive(true);
+                showPauseMenu = true;
             } else
             {
                 PauseScreen.SetActive(false);
-            }    
+            } 
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead && !showingStatsAnim && !isPaused)
+        if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead && !showingStatsAnim && !showPauseMenu)
         {
             StartCoroutine(ShowStats());
         }
@@ -162,6 +164,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             GameResumed.Invoke();
             PauseScreen.SetActive(false);
+            showPauseMenu = false;
         }
     }
 

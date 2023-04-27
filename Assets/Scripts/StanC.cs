@@ -131,6 +131,10 @@ public class StanC : MonoBehaviour
                     }
                 }
             }
+            
+        } else
+        {
+            ChangeAnimationState(NORMAL);
         }
         // Need to add patrol code here!
         
