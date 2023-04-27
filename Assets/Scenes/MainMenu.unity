@@ -1412,23 +1412,19 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Update features!
 
+    - Stan(Tree dude)
+
     - Tab to view stats
 
-    - Bush and Tree respawning
-
     -
-    Bushes heal for 5 health
+    Dodge particles
 
-    - Health and stamina numbers
-
-    - Dodge particles
-
-    -
-    Map changes
+    - Map changes
 
     - Score
 
-    -Kill Streak that can increase score'
+    -Kill Streak that can increase
+    score'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}
   m_sharedMaterial: {fileID: -3600672583327299092, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}

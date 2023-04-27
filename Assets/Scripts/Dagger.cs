@@ -5,7 +5,6 @@ using UnityEngine;
 public class Dagger : MonoBehaviour
 {
     playerController PC;
-    [SerializeField] float dmg;
     [SerializeField] float rotationSpeed;
     bool isRotating = false;
     float angle;
@@ -42,7 +41,7 @@ public class Dagger : MonoBehaviour
 
             foreach (Collider2D enemyGameobject in enemy)
             {
-                GameManager.gameManager.DamageEnemy(enemyGameobject, dmg, transform);
+                GameManager.gameManager.DamageEnemy(enemyGameobject, PC.daggerDmg, transform);
             }
             
             Destroy(gameObject);

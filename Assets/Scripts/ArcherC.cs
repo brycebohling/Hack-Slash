@@ -55,6 +55,7 @@ public class ArcherC : MonoBehaviour
     // Death
     bool isDead;
     [SerializeField] GameObject deathParticals;
+    int scoreValue = 100;
 
 
     void Start()
@@ -70,7 +71,7 @@ public class ArcherC : MonoBehaviour
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
             GameManager.gameManager.DropHealth(transform);
-            GameManager.gameManager.EnemyDied(100);
+            GameManager.gameManager.EnemyDied(scoreValue);
             Destroy(gameObject);
         }
 

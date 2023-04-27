@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public float playerMaxHealth;
     public float playerCurrentHealth;
     public bool isPlayerDead;
+    public Vector2 playerPos;
     public bool levelingUp;
     [SerializeField] Transform healthItem;
     public int waveNum;
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
     {
         playerCurrentHealth = playerScript.currentHealth;
         playerMaxHealth = playerScript.maxHealth;
+        playerPos = playerScript.transform.position;
         waveNum = waveScript.waveNumber;
         killStreakText.text = killStreak.ToString();
         
@@ -107,7 +109,7 @@ public class GameManager : MonoBehaviour
             }    
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead && !showingStatsAnim)
+        if (Input.GetKeyDown(KeyCode.Tab) && !levelingUp && !isPlayerDead && !showingStatsAnim && !isPaused)
         {
             StartCoroutine(ShowStats());
         }
@@ -184,6 +186,10 @@ public class GameManager : MonoBehaviour
         } else if (enemy.CompareTag("archer"))
         {
             enemy.gameObject.GetComponent<ArcherC>().DmgArcher(dmg, attacker);
+
+        } else if (enemy.CompareTag("stan"))
+        {
+            enemy.gameObject.GetComponent<StanC>().DmgStan(dmg, attacker);
         }
     }
 

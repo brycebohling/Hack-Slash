@@ -9,6 +9,7 @@ TagManager:
   - flyer
   - vcam
   - archer
+  - stan
   layers:
   - Default
   - TransparentFX

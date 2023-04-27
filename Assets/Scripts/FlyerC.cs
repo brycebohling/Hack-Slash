@@ -49,9 +49,8 @@ public class FlyerC : MonoBehaviour
 
     float dmgTimerCountdown;
     [SerializeField] float dmgTime;
-    bool isDead;
+    
     bool takingDmg;
-    [SerializeField] GameObject deathParticals;
     [SerializeField] float knockbackPower;
     [SerializeField] float knockbackTime;
     bool beingKnockedback;
@@ -60,6 +59,12 @@ public class FlyerC : MonoBehaviour
     bool spawningFromTree;
     Transform goToPoint;
     bool noAddToEnemies;
+
+    // Death
+    int scoreValue = 70;
+    [SerializeField] GameObject deathParticals;
+    bool isDead;
+
 
 
     void Start()
@@ -76,7 +81,7 @@ public class FlyerC : MonoBehaviour
             Instantiate(deathParticals, transform.position, Quaternion.identity);
             if (!noAddToEnemies)
             {
-                GameManager.gameManager.EnemyDied(75);
+                GameManager.gameManager.EnemyDied(scoreValue);
             }
             Destroy(gameObject);
         }

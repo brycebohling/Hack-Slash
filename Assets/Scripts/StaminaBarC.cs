@@ -24,14 +24,16 @@ public class StaminaBarC : MonoBehaviour
 
     private void Update() 
     {
+        if (background.fillAmount < barImage.fillAmount)
+        {
+            background.fillAmount = barImage.fillAmount;
+        }
+        
         if (fadeWaitTimer <= 0f)
         {   
             if (background.fillAmount > barImage.fillAmount)
             {
                 background.fillAmount = Mathf.Lerp(background.fillAmount, barImage.fillAmount, fadeSpeed);
-            } else
-            {
-                background.fillAmount = barImage.fillAmount;
             }
             
         } else

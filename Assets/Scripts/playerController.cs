@@ -396,6 +396,7 @@ public class playerController : MonoBehaviour
                     waitToCheckForJumpTimer = waitToCheckForJump;
                     ChangeAnimationState(PLAYER_JUMP);
                     StopRoll();
+                    Debug.Log("hi");
                     StopCoroutine(Roll());
                 } else if (!isRolling)
                 {
