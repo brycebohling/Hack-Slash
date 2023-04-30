@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  minAttackDisX: 10
+  minAttackDisX: 9
   seeDistance: 15
   groundCheck: {fileID: 7740571308533723580}
   groundLayer:

@@ -396,7 +396,7 @@ public class playerController : MonoBehaviour
                     waitToCheckForJumpTimer = waitToCheckForJump;
                     ChangeAnimationState(PLAYER_JUMP);
                     StopRoll();
-                    StopCoroutine(Roll());
+                    StopAllCoroutines();
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -426,7 +426,7 @@ public class playerController : MonoBehaviour
                 AttackAnim();
                 attacking = true;
                 StopRoll();
-                StopCoroutine(Roll());
+                StopAllCoroutines();
                 if (isGrounded)
                 {
                     rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
@@ -620,7 +620,7 @@ public class playerController : MonoBehaviour
 
         yield return new WaitForSeconds(rollTime);
         yield return new WaitUntil(() => !isCeiling);
-
+        
         StopRoll();
     }
 
