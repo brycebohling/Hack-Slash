@@ -1548,8 +1548,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Update features!
 
+    - Can now support the game using through the donate
+    button
 
-    - Background
+    - Background (work progress)
 
     - Stan(Tree dude)
 
