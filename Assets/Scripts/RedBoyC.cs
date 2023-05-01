@@ -13,13 +13,12 @@ public class RedBoyC : MonoBehaviour
 
     // Movement
     private Rigidbody2D rb;
-    private bool isFacingRight;
+    private bool isFacingRight = true;
     [SerializeField] private float speed;
     [SerializeField] private float minDistanceX;
     [SerializeField] float seeDistance;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
-    float playerDistanceX;
     float playerDistanceY;
     float playerDistance;
     [SerializeField] Transform groundCheck;
@@ -28,6 +27,15 @@ public class RedBoyC : MonoBehaviour
     [SerializeField] Transform wallCheck;
     [SerializeField] private LayerMask wallCheackLayer;
     private bool isWallClose;
+    Vector2 playerDir;
+    RaycastHit2D groundInWay;
+    [SerializeField] float patrolTurnLow;
+    [SerializeField] float patrolTurnHigh;
+    float patrolTurnTimer;
+    int randomDir;
+    [SerializeField] float patrolSpeed;
+    [SerializeField] float waitToPatrolTime;
+    float waitToPatrolTimer;
 
     // Attack
     [SerializeField] float dmg;
@@ -65,6 +73,7 @@ public class RedBoyC : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentHealth = health;
+        waitToPatrolTimer = waitToPatrolTime;
     }
 
     private void Update()
@@ -99,21 +108,25 @@ public class RedBoyC : MonoBehaviour
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(2f, 1.5f), 0, wallCheackLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
         targetLocationY = new Vector2(transform.position.x, GameManager.gameManager.player.transform.position.y);
-        playerDistanceX = Vector2.Distance(transform.position, targetLocationX);
         playerDistanceY = Vector2.Distance(transform.position, targetLocationY);
+
         playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
+        playerDir = GameManager.gameManager.player.transform.position - transform.position;
+        groundInWay = Physics2D.Raycast(transform.position, playerDir, playerDistance, groundLayer);
 
         if (beingKnockedback)
         {
             return;
         }
 
-        Flip();
-
-        if (isGrounded && GameManager.gameManager.isPlayerRendered)
+        if (isGrounded)
         {
-            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK))
+            if (playerDistance < seeDistance && !isWallClose && !IsAnimationPlaying(anim, ENEMY_ATTACK) && !groundInWay && GameManager.gameManager.isPlayerRendered)
             {
+                FacePlayer();
+                waitToPatrolTimer = waitToPatrolTime;
+                patrolTurnTimer = Random.Range(patrolTurnLow, patrolTurnHigh);
+
                 if (playerDistance > minDistanceX)
                 {
                     ChangeAnimationState(ENEMY_NORMAL);
@@ -129,10 +142,44 @@ public class RedBoyC : MonoBehaviour
                         ChangeAnimationState(ENEMY_NORMAL);
                     }
                 }
+            } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
+            {
+                if (waitToPatrolTimer < 0f)
+                {
+                    if (patrolTurnTimer < 0f)
+                    {
+                        patrolTurnTimer = Random.Range(patrolTurnLow, patrolTurnHigh);
+                        randomDir = Random.Range(0, 2);
+                        
+                    } else
+                    {
+                        patrolTurnTimer -= Time.deltaTime;
+                    }
+
+                    if (randomDir == 0)
+                    {
+                        rb.velocity = new Vector2(-patrolSpeed, 0);
+                
+                        if (isFacingRight)
+                        {
+                            Flip();
+                        }
+
+                    } else
+                    {
+                        rb.velocity = new Vector2(patrolSpeed, 0);
+                    
+                        if (!isFacingRight)
+                        {
+                            Flip();
+                        }
+                    }
+                } else
+                {
+                    waitToPatrolTimer -= Time.deltaTime;
+                }
             }
-        }
-        // Need to add patrol code here!
-        
+        } 
     }
 
     public void DmgPlayer()
@@ -144,27 +191,29 @@ public class RedBoyC : MonoBehaviour
         }
     }
 
-    private void Flip()
+    private void FacePlayer()
     {
         if (GameManager.gameManager.player.transform.position.x > transform.position.x)
         {
-            if (isFacingRight)
+            if (!isFacingRight)
             {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;    
-                transform.localScale = localScale;
+                Flip();
             }
         } else
         {
-            if (!isFacingRight)
+            if (isFacingRight)
             {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
+                Flip();
             }
         }
+    }
+
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;    
+        transform.localScale = localScale;
     }
 
     public void DmgRedBoy(float dmg, Transform attacker)

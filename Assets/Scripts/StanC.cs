@@ -14,7 +14,7 @@ public class StanC : MonoBehaviour
 
     // Movement
     private Rigidbody2D rb;
-    private bool isFacingRight;
+    private bool isFacingRight = true;
     [SerializeField] private float speed;
     [SerializeField] private float minAttackDisX;
     [SerializeField] float seeDistance;
@@ -30,6 +30,15 @@ public class StanC : MonoBehaviour
     private bool isWallClose;
     [SerializeField] Vector2 groundCheckSize;
     [SerializeField] Vector2 wallCheckSize;
+    [SerializeField] float patrolTurnLow;
+    [SerializeField] float patrolTurnHigh;
+    float patrolTurnTimer;
+    int randomDir;
+    [SerializeField] float patrolSpeed;
+    [SerializeField] float waitToPatrolTime;
+    float waitToPatrolTimer;
+    Vector2 playerDir;
+    RaycastHit2D groundInWay;
 
     // Attack
     [SerializeField] float attackRadius;
@@ -96,23 +105,29 @@ public class StanC : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
         isWallClose = Physics2D.OverlapBox(wallCheck.position, wallCheckSize, 0, wallCheckLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
+
         playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
+        playerDir = GameManager.gameManager.player.transform.position - transform.position;
+        groundInWay = Physics2D.Raycast(transform.position, playerDir, playerDistance, groundLayer);
 
         if (beingKnockedback)
         {
             return;
         }
 
-        Flip();
-
-        if (isGrounded && GameManager.gameManager.isPlayerRendered)
+        if (isGrounded)
         {
-            if (playerDistance < seeDistance && !IsAnimationPlaying(anim, ATTACK))
+            if (playerDistance < seeDistance && !IsAnimationPlaying(anim, ATTACK) && !groundInWay && GameManager.gameManager.isPlayerRendered)
             {
-                if (playerDistance > minAttackDisX && !isWallClose)
+                FacePlayer();
+                waitToPatrolTimer = waitToPatrolTime;
+                patrolTurnTimer = Random.Range(patrolTurnLow, patrolTurnHigh);
+
+                if (playerDistance > attackRadius && !isWallClose)
                 {
                     ChangeAnimationState(WALK);
                     transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
+
                 } else
                 { 
                     if (attackCountdown <= 0)
@@ -127,37 +142,76 @@ public class StanC : MonoBehaviour
             } else if (!IsAnimationPlaying(anim, ATTACK))
             {
                 ChangeAnimationState(NORMAL);
+
+                if (waitToPatrolTimer < 0f)
+                {
+                    ChangeAnimationState(WALK);
+
+                    if (patrolTurnTimer < 0f)
+                    {
+                        patrolTurnTimer = Random.Range(patrolTurnLow, patrolTurnHigh);
+                        randomDir = Random.Range(0, 2);
+                        
+                    } else
+                    {
+                        patrolTurnTimer -= Time.deltaTime;
+                    }
+
+                    if (randomDir == 0)
+                    {
+                        rb.velocity = new Vector2(-patrolSpeed, 0);
+                
+                        if (isFacingRight)
+                        {
+                            Flip();
+                        }
+
+                    } else
+                    {
+                        rb.velocity = new Vector2(patrolSpeed, 0);
+                    
+                        if (!isFacingRight)
+                        {
+                            Flip();
+                        }
+                    }
+                } else
+                {
+                    waitToPatrolTimer -= Time.deltaTime;
+
+                    ChangeAnimationState(NORMAL);
+                }
             }
 
         } else
         {
             ChangeAnimationState(NORMAL);
         }
-        // Need to add patrol code here!
-        
+    }
+
+    private void FacePlayer()
+    {
+        if (GameManager.gameManager.player.transform.position.x > transform.position.x)
+        {
+            if (!isFacingRight)
+            {
+                Flip();
+            }
+        } else
+        {
+            if (isFacingRight)
+            {
+                Flip();
+            }
+        }
     }
 
     private void Flip()
     {
-        if (GameManager.gameManager.player.transform.position.x > transform.position.x)
-        {
-            if (isFacingRight)
-            {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;    
-                transform.localScale = localScale;
-            }
-        } else
-        {
-            if (!isFacingRight)
-            {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
-            }
-        }
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;    
+        transform.localScale = localScale;
     }
 
     public void DmgStan(float dmg, Transform attacker)
@@ -194,8 +248,8 @@ public class StanC : MonoBehaviour
 
     public void SpawnRoot()
     {
-        RaycastHit2D groundPos = Physics2D.Raycast(GameManager.gameManager.playerPos, Vector2.down, 100f, groundLayer);
-        
+        RaycastHit2D groundPos = Physics2D.Raycast(GameManager.gameManager.playerPos, Vector2.down, 1000f, groundLayer);
+    
         Vector2 rootSpawnPoint = new Vector2(groundPos.point.x, groundPos.point.y + groundThickness);
 
         Instantiate(root, rootSpawnPoint, Quaternion.identity);

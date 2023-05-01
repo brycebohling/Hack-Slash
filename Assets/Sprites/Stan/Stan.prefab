@@ -213,8 +213,12 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckSize: {x: 1.45, y: 0.12}
   wallCheckSize: {x: 0.4, y: 1.5}
+  patrolTurnLow: 2
+  patrolTurnHigh: 8
+  patrolSpeed: 2
+  waitToPatrolTime: 1
   attackRadius: 9
-  attackTimer: 3
+  attackTimer: 2.5
   root: {fileID: 2273161556815106873, guid: e8396c361de4345c2a257f1f985686df, type: 3}
   groundThickness: 0.85
   health: 30

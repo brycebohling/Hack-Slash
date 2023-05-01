@@ -202,6 +202,10 @@ MonoBehaviour:
   wallCheackLayer:
     serializedVersion: 2
     m_Bits: 64
+  patrolTurnLow: 2
+  patrolTurnHigh: 8
+  patrolSpeed: 2
+  waitToPatrolTime: 1
   dmg: 10
   attackRadius: 1
   attackTimer: 0.5

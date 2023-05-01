@@ -244,8 +244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   shootingRange: 15
-  seeDistance: 20
-  maxSeeDistanceY: 10
+  seeDistance: 19
+  maxSeeDistanceY: 1
   groundCheck: {fileID: 203365290}
   groundLayer:
     serializedVersion: 2
@@ -254,6 +254,10 @@ MonoBehaviour:
   wallCheackLayer:
     serializedVersion: 2
     m_Bits: 64
+  patrolTurnLow: 2
+  patrolTurnHigh: 8
+  patrolSpeed: 2
+  waitToPatrolTime: 1
   arrow: {fileID: 7531606659435691051, guid: 392c49f2deaed4702b3bad6905d56bec, type: 3}
   attackTimer: 1
   attckPoint: {fileID: 742453162884514992}

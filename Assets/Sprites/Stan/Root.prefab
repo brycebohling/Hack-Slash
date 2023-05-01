@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa78eca5bd85f42eb9133f5ddf5832df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 3
+  lifeTime: 2.5
   dmg: 10
   rootSize: {x: 0.5, y: 1.7}
   playerLayer:

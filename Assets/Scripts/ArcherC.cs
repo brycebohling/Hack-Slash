@@ -15,7 +15,7 @@ public class ArcherC : MonoBehaviour
 
     // Movement
     private Rigidbody2D rb;
-    private bool isFacingRight;
+    private bool isFacingRight = true;
     [SerializeField] private float speed;
     [SerializeField] private float shootingRange;
     [SerializeField] private float seeDistance;
@@ -29,6 +29,15 @@ public class ArcherC : MonoBehaviour
     [SerializeField] Transform wallCheck;
     [SerializeField] private LayerMask wallCheackLayer;
     private bool isWallClose;
+    [SerializeField] float patrolTurnLow;
+    [SerializeField] float patrolTurnHigh;
+    float patrolTurnTimer;
+    int randomDir;
+    [SerializeField] float patrolSpeed;
+    [SerializeField] float waitToPatrolTime;
+    float waitToPatrolTimer;
+    Vector2 playerDir;
+    RaycastHit2D groundInWay;
 
     // Attack
 
@@ -102,25 +111,30 @@ public class ArcherC : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
         isWallClose = Physics2D.OverlapBox(wallCheck.position, new Vector2(.5f, 1.5f), 0, wallCheackLayer);
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
-        playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
         playerDistanceY = Mathf.Abs(transform.position.y - GameManager.gameManager.player.transform.position.y);
         
+        playerDistance = Vector2.Distance(transform.position, GameManager.gameManager.player.transform.position);
+        playerDir = GameManager.gameManager.player.transform.position - transform.position;
+        groundInWay = Physics2D.Raycast(transform.position, playerDir, playerDistance, groundLayer);
 
-        if (isGrounded && GameManager.gameManager.isPlayerRendered)
+        if (isGrounded)
         {
-            if (playerDistance < seeDistance && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING) && playerDistanceY < maxSeeDistanceY)
+            if (playerDistance < seeDistance && !IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING) && GameManager.gameManager.isPlayerRendered && !groundInWay)
             {
-                Flip();
+                FacePlayer();
+                waitToPatrolTimer = waitToPatrolTime;
+                patrolTurnTimer = Random.Range(patrolTurnLow, patrolTurnHigh);
+
                 if (!isWallClose)
                 {
-                    if (playerDistance < shootingRange && playerDistanceY > 8f || playerDistance > shootingRange)
+                    if (playerDistance < shootingRange && playerDistanceY > maxSeeDistanceY || playerDistance > shootingRange)
                     {
                         ChangeAnimationState(ENEMY_WALK);
                         transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);
                             
                     } else
                     { 
-                        if (attackCountdown <= 0 && playerDistanceY < 1f)
+                        if (attackCountdown <= 0 && playerDistanceY <= maxSeeDistanceY)
                         {
                             ChangeAnimationState(ENEMY_START_ATTACK);
                             attackCountdown = attackTimer;
@@ -135,7 +149,44 @@ public class ArcherC : MonoBehaviour
                 
             } else if (!IsAnimationPlaying(anim, ENEMY_START_ATTACK) && !IsAnimationPlaying(anim, ENEMY_ATTACKING))   
             {
-                ChangeAnimationState(ENEMY_NORMAL);
+                if (waitToPatrolTimer < 0f)
+                {
+                    ChangeAnimationState(ENEMY_WALK);
+
+                    if (patrolTurnTimer < 0f)
+                    {
+                        patrolTurnTimer = Random.Range(patrolTurnLow, patrolTurnHigh);
+                        randomDir = Random.Range(0, 2);
+                        
+                    } else
+                    {
+                        patrolTurnTimer -= Time.deltaTime;
+                    }
+
+                    if (randomDir == 0)
+                    {
+                        rb.velocity = new Vector2(-patrolSpeed, 0);
+                
+                        if (isFacingRight)
+                        {
+                            Flip();
+                        }
+
+                    } else
+                    {
+                        rb.velocity = new Vector2(patrolSpeed, 0);
+                    
+                        if (!isFacingRight)
+                        {
+                            Flip();
+                        }
+                    }
+                } else
+                {
+                    waitToPatrolTimer -= Time.deltaTime;
+
+                    ChangeAnimationState(ENEMY_NORMAL);
+                }
             }
         } else
         {
@@ -145,7 +196,7 @@ public class ArcherC : MonoBehaviour
     }
     public void FireArrow()
     {
-        if (!isFacingRight)
+        if (isFacingRight)
         {
             Instantiate(arrow, attckPoint.position, Quaternion.identity);
         } else
@@ -189,27 +240,29 @@ public class ArcherC : MonoBehaviour
         rb.velocity = Vector3.zero;
     }
 
-    private void Flip()
+    private void FacePlayer()
     {
         if (GameManager.gameManager.player.transform.position.x > transform.position.x)
         {
-            if (isFacingRight)
+            if (!isFacingRight)
             {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;    
-                transform.localScale = localScale;
+                Flip();
             }
         } else
         {
-            if (!isFacingRight)
+            if (isFacingRight)
             {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
+                Flip();
             }
         }
+    }
+
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1f;    
+        transform.localScale = localScale;
     }
 
     private void ChangeAnimationState(string newState)
