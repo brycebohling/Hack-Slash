@@ -33,6 +33,7 @@ public class FlyerC : MonoBehaviour
     bool canDive;
     [SerializeField] float seeDistance;
     RaycastHit2D groundInWay;
+    bool hitPlayerOnce;
 
     // Movement 
     
@@ -107,7 +108,7 @@ public class FlyerC : MonoBehaviour
             {
                 return;
             }            
-        } else if (!attacking)
+        } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK) && !attacking)
         {
             ChangeAnimationState(ENEMY_NORMAL);
         }
@@ -133,19 +134,22 @@ public class FlyerC : MonoBehaviour
 
         if (attacking)
         {   
+        
             if (canDive)
             {
                 isTouchingPlayer = Physics2D.OverlapBox(transform.position, new Vector2(1.6f, 1.1f), 0, playerLayer);
-
-                if (isTouchingPlayer)
+                
+                if (isTouchingPlayer && !hitPlayerOnce)
                 {
                     GameManager.gameManager.DamagePlayer(dmg,transform);
+                    hitPlayerOnce = true;
+                    ChangeAnimationState(ENEMY_NORMAL);
                 }    
 
                 if (!divedIn)
                 {   
                     transform.position =  Vector2.Lerp(transform.position, attackPlayerPos, attackSpeed * Time.deltaTime);
-
+                    
                     if (Vector2.Distance(transform.position, attackPlayerPos) < 1)
                     {
                         divedIn = true;
@@ -154,14 +158,14 @@ public class FlyerC : MonoBehaviour
                 } else if (!divedOut)
                 {
                     transform.position =  Vector2.Lerp(transform.position, originalPos, attackSpeed * Time.deltaTime);
-
+                    
                     if (Vector2.Distance(transform.position, originalPos) < 0.05f)
                     {
                         divedOut = true;
                     }
                 }
             }
-    
+            
             return;
         }
 
@@ -173,8 +177,6 @@ public class FlyerC : MonoBehaviour
 
             } else
             {
-                attacking = true;
-                Debug.Log("attack anim");
                 ChangeAnimationState(ENEMY_ATTACK);
             }
         }
@@ -191,6 +193,7 @@ public class FlyerC : MonoBehaviour
     {        
         if (distance < minDistance && !groundInWay)
         {
+            attacking = true;
             originalPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             attackPlayerPos = new Vector3(GameManager.gameManager.player.transform.position.x, GameManager.gameManager.player.transform.position.y, GameManager.gameManager.player.transform.position.z);
             divedIn = false;
@@ -203,6 +206,7 @@ public class FlyerC : MonoBehaviour
 
         attacking = false;
         canDive = false;
+        hitPlayerOnce = false;
     }
 
     public void DmgFlyer(float dmg, Transform attacker)
