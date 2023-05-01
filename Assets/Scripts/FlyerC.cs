@@ -9,6 +9,7 @@ public class FlyerC : MonoBehaviour
     private Animator anim;
     string _currentState;
     const string ENEMY_NORMAL = "normal";
+    const string ENEMY_ATTACK = "attack";
     const string ENEMY_DAMAGED = "damaged";
 
     // Physics
@@ -106,7 +107,7 @@ public class FlyerC : MonoBehaviour
             {
                 return;
             }            
-        } else 
+        } else if (!attacking)
         {
             ChangeAnimationState(ENEMY_NORMAL);
         }
@@ -173,7 +174,8 @@ public class FlyerC : MonoBehaviour
             } else
             {
                 attacking = true;
-                StartCoroutine(AttackPlayer());   
+                Debug.Log("attack anim");
+                ChangeAnimationState(ENEMY_ATTACK);
             }
         }
     }
@@ -185,10 +187,8 @@ public class FlyerC : MonoBehaviour
         goToPoint = point;
     }
 
-    private IEnumerator AttackPlayer()
-    {
-        yield return new WaitForSeconds(attackWaitTime);
-        
+    public IEnumerator AttackPlayer()
+    {        
         if (distance < minDistance && !groundInWay)
         {
             originalPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);

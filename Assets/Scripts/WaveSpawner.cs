@@ -102,6 +102,12 @@ public class WaveSpawner : MonoBehaviour
 
                 SpawnTrees();
                 SpawnBushes();
+
+                if (timeBetweenSpawns > minSpawnSpeed)
+                {
+                    timeBetweenSpawns -= spawnSpeedReductionTime;
+                }
+
             } else
             {
 
@@ -126,17 +132,12 @@ public class WaveSpawner : MonoBehaviour
             Vector2 spawnLocation = new Vector2(randomSpawnPoint.position.x + randomPosX, randomSpawnPoint.position.y);
 
             GameObject newEnemy = Instantiate(enemyTypes[enemyIndex].prefab, spawnLocation, randomSpawnPoint.rotation);
-            
+
             enemiesSpawned++;
 
             currentWaveValue -= enemyTypes[enemyIndex].value;
 
             spawnTimer = timeBetweenSpawns;
-
-            if (timeBetweenSpawns > minSpawnSpeed)
-            {
-                timeBetweenSpawns -= spawnSpeedReductionTime;
-            }
 
             if (currentWaveValue <= 0f)
             {
