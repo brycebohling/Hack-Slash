@@ -10,6 +10,7 @@ TagManager:
   - vcam
   - archer
   - stan
+  - ivan
   layers:
   - Default
   - TransparentFX

@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
 
         playerMaxHealth = playerScript.maxHealth;
         incScoreWaitTimer = incScoreWaitTime;
+
+        Time.timeScale = 1f;
     }
 
     void Update()
@@ -193,6 +195,9 @@ public class GameManager : MonoBehaviour
         } else if (enemy.CompareTag("stan"))
         {
             enemy.gameObject.GetComponent<StanC>().DmgStan(dmg, attacker);
+        } else if (enemy.CompareTag("ivan"))
+        {
+            enemy.gameObject.GetComponent<IvanC>().DmgIvan(dmg, attacker);
         }
     }
 
