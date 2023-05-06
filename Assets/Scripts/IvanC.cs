@@ -17,7 +17,7 @@ public class IvanC : MonoBehaviour
     // Movement
     private Rigidbody2D rb;
     [SerializeField] Vector2 speed;
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
     [SerializeField] private float minDistanceX;
     [SerializeField] float seeDistance;
     Vector2 targetLocationX;
@@ -60,6 +60,9 @@ public class IvanC : MonoBehaviour
     [SerializeField] GameObject root;
     [SerializeField] float timeBetweenRootSpawns; 
     [SerializeField] float groundThickness;
+    [SerializeField] int numberOfTwigSpawns;
+    [SerializeField] GameObject twig;
+    [SerializeField] List<Transform> twigSpawnPoints = new List<Transform>();
 
     // Health
 
@@ -321,8 +324,22 @@ public class IvanC : MonoBehaviour
 
     public void SpawnTwigs()
     {
+        int randomSpawnPoint = Random.Range(0, twigSpawnPoints.Count);
 
-    }
+        for(int i = 0; i < numberOfTwigSpawns; i++)
+        {
+            randomSpawnPoint = Random.Range(0, twigSpawnPoints.Count);
+
+            if (isFacingRight)
+            {
+                GameObject prefab = Instantiate(twig, twigSpawnPoints[randomSpawnPoint].position, Quaternion.Euler(0f, 0f, 5f - i));
+                prefab.GetComponent<TwigC>().shootRight = true;
+            } else
+            {
+                GameObject prefab = Instantiate(twig, twigSpawnPoints[randomSpawnPoint].position, Quaternion.Euler(0f, 0f, 185f - i));
+            }
+        }
+    }  
 
     private void FacePlayer()
     {

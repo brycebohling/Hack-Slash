@@ -8,13 +8,14 @@ public class TwigC : MonoBehaviour
     [SerializeField] float dmg;    
     [SerializeField] float groundLayerNum;
     private Rigidbody2D rb;
+    int randomRotationY;
+    public bool shootRight;
     
-
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * speed;
+        SetDirection();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) 
@@ -28,5 +29,18 @@ public class TwigC : MonoBehaviour
             Destroy(gameObject);
         }
         
+    }
+
+    void SetDirection()
+    {
+        if (shootRight)
+        {
+            randomRotationY = Random.Range(-2, 2);
+            rb.velocity = new Vector2(speed, randomRotationY).normalized * speed;
+        } else
+        {
+            randomRotationY = Random.Range(-2, 2);
+            rb.velocity = new Vector2(-speed, randomRotationY).normalized * speed;
+        }
     }
 }
