@@ -199,8 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d09c0fbb2214a2899df60b32084d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveSpawnerScript: {fileID: 0}
   speed: {x: 5, y: 0}
-  minDistanceX: 4
+  isFacingRight: 1
   seeDistance: 20
   groundCheck: {fileID: 1665152409307121711}
   groundLayer:
@@ -211,7 +212,7 @@ MonoBehaviour:
   patrolSpeed: 2
   waitToPatrolTime: 1
   groundCheckSize: {x: 4, y: 0.1}
-  dmg: 1
+  dmg: 25
   totalAttackRange: 8
   slashHitRadius: 1.5
   kickHitRadius: 1.3
@@ -232,11 +233,9 @@ MonoBehaviour:
   - {fileID: 258148808}
   - {fileID: 1304303934}
   - {fileID: 1068103961}
-  health: 200
-  dmgTime: 0.1
-  knockbackPower: 2
-  knockbackTime: 0.1
-  deathParticals: {fileID: 0}
+  health: 250
+  deathParticals: {fileID: 901058660515239618, guid: 38e29c35688ca43b98acf0b9587f55b8, type: 3}
+  teleporter: {fileID: 4490126659960503450, guid: 355b8ebf8cd034547b0416e17845e2ba, type: 3}
 --- !u!50 &1665152408549884675
 Rigidbody2D:
   serializedVersion: 4

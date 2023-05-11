@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class IvanC : MonoBehaviour
 {
+    [SerializeField] WaveSpawner waveSpawnerScript;
+
    // Animation
     private Animator anim;
     string _currentState;
@@ -18,7 +20,6 @@ public class IvanC : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] Vector2 speed;
     public bool isFacingRight = true;
-    [SerializeField] private float minDistanceX;
     [SerializeField] float seeDistance;
     Vector2 targetLocationX;
     Vector2 targetLocationY;
@@ -69,20 +70,14 @@ public class IvanC : MonoBehaviour
     float currentHealth;
     [SerializeField] float health;
 
-    // Damaged
-
-    bool takingDmg;
-    float dmgTimerCountdown;
-    [SerializeField] float dmgTime;
-    [SerializeField] float knockbackPower;
-    [SerializeField] float knockbackTime;
-    bool beingKnockedback;
-
-
     // Death
     bool isDead;
     [SerializeField] GameObject deathParticals;
     int scoreValue = 1000;
+
+    // Teleporter
+
+    [SerializeField] GameObject teleporter;
 
 
 
@@ -98,23 +93,12 @@ public class IvanC : MonoBehaviour
     {
         if (isDead)
         {
-            // Instantiate(deathParticals, transform.position, Quaternion.identity);
+            Instantiate(deathParticals, transform.position, Quaternion.identity);
             GameManager.gameManager.EnemyDied(scoreValue);
+            waveSpawnerScript.inBossFight = false;
+            GameObject tele = Instantiate(teleporter, transform.position, Quaternion.identity);
+            tele.GetComponent<BossTeleporter>().toBoss = false;
             Destroy(gameObject);
-        }
-
-        if (takingDmg)
-        {
-            dmgTimerCountdown -= Time.deltaTime;
-
-            if (dmgTimerCountdown <= 0) 
-            {
-                ChangeAnimationState(ENEMY_NORMAL);
-                takingDmg = false;
-            } else 
-            {
-                return;
-            }            
         }
 
         if (!IsAnimationPlaying(anim, ENEMY_NORMAL) && !IsAnimationPlaying(anim, ENEMY_WALK) && !IsAnimationPlaying(anim, ENEMY_SLASH)
@@ -126,11 +110,6 @@ public class IvanC : MonoBehaviour
         if (attackCountdown > 0)
         {
             attackCountdown -= Time.deltaTime;
-        }
-
-        if (beingKnockedback)
-        {
-            return;
         }
 
         if (!IsAnimationPlaying(anim, ENEMY_WALK))
@@ -373,29 +352,9 @@ public class IvanC : MonoBehaviour
         if (currentHealth <= 0)
         {
             isDead = true;
-        } else
-        {
-            dmgTimerCountdown = dmgTime;
-            takingDmg = true;
-            
-            Knockback(attacker);
         }
-    }
 
-    private void Knockback(Transform attacker)
-    {
-        StopAllCoroutines();
-        Vector2 hitDir = (transform.position - attacker.position).normalized;
-        rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
-        StartCoroutine(CancelKnockback());
-        beingKnockedback = true;
-    }
-
-    private IEnumerator CancelKnockback()
-    {
-        yield return new WaitForSeconds(knockbackTime);
-        beingKnockedback = false;
-        rb.velocity = Vector3.zero;
+        Instantiate(deathParticals, transform.position, Quaternion.identity);
     }
 
     private void ChangeAnimationState(string newState)

@@ -39,6 +39,8 @@ public class WaveSpawner : MonoBehaviour
     public int killedEnemies;
     int enemiesLeft;
     bool spawnNextWave;
+    [SerializeField] int bossSpawnWave;
+    [SerializeField] GameObject toBossTeleporter;
 
     // Tree stuff
 
@@ -54,6 +56,9 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] Transform bush;
     [SerializeField] float bushSpawnPercent;
 
+    // Boss
+    public bool inBossFight;
+
 
     void Start()
     {
@@ -64,6 +69,11 @@ public class WaveSpawner : MonoBehaviour
     void FixedUpdate()
     {
         if (GameManager.gameManager.isPlayerDead)
+        {
+            return;
+        }
+
+        if (inBossFight)
         {
             return;
         }
@@ -98,18 +108,25 @@ public class WaveSpawner : MonoBehaviour
             {
                 waveNumber++;
                 ChangeWaveNumber(waveNumber.ToString());
-                isNewWave = false;
+
+
+                if (waveNumber == bossSpawnWave)
+                {
+                    GameObject teleporter = Instantiate(toBossTeleporter, GameManager.gameManager.playerPos, Quaternion.identity);
+                    teleporter.GetComponent<BossTeleporter>().toBoss = true;
+                    inBossFight = true;
+                    return;
+                }
 
                 SpawnTrees();
                 SpawnBushes();
+
+                isNewWave = false;
 
                 if (timeBetweenSpawns > minSpawnSpeed)
                 {
                     timeBetweenSpawns -= spawnSpeedReductionTime;
                 }
-
-            } else
-            {
 
             }
 

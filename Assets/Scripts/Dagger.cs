@@ -5,7 +5,6 @@ using UnityEngine;
 public class Dagger : MonoBehaviour
 {
     playerController PC;
-    [SerializeField] float rotationSpeed;
     bool isRotating = false;
     float angle;
     [SerializeField] LayerMask enemyLayer;

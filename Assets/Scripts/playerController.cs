@@ -171,6 +171,10 @@ public class playerController : MonoBehaviour
 
     public TurnOffUI[] turnOffUI;
 
+    // Teleporter
+
+    [SerializeField] GameObject autoDestroyTeleporter;
+
 
     private void Start()
     {
@@ -777,6 +781,13 @@ public class playerController : MonoBehaviour
             currentWave = GameManager.gameManager.waveNum;
             PlayerHeal(maxHealth * healthRegenerationPercent); 
         } 
+    }
+
+    public void Teleport(Vector2 pos)
+    {
+        transform.position = pos;
+
+        Instantiate(autoDestroyTeleporter, transform.position, Quaternion.identity);
     }
 
     private void ChangeAnimationState(string newState)
