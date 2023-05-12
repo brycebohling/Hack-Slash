@@ -102,6 +102,7 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask enemies;
     [SerializeField] Transform critParticle;
     bool willCrit;
+    [SerializeField] LayerMask rootLayer;
 
     // Dagger
     public GameObject dagger;
@@ -703,6 +704,18 @@ public class playerController : MonoBehaviour
             var treeScript = tree.GetComponent<TreeC>();
             treeScript.TreeShake();
         }        
+
+        // Hit Roots
+        Collider2D[] roots = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, rootLayer);
+
+        foreach (Collider2D root in roots)
+        {
+            var rootScript = root.GetComponent<RootC>();
+            if (rootScript.canAttack)
+            {
+            rootScript.killed = true;
+            }
+        } 
     }
 
     public void PlayerTakeDmg(float dmg, Transform attacker)

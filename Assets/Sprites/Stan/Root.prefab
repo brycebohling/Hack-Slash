@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2273161556815106872}
   - component: {fileID: 2273161556815106869}
   - component: {fileID: 2273161556815106868}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa78eca5bd85f42eb9133f5ddf5832df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAttack: 0
   lifeTime: 2.5
   dmg: 10
   rootSize: {x: 0.5, y: 1.7}
@@ -159,6 +160,7 @@ MonoBehaviour:
     m_Bits: 256
   deathParticles: {fileID: 901058660515239618, guid: 38e29c35688ca43b98acf0b9587f55b8, type: 3}
   center: {fileID: 2136563668}
+  killed: 0
 --- !u!61 &2273161556815106868
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,7 +168,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2273161556815106873}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

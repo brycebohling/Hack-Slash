@@ -5,13 +5,14 @@ using UnityEngine;
 public class RootC : MonoBehaviour
 {
     Animator anim;
-    bool canAttack;
+    public bool canAttack;
     [SerializeField] float lifeTime;
     [SerializeField] int dmg;
     [SerializeField] Vector2 rootSize;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] GameObject deathParticles;
     [SerializeField] Transform center;
+    public bool killed;
     
 
     void Start()
@@ -25,7 +26,7 @@ public class RootC : MonoBehaviour
     {
         lifeTime -= Time.deltaTime;
     
-        if (lifeTime <= 0)
+        if (lifeTime <= 0 || killed)
         {
             Instantiate(deathParticles, center.position, Quaternion.identity);
             Destroy(gameObject);

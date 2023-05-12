@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveSpawnerScript: {fileID: 0}
-  speed: {x: 5, y: 0}
+  speed: {x: 6, y: 0}
   isFacingRight: 1
   seeDistance: 20
   groundCheck: {fileID: 1665152409307121711}
@@ -213,12 +213,12 @@ MonoBehaviour:
   waitToPatrolTime: 1
   groundCheckSize: {x: 4, y: 0.1}
   dmg: 25
-  totalAttackRange: 8
-  slashHitRadius: 1.5
-  kickHitRadius: 1.3
-  slashRadius: 1.5
-  kickRadius: 1.3
-  attackTimer: 3
+  totalAttackRange: 10
+  slashHitRadius: 1.6
+  kickHitRadius: 1.4
+  slashRadius: 1.6
+  kickRadius: 1.4
+  attackTimer: 2
   slashPoint: {fileID: 1665152410379547587}
   kickPoint: {fileID: 1665152409393127145}
   attackLayer:

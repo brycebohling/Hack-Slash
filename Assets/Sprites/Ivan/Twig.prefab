@@ -99,10 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e27e8fe8cba459987cc33114ea0b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ivanC: {fileID: 1665152408549884701, guid: 6f8080db7bb724bb796ee1ab842a6aee, type: 3}
-  speed: 6
+  speed: 8
   dmg: 10
   groundLayerNum: 6
+  shootRight: 0
 --- !u!50 &8796011138204592245
 Rigidbody2D:
   serializedVersion: 4
