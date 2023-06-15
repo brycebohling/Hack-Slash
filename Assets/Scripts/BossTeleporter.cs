@@ -36,6 +36,7 @@ public class BossTeleporter : MonoBehaviour
         {
             if (toBoss)
             {
+                GameManager.gameManager.bossHealthBar.SetActive(true);
                 playerScript.Teleport(bossArenaTelePos);
             } else
             {

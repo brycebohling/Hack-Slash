@@ -246,7 +246,7 @@ public class UpgradeC : MonoBehaviour
     {
         PC.maxHealth += maxHealthIncAmount;
 
-        HB.SetHealth(PC.currentHealth);
+        HB.SetHealth(PC.currentHealth, PC.maxHealth);
 
         PC.PlayerHeal(maxHealthIncAmount);
 

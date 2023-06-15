@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class IvanC : MonoBehaviour
 {
-    [SerializeField] WaveSpawner waveSpawnerScript;
+    WaveSpawner waveSpawnerScript;
+    BossHealthBar bossHealthBarScript;
 
    // Animation
     private Animator anim;
@@ -67,8 +68,8 @@ public class IvanC : MonoBehaviour
 
     // Health
 
-    float currentHealth;
-    [SerializeField] float health;
+    public float currentHealth;
+    public float maxHealth;
 
     // Death
     bool isDead;
@@ -76,16 +77,16 @@ public class IvanC : MonoBehaviour
     int scoreValue = 1000;
 
     // Teleporter
-
     [SerializeField] GameObject teleporter;
-
 
 
     private void Start() 
     {
+        bossHealthBarScript = GameManager.gameManager.bossHealthBar.GetComponent<BossHealthBar>();
+        waveSpawnerScript = GameObject.Find("GameManager").GetComponent<WaveSpawner>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        currentHealth = health;
+        currentHealth = maxHealth;
         waitToPatrolTimer = waitToPatrolTime;
     }
 
@@ -98,6 +99,7 @@ public class IvanC : MonoBehaviour
             waveSpawnerScript.inBossFight = false;
             GameObject tele = Instantiate(teleporter, transform.position, Quaternion.identity);
             tele.GetComponent<BossTeleporter>().toBoss = false;
+            GameManager.gameManager.bossHealthBar.SetActive(false);
             Destroy(gameObject);
         }
 
@@ -348,6 +350,8 @@ public class IvanC : MonoBehaviour
     public void DmgIvan(float dmg, Transform attacker)
     {
         currentHealth -= dmg;   
+
+        bossHealthBarScript.SetHealth(currentHealth, maxHealth);    
 
         if (currentHealth <= 0)
         {

@@ -11,6 +11,7 @@ TagManager:
   - archer
   - stan
   - ivan
+  - bossHealthBar
   layers:
   - Default
   - TransparentFX

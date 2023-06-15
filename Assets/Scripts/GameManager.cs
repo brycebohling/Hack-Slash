@@ -8,6 +8,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
+    public GameObject bossHealthBar;
     public UnityEvent GamePaused;
     public UnityEvent GameResumed;
     [SerializeField] GameObject PauseScreen;

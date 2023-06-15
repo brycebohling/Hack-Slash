@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &258148807
+--- !u!1 &7933846559091237793
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,30 +8,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 258148808}
+  - component: {fileID: 7933846559091237792}
   m_Layer: 9
-  m_Name: TwigSpawnPoint
+  m_Name: ShashPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &258148808
+--- !u!4 &7933846559091237792
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258148807}
+  m_GameObject: {fileID: 7933846559091237793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.76, y: 0.46, z: 0}
+  m_LocalPosition: {x: 1.66, y: -0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1665152408549884673}
-  m_RootOrder: 3
+  m_Father: {fileID: 7933846560886543202}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1068103960
+--- !u!1 &7933846560119131787
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -39,30 +39,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1068103961}
+  - component: {fileID: 7933846560119131786}
   m_Layer: 9
-  m_Name: TwigSpawnPoint (2)
+  m_Name: KickPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1068103961
+--- !u!4 &7933846560119131786
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068103960}
+  m_GameObject: {fileID: 7933846560119131787}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.33, y: -1.15, z: 0}
+  m_LocalPosition: {x: 0.76, y: -2.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1665152408549884673}
-  m_RootOrder: 5
+  m_Father: {fileID: 7933846560886543202}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1304303933
+--- !u!1 &7933846560167385165
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,30 +70,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1304303934}
+  - component: {fileID: 7933846560167385164}
   m_Layer: 9
-  m_Name: TwigSpawnPoint (1)
+  m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1304303934
+--- !u!4 &7933846560167385164
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304303933}
+  m_GameObject: {fileID: 7933846560167385165}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.22, y: -0.3, z: 0}
+  m_LocalPosition: {x: -0.03, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1665152408549884673}
-  m_RootOrder: 4
+  m_Father: {fileID: 7933846560886543202}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1665152408549884679
+--- !u!1 &7933846560886543204
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,12 +101,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1665152408549884673}
-  - component: {fileID: 1665152408549884672}
-  - component: {fileID: 1665152408549884701}
-  - component: {fileID: 1665152408549884675}
-  - component: {fileID: 1665152408549884674}
-  - component: {fileID: 1665152408549884700}
+  - component: {fileID: 7933846560886543202}
+  - component: {fileID: 7933846560886543203}
+  - component: {fileID: 7933846560886543230}
+  - component: {fileID: 7933846560886543200}
+  - component: {fileID: 7933846560886543201}
+  - component: {fileID: 7933846560886543231}
   m_Layer: 9
   m_Name: Ivan
   m_TagString: ivan
@@ -114,34 +114,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1665152408549884673
+--- !u!4 &7933846560886543202
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152408549884679}
+  m_GameObject: {fileID: 7933846560886543204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.72, y: 9.96, z: 0}
+  m_LocalPosition: {x: -99.55, y: 12.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1665152409307121711}
-  - {fileID: 1665152410379547587}
-  - {fileID: 1665152409393127145}
-  - {fileID: 258148808}
-  - {fileID: 1304303934}
-  - {fileID: 1068103961}
+  - {fileID: 7933846560167385164}
+  - {fileID: 7933846559091237792}
+  - {fileID: 7933846560119131786}
+  - {fileID: 8719356054656997803}
+  - {fileID: 8719356053535738205}
+  - {fileID: 8719356053838473594}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1665152408549884672
+--- !u!212 &7933846560886543203
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152408549884679}
+  m_GameObject: {fileID: 7933846560886543204}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -187,23 +187,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1665152408549884701
+--- !u!114 &7933846560886543230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152408549884679}
+  m_GameObject: {fileID: 7933846560886543204}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95d09c0fbb2214a2899df60b32084d49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSpawnerScript: {fileID: 0}
   speed: {x: 6, y: 0}
   isFacingRight: 1
   seeDistance: 20
-  groundCheck: {fileID: 1665152409307121711}
+  groundCheck: {fileID: 7933846560167385164}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -219,8 +218,8 @@ MonoBehaviour:
   slashRadius: 1.6
   kickRadius: 1.4
   attackTimer: 2
-  slashPoint: {fileID: 1665152410379547587}
-  kickPoint: {fileID: 1665152409393127145}
+  slashPoint: {fileID: 7933846559091237792}
+  kickPoint: {fileID: 7933846560119131786}
   attackLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -230,20 +229,21 @@ MonoBehaviour:
   numberOfTwigSpawns: 10
   twig: {fileID: 8796011138204592247, guid: e853a2ce4e7ec4548912dfaf7c7e4d2e, type: 3}
   twigSpawnPoints:
-  - {fileID: 258148808}
-  - {fileID: 1304303934}
-  - {fileID: 1068103961}
-  health: 250
+  - {fileID: 8719356054656997803}
+  - {fileID: 8719356053535738205}
+  - {fileID: 8719356053838473594}
+  currentHealth: 0
+  maxHealth: 250
   deathParticals: {fileID: 901058660515239618, guid: 38e29c35688ca43b98acf0b9587f55b8, type: 3}
   teleporter: {fileID: 4490126659960503450, guid: 355b8ebf8cd034547b0416e17845e2ba, type: 3}
---- !u!50 &1665152408549884675
+--- !u!50 &7933846560886543200
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152408549884679}
+  m_GameObject: {fileID: 7933846560886543204}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -257,13 +257,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &1665152408549884674
+--- !u!61 &7933846560886543201
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152408549884679}
+  m_GameObject: {fileID: 7933846560886543204}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -283,14 +283,14 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.8475838, y: 6.0395365}
   m_EdgeRadius: 0
---- !u!95 &1665152408549884700
+--- !u!95 &7933846560886543231
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152408549884679}
+  m_GameObject: {fileID: 7933846560886543204}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4c3d54f27e20d4a32ad337068d107a4d, type: 2}
@@ -303,7 +303,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!1 &1665152409307121710
+--- !u!1 &8719356053535738206
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,30 +311,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1665152409307121711}
+  - component: {fileID: 8719356053535738205}
   m_Layer: 9
-  m_Name: GroundCheck
+  m_Name: TwigSpawnPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1665152409307121711
+--- !u!4 &8719356053535738205
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152409307121710}
+  m_GameObject: {fileID: 8719356053535738206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: -3, z: 0}
+  m_LocalPosition: {x: 2.22, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1665152408549884673}
-  m_RootOrder: 0
+  m_Father: {fileID: 7933846560886543202}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1665152409393127144
+--- !u!1 &8719356053838473595
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -342,30 +342,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1665152409393127145}
+  - component: {fileID: 8719356053838473594}
   m_Layer: 9
-  m_Name: KickPoint
+  m_Name: TwigSpawnPoint (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1665152409393127145
+--- !u!4 &8719356053838473594
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152409393127144}
+  m_GameObject: {fileID: 8719356053838473595}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.76, y: -2.11, z: 0}
+  m_LocalPosition: {x: 2.33, y: -1.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1665152408549884673}
-  m_RootOrder: 2
+  m_Father: {fileID: 7933846560886543202}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1665152410379547586
+--- !u!1 &8719356054656997796
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -373,26 +373,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1665152410379547587}
+  - component: {fileID: 8719356054656997803}
   m_Layer: 9
-  m_Name: ShashPoint
+  m_Name: TwigSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1665152410379547587
+--- !u!4 &8719356054656997803
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665152410379547586}
+  m_GameObject: {fileID: 8719356054656997796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.66, y: -0.45, z: 0}
+  m_LocalPosition: {x: 1.76, y: 0.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1665152408549884673}
-  m_RootOrder: 1
+  m_Father: {fileID: 7933846560886543202}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

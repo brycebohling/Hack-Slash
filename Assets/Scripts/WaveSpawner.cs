@@ -14,12 +14,9 @@ public class WaveSpawner : MonoBehaviour
         public float value; 
     }
 
-    [System.Serializable] public struct SpawnPoints
-    {
-        public Transform spawnPoint;
-    }
-    
-    public SpawnPoints[] spawnPoints;
+    [SerializeField] GameObject ivanPrefab;
+    [SerializeField] Transform ivanSpawnPoint;
+    public List<Transform> spawnPoints = new List<Transform>();
     public EnemyType[] enemyTypes; 
     [SerializeField] float waveValue;
     [SerializeField] float valueIncreasePerWave; 
@@ -115,6 +112,8 @@ public class WaveSpawner : MonoBehaviour
                     GameObject teleporter = Instantiate(toBossTeleporter, GameManager.gameManager.playerPos, Quaternion.identity);
                     teleporter.GetComponent<BossTeleporter>().toBoss = true;
                     inBossFight = true;
+
+                    Instantiate(ivanPrefab, ivanSpawnPoint.position, Quaternion.identity);
                     return;
                 }
 
@@ -137,11 +136,11 @@ public class WaveSpawner : MonoBehaviour
                 enemyIndex = Random.Range(0, enemyTypes.Length);
             }
 
-            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].spawnPoint;
+            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
 
             while (Vector2.Distance(randomSpawnPoint.position, GameManager.gameManager.player.transform.position) < spawnPointRequiredDistance)
             {
-                randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)].spawnPoint;
+                randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
             }
 
             float randomPosX = Random.Range(-2f, 2f);

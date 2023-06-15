@@ -6,10 +6,8 @@ using TMPro;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] playerController PC;
     private Image barImage;
     private Image background;
-    private float maxHealthAmount;
     [SerializeField] float fadeSpeed;
     [SerializeField] float fadeWaitTime;
     float fadeWaitTimer;
@@ -41,13 +39,13 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    public void SetHealth(float health)
+    public void SetHealth(float health, float maxHealth)
     {
-        if (barImage.fillAmount != health / PC.maxHealth)
+        if (barImage.fillAmount != health / maxHealth)
         {
-            barImage.fillAmount = health / PC.maxHealth;
+            barImage.fillAmount = health / maxHealth;
             fadeWaitTimer = fadeWaitTime;
-            healthText.text = Mathf.RoundToInt(health) + "/" + Mathf.RoundToInt(PC.maxHealth);
+            healthText.text = Mathf.RoundToInt(health) + "/" + Mathf.RoundToInt(maxHealth);
         }
     }
 }

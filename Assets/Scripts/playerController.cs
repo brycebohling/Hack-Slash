@@ -728,7 +728,7 @@ public class playerController : MonoBehaviour
             {
                 currentHealth -= dmg * (1 - dmgReduction);
                 
-                HB.SetHealth(currentHealth);
+                HB.SetHealth(currentHealth, maxHealth);
             
                 GameManager.gameManager.killStreak = 0;
 
@@ -776,7 +776,7 @@ public class playerController : MonoBehaviour
             }            
         }
         
-        HB.SetHealth(currentHealth);
+        HB.SetHealth(currentHealth, maxHealth);
     }
 
     private void Knockback(Transform attacker)
