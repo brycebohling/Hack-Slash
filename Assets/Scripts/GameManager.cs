@@ -223,6 +223,11 @@ public class GameManager : MonoBehaviour
         IncScore(scoreValue);
     }
 
+    public void BossKilled(int scoreValue)
+    {
+        IncScore(scoreValue);
+    }
+
     public void TreeDead(Transform location)
     {
         waveScript.TreeDestroyed(location);

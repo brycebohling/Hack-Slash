@@ -149,6 +149,7 @@ public class WaveSpawner : MonoBehaviour
             Vector2 spawnLocation = new Vector2(randomSpawnPoint.position.x + randomPosX, randomSpawnPoint.position.y);
 
             GameObject newEnemy = Instantiate(enemyTypes[enemyIndex].prefab, spawnLocation, randomSpawnPoint.rotation);
+            
 
             enemiesSpawned++;
 

@@ -94,7 +94,7 @@ public class IvanC : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
-            GameManager.gameManager.EnemyDied(scoreValue);
+            GameManager.gameManager.BossKilled(scoreValue);
             waveSpawnerScript.inBossFight = false;
             GameObject tele = Instantiate(teleporter, transform.position, Quaternion.identity);
             tele.GetComponent<BossTeleporter>().toBoss = false;
