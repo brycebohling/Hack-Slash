@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -15,8 +14,6 @@ public class GameManager : MonoBehaviour
     bool isPaused;
     public GameObject player;
     private playerController playerScript;
-    private WaveSpawner waveScript;
-    private daggerAmmoUI daggerUIScript;
     [SerializeField] UpgradeC upgrades;
     Renderer playerRenderer;
     public bool isPlayerRendered;
@@ -27,7 +24,6 @@ public class GameManager : MonoBehaviour
     public Vector2 playerPos;
     public bool levelingUp;
     [SerializeField] Transform healthItem;
-    public int waveNum;
     float score;
     float incScoreValue;
     [SerializeField] TMP_Text scoreText;
@@ -50,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameManager != null && gameManager != this)
         {
-            Destroy(this);
+            Debug.Log("More than one GameManager in a scene!");
         } else
         {
             gameManager = this;
@@ -62,13 +58,11 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<playerController>();
         playerRenderer = player.GetComponent<Renderer>();
-        waveScript = GameObject.Find("GameManager").GetComponent<WaveSpawner>();
-        daggerUIScript = GameObject.Find("DaggerAmmo").GetComponent<daggerAmmoUI>();
+
+        SetDifficulty();
 
         playerMaxHealth = playerScript.maxHealth;
         incScoreWaitTimer = incScoreWaitTime;
-
-        Time.timeScale = 1f;
     }
 
     void Update()
@@ -76,7 +70,6 @@ public class GameManager : MonoBehaviour
         playerCurrentHealth = playerScript.currentHealth;
         playerMaxHealth = playerScript.maxHealth;
         playerPos = playerScript.transform.position;
-        waveNum = waveScript.waveNumber;
         killStreakText.text = killStreak.ToString();
         
         if (playerRenderer.enabled == true)
@@ -153,6 +146,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetDifficulty()
+    {
+        if (StoredVars.difficulty == "normal")
+        {
+
+        } else if (StoredVars.difficulty == "hardcore")
+        {
+            playerScript.currentHealth = 1f;
+        }
+    }
+
     public void PauseResume()
     {
         isPaused = !isPaused;
@@ -212,31 +216,14 @@ public class GameManager : MonoBehaviour
         playerScript.PlayerHeal(healAmount);
     }
 
-    public void SetDaggerAmmoUI(int ammo)
-    {
-        daggerUIScript.ChangeDaggerAmmoUI(ammo);
-    }
-
     public void EnemyDied(int scoreValue)
     {
-        waveScript.killedEnemies++;
-
         IncScore(scoreValue);
     }
 
     public void BossKilled(int scoreValue)
     {
         IncScore(scoreValue);
-    }
-
-    public void TreeDead(Transform location)
-    {
-        waveScript.TreeDestroyed(location);
-    }
-
-    public void BushDead(Transform location)
-    {
-        waveScript.BushDestroyed(location);
     }
 
     public void IncScore(int value)
@@ -274,7 +261,7 @@ public class GameManager : MonoBehaviour
             statsText[0].SetActive(true);
             statsText[1].SetActive(true);
 
-            for(int i = 2; i < GameManager.gameManager.statsText.Count; i++)
+            for(int i = 2; i < statsText.Count; i++)
             {
                 statsText[i].SetActive(true);
                 yield return new WaitForSecondsRealtime(statShowOffset);
@@ -286,7 +273,7 @@ public class GameManager : MonoBehaviour
         {
             showingStatsAnim = true;
 
-            for(int i = 2; i < GameManager.gameManager.statsText.Count; i++)
+            for(int i = 2; i < statsText.Count; i++)
             {
                 statsText[i].GetComponent<Animator>().Play("hide");
                 yield return new WaitForSecondsRealtime(statShowOffset);
@@ -294,7 +281,7 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitUntil(() => !IsAnimationPlaying(statsText[statsText.Count - 1].GetComponent<Animator>(), "hide"));
 
-            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            for(int i = 0; i < statsText.Count; i++)
             {
                 statsText[i].SetActive(false);
             }

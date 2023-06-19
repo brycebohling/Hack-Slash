@@ -84,6 +84,7 @@ public class FlyerC : MonoBehaviour
             if (!noAddToEnemies)
             {
                 GameManager.gameManager.EnemyDied(scoreValue);
+                GameManager.gameManager.GetComponent<WaveSpawner>().killedEnemies++;
             }
             Destroy(gameObject);
         }

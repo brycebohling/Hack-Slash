@@ -24,11 +24,6 @@ public class UIC : MonoBehaviour
         SceneC.LoadScene(1);
     }
 
-    public void Resume()
-    {
-        GameManager.gameManager.PauseResume();
-    }
-
     public void Hyperlinks(string link)
     {
         Application.OpenURL(link);

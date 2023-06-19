@@ -62,7 +62,7 @@ public class TreeC : MonoBehaviour
 
             if (color.a <= 0)
             {
-                GameManager.gameManager.TreeDead(transform);
+                GameManager.gameManager.GetComponent<WaveSpawner>().TreeDestroyed(transform);
 
                 Destroy(gameObject);
             }

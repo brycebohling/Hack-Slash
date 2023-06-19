@@ -5,12 +5,16 @@ using TMPro;
 
 public class playerController : MonoBehaviour
 {
+    [Header("Refrences")]
     CameraC camC;
     bushC bushScript;
     [SerializeField] HealthBar HB;
     [SerializeField] StaminaBarC SB;
+    daggerAmmoUI daggerUIScript;
+    [SerializeField] WaveSpawner waveSpawnerScript;
+    
 
-    // Stats
+    [Header("Stats")]
     public float movementSpeed;
     public float jumpForce;
     public int numberOfJumps;
@@ -27,10 +31,17 @@ public class playerController : MonoBehaviour
     public float meleeSpeed;
     public float healthRegenerationPercent;
 
-    // Movement
+    [Header("Movement")]
     private float movementX;
     public bool isFacingRight;
 
+    [Header("Key Binds")]
+    [SerializeField] List<KeyCode> meleeAttackBinds = new List<KeyCode>();
+    [SerializeField] List<KeyCode> throwDaggerBinds = new List<KeyCode>();
+    [SerializeField] List<KeyCode> jumpBinds = new List<KeyCode>();
+    [SerializeField] List<KeyCode> rollBinds = new List<KeyCode>();
+    [SerializeField] List<KeyCode> jumpInBushBinds = new List<KeyCode>();
+    
     // Physics
     private Rigidbody2D rb;
     private BoxCollider2D bcoll;
@@ -49,28 +60,27 @@ public class playerController : MonoBehaviour
     const string PLAYER_ATTACK_3 = "attack-3";
     const string PLAYER_DAMAGED = "damaged";
     
-    // Ground check
+    [Header("Ground Check")]
     [SerializeField] Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
     private bool wasGrounded;
     [SerializeField] Vector2 groundCheckSize;
 
-    // Ceilling check
+    [Header("Ceiling Check")]
     [SerializeField] Vector2 ceillingCheckSize;
     [SerializeField] Transform ceillingCheck;
     [SerializeField] private LayerMask headHitters;
     private bool isCeiling;
 
-    // Junping
+    [Header("Jumping")]
     int currentNumOfJumps;
     [SerializeField] float jumpOffJumpTime;
     float jumpOffJumpTimer;
     [SerializeField] float waitToCheckForJump;
     float waitToCheckForJumpTimer;
 
-    // Rolling 
-
+    [Header("Rolling")]
     [SerializeField] private float rollWidth;
     [SerializeField] private float rollHight;
     [SerializeField] private float rollOffsetX;
@@ -83,15 +93,14 @@ public class playerController : MonoBehaviour
     float originalOffsetX;
     float originalOffsetY;
 
-    // Stamina
-
+    [Header("Stamina")]
     public float currentStamina;
     [SerializeField] float staminaRechargeTime;
     float staminaRechargeTimer;
     [SerializeField] float staminaRechargeSpeed;
     [SerializeField] float rollStaminaAmount;
 
-    // Attack
+    [Header("Melee Attack")]
     public static int noOfClicks = 0;
     private float lastClickedTime = 0;
     [SerializeField] private float maxComboDelay = 1;
@@ -104,7 +113,7 @@ public class playerController : MonoBehaviour
     bool willCrit;
     [SerializeField] LayerMask rootLayer;
 
-    // Dagger
+    [Header("Dagger")]
     public GameObject dagger;
     int daggerAmmo = 3;
     [SerializeField] float daggerThrowCooldown;
@@ -117,14 +126,13 @@ public class playerController : MonoBehaviour
     [SerializeField] Transform daggerSpawnPoint;
     [SerializeField] GameObject daggerUIObejct;
 
-    // Health
-
+    [Header("Health")]
     public float currentHealth;
     private int currentWave = 1;
     [SerializeField] Transform dodgeParticles;
     [SerializeField] GameObject healingText;
 
-    // Dmg
+    [Header("Taking Damage")]
     [SerializeField] float iFrameTime;
     float iFrameCountdown;
     public bool invicible;
@@ -133,11 +141,11 @@ public class playerController : MonoBehaviour
     float dmgTimerCountdown;
     [SerializeField] float knockbackPower;
 
-    // Death
+    [Header("Death")]
     public bool isDead;
     [SerializeField] GameObject deathParticals;
     
-    // Bush mechanics
+    [Header("Bush Mechanics")]
     Collider2D[] bushInRange;
     float bushJumpHeight = 5f;
     bool jumpingIntoBush;
@@ -156,14 +164,13 @@ public class playerController : MonoBehaviour
     bool didBushShake = false;
     float bushHealthAmount = 5;
 
-    // Tree mechanices
+    [Header("Tree Mechanics")]
     [SerializeField] LayerMask treeLayer;
 
-    // UI
+    [Header("UI")]
     [SerializeField] GameObject deathScreenUI;
     [SerializeField] GameObject bushInRangeUI;
     [SerializeField] TMP_Text totalWaveText;
-
     [System.Serializable] public struct TurnOffUI
     {
         public GameObject UIObject;
@@ -172,8 +179,7 @@ public class playerController : MonoBehaviour
 
     public TurnOffUI[] turnOffUI;
 
-    // Teleporter
-
+    [Header("Bush Teleporter")]
     [SerializeField] GameObject autoDestroyTeleporter;
 
 
@@ -184,11 +190,15 @@ public class playerController : MonoBehaviour
         bcoll = GetComponent<BoxCollider2D>();
         camC = GameObject.FindGameObjectWithTag("vcam").GetComponent<CameraC>();
         spriteRend = GetComponent<SpriteRenderer>();
+
+        daggerUIScript = GameObject.Find("DaggerAmmo").GetComponent<daggerAmmoUI>();
+        waveSpawnerScript = GameManager.gameManager.GetComponent<WaveSpawner>();
+
         currentHealth = maxHealth;
         currentDaggerAmmo = daggerAmmo;
         currentStamina = maxStamina;
         jumpOffJumpTimer = jumpOffJumpTime;
-        waitToCheckForJumpTimer = waitToCheckForJump;
+        waitToCheckForJumpTimer = waitToCheckForJump;    
     }
     
 
@@ -204,32 +214,15 @@ public class playerController : MonoBehaviour
                 turnOffUI[i].UIObject.SetActive(false);
             }
 
-            totalWaveText.text = "You made it to Wave: " + GameManager.gameManager.waveNum;
+            totalWaveText.text = "You made it to Wave: " + waveSpawnerScript.waveNumber;
 
             gameObject.SetActive(false);
             return;
         }
 
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
-        isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
-
         DidWaveChange();    
-
-        if (iFrameCountdown > 0f)
-        {
-            iFrameCountdown -= Time.deltaTime;
-        }
-
-        if (daggerThrowCooldown > 0f)
-        {
-            daggerThrowCooldown -= Time.deltaTime;
-        }
-
-        if (currentDaggerRechargingTime > 0f)
-        {
-            currentDaggerRechargingTime -= Time.deltaTime;
-        }
-
+        UpdateTimers();
+        
         if (staminaRechargeTimer > 0f)
         {
             staminaRechargeTimer -= Time.deltaTime;
@@ -243,114 +236,30 @@ public class playerController : MonoBehaviour
             SB.SetStamina(currentStamina);
         }
 
-        if (!isGrounded && jumpOffJumpTimer > 0f)
-        {
-            jumpOffJumpTimer -= Time.deltaTime;
-        }
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
+        isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
 
-        if (!isGrounded && wasGrounded)
-        {
-            currentNumOfJumps = numberOfJumps;
-        }
-
-        if (isGrounded)
-        {
-            wasGrounded = true;
-        } else 
-        {
-            wasGrounded = false;
-        }
-
-        if (isGrounded && waitToCheckForJumpTimer < 0f)
-        {
-            jumpOffJumpTimer = jumpOffJumpTime;
-        } else
-        {
-            waitToCheckForJumpTimer -= Time.deltaTime;
-        }
+        UpdateJumpStatus();
 
         if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo + 1 <= daggerAmmo)
         {
             currentDaggerRechargingTime = daggerRechargingTime;
             currentDaggerAmmo++;
-            GameManager.gameManager.SetDaggerAmmoUI(currentDaggerAmmo);
+            daggerUIScript.ChangeDaggerAmmoUI(currentDaggerAmmo);
         }
         
         if (jumpingIntoBush)
         {
-            daggerUIObejct.SetActive(false);
-            if (bushLerp < 1.0f) 
-            {
-                ChangeAnimationState(PLAYER_START_ROLL);
-                
-                bushLerp += bushLerpSpeed * Time.deltaTime;
-
-                Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
-                Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp);
-                transform.position = Vector3.Lerp(m1, m2, bushLerp);
- 
-                if (bushLerp > 0.8f)
-                {
-                    spriteRend.enabled = false;
-                }
-            
-            } else
-            {
-
-                if (!didBushShake)
-                {
-                    bushScript.BushShake();
-                    didBushShake = true;
-                    PlayerHeal(bushHealthAmount);
-                }
-
-                if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
-                {
-                    bushLerp = 0f;
-                    timeInBush = 0f;
-                    jumpingIntoBush = false;
-                    jumpingOutBush = true;
-                    didBushShake = false;
-                    JumpBush(closestBushTransform);
-                } else 
-                {
-                    timeInBush += Time.deltaTime;
-                    transform.position = closestBushTransform.position;
-                }
-            }
+            JumpIntoBush();
 
             return;
         }
 
         if (jumpingOutBush)
         {
-            daggerUIObejct.SetActive(true);
-            GameManager.gameManager.SetDaggerAmmoUI(currentDaggerAmmo);
-            if (bushLerp < 1.0f) 
-            {
-                if (!didBushShake)
-                {
-                    bushScript.BushShake();
-                    didBushShake = true;
-                }
-        
-                ChangeAnimationState(PLAYER_START_ROLL);
+            JumpOutBush();
 
-                bushLerp += bushLerpSpeed * Time.deltaTime;
-
-                Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
-                Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp );
-                transform.position = Vector3.Lerp(m1, m2, bushLerp);
-
-                return;
-            } else
-            {
-                bushLerp = 0;
-                jumpingOutBush = false;
-                didBushShake = false;
-                invicible = false;
-                bushScript.KillBush();
-            }
+            return;
         }
 
         if (takingDmg)
@@ -390,41 +299,20 @@ public class playerController : MonoBehaviour
             noOfClicks = 0;
         }
 
-        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) 
+        HandleJump();
+
+        bool pressedAttack = false;
+
+        foreach(KeyCode keyBind in meleeAttackBinds)
         {
-            if (isGrounded || jumpOffJumpTimer > 0f) 
-            {   
-                if (isRolling && !isCeiling)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    jumpOffJumpTimer = 0f;
-                    waitToCheckForJumpTimer = waitToCheckForJump;
-                    ChangeAnimationState(PLAYER_JUMP);
-                    StopRoll();
-                    StopAllCoroutines();
-                } else if (!isRolling)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    jumpOffJumpTimer = 0f;
-                    waitToCheckForJumpTimer = waitToCheckForJump;
-                }
-                
-            } else if (currentNumOfJumps >= 1)
+            if (Input.GetKeyDown(keyBind))
             {
-                if (isRolling && !isCeiling)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    currentNumOfJumps -= 1;
-                    ChangeAnimationState(PLAYER_JUMP);
-                } else if (!isRolling)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    currentNumOfJumps -= 1;
-                }
+                pressedAttack = true;
+                break;
             }
         }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.RightShift))
+        if (pressedAttack)
         {
             if (isRolling && !isCeiling)
             {
@@ -467,49 +355,11 @@ public class playerController : MonoBehaviour
 
         Flip();
 
-        if (movementX == 0 && rb.velocity.y == 0)
-        {
-            ChangeAnimationState(PLAYER_IDLE);
+        HandleMovementAnimations();
 
-        } else if (rb.velocity.y < -0.01f || rb.velocity.y > 0.01f) 
-        {
-            if (rb.velocity.y > 0) 
-            {
-                ChangeAnimationState(PLAYER_JUMP);
-            } else 
-            {
-                ChangeAnimationState(PLAYER_FALL);
-            }
+        HandleRoll();
 
-        } else if (movementX != 0)
-        {
-            ChangeAnimationState(PLAYER_RUN);
-        } 
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll || Input.GetKeyDown(KeyCode.S) && canRoll || Input.GetKeyDown(KeyCode.DownArrow) && canRoll)
-        {
-            if (currentStamina - rollStaminaAmount >= 0f)
-            {
-                StartCoroutine(Roll());
-            }
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.C) && daggerThrowCooldownTimer <= 0 && currentDaggerAmmo > 0)
-        {
-            if (isFacingRight) 
-            {
-                Instantiate(dagger, daggerSpawnPoint.position, Quaternion.identity);
-                
-            } else
-            {
-                Instantiate(dagger, daggerSpawnPoint.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
-            }
-            daggerThrowCooldownTimer = daggerThrowCooldown;
-            currentDaggerAmmo -= 1;
-            lastDaggerThrown = Time.time;
-            GameManager.gameManager.SetDaggerAmmoUI(currentDaggerAmmo);
-        }
+        HandleDaggerThrowing();
 
         bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
 
@@ -521,10 +371,7 @@ public class playerController : MonoBehaviour
             bushInRangeUI.SetActive(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && bushInRange.Length > 0)
-        {
-            BushJumpCheck();
-        }
+        BushJumpCheck();
     }
 
     // -------------------------------- Fixed Update -----------------------------
@@ -543,26 +390,40 @@ public class playerController : MonoBehaviour
 
     void BushJumpCheck()
     {
-        float closestBush = 100000;
+        bool pressedBushJump = false;
 
-        foreach (Collider2D bush in bushInRange)
+        foreach(KeyCode keyBind in jumpInBushBinds)
         {
-            float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
-
-            if (bushDistance < closestBush)
+            if (Input.GetKeyDown(keyBind))
             {
-                closestBush = bushDistance;
-                
-                closestBushTransform = bush.gameObject.transform;
-                bushScript = closestBushTransform.GetComponent<bushC>();
+                pressedBushJump = true;
+                break;
             }
         }
 
-        if (closestBush != 100000)
+        if (pressedBushJump && bushInRange.Length > 0)
         {
-            jumpingIntoBush = true;
-            invicible = true;
-            JumpBush(closestBushTransform);
+            float closestBush = 100000;
+
+            foreach (Collider2D bush in bushInRange)
+            {
+                float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
+
+                if (bushDistance < closestBush)
+                {
+                    closestBush = bushDistance;
+                    
+                    closestBushTransform = bush.gameObject.transform;
+                    bushScript = closestBushTransform.GetComponent<bushC>();
+                }
+            }
+
+            if (closestBush != 100000)
+            {
+                jumpingIntoBush = true;
+                invicible = true;
+                JumpBush(closestBushTransform);
+            }
         }
     }
 
@@ -789,9 +650,9 @@ public class playerController : MonoBehaviour
 
     private void DidWaveChange()
     {
-        if (currentWave != GameManager.gameManager.waveNum)
+        if (currentWave != waveSpawnerScript.waveNumber)
         {
-            currentWave = GameManager.gameManager.waveNum;
+            currentWave = waveSpawnerScript.waveNumber;
             PlayerHeal(maxHealth * healthRegenerationPercent); 
         } 
     }
@@ -812,6 +673,249 @@ public class playerController : MonoBehaviour
 
         anim.Play(newState);
         _currentState = newState;
+    }
+
+    private void UpdateTimers()
+    {
+        if (iFrameCountdown > 0f)
+        {
+            iFrameCountdown -= Time.deltaTime;
+        }
+
+        if (daggerThrowCooldown > 0f)
+        {
+            daggerThrowCooldown -= Time.deltaTime;
+        }
+
+        if (currentDaggerRechargingTime > 0f)
+        {
+            currentDaggerRechargingTime -= Time.deltaTime;
+        }
+    }
+
+    private void UpdateJumpStatus()
+    {
+        if (!isGrounded && jumpOffJumpTimer > 0f)
+        {
+            jumpOffJumpTimer -= Time.deltaTime;
+        }
+
+        if (!isGrounded && wasGrounded)
+        {
+            currentNumOfJumps = numberOfJumps;
+        }
+
+        if (isGrounded)
+        {
+            wasGrounded = true;
+        } else 
+        {
+            wasGrounded = false;
+        }
+
+        if (isGrounded && waitToCheckForJumpTimer < 0f)
+        {
+            jumpOffJumpTimer = jumpOffJumpTime;
+        } else
+        {
+            waitToCheckForJumpTimer -= Time.deltaTime;
+        }
+    }
+
+    private void JumpIntoBush()
+    {
+        daggerUIObejct.SetActive(false);
+        if (bushLerp < 1.0f) 
+        {
+            ChangeAnimationState(PLAYER_START_ROLL);
+            
+            bushLerp += bushLerpSpeed * Time.deltaTime;
+
+            Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
+            Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp);
+            transform.position = Vector3.Lerp(m1, m2, bushLerp);
+
+            if (bushLerp > 0.8f)
+            {
+                spriteRend.enabled = false;
+            }
+        
+        } else
+        {
+
+            if (!didBushShake)
+            {
+                bushScript.BushShake();
+                didBushShake = true;
+                PlayerHeal(bushHealthAmount);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
+            {
+                bushLerp = 0f;
+                timeInBush = 0f;
+                jumpingIntoBush = false;
+                jumpingOutBush = true;
+                didBushShake = false;
+                JumpBush(closestBushTransform);
+            } else 
+            {
+                timeInBush += Time.deltaTime;
+                transform.position = closestBushTransform.position;
+            }
+        }
+    }
+
+    private void JumpOutBush()
+    {
+        daggerUIObejct.SetActive(true);
+        daggerUIScript.ChangeDaggerAmmoUI(currentDaggerAmmo);
+
+        if (bushLerp < 1.0f) 
+        {
+            if (!didBushShake)
+            {
+                bushScript.BushShake();
+                didBushShake = true;
+            }
+    
+            ChangeAnimationState(PLAYER_START_ROLL);
+
+            bushLerp += bushLerpSpeed * Time.deltaTime;
+
+            Vector3 m1 = Vector3.Lerp(bushStartPoint ,bushControlPoint, bushLerp);
+            Vector3 m2 = Vector3.Lerp(bushControlPoint, bushEndPoint, bushLerp );
+            transform.position = Vector3.Lerp(m1, m2, bushLerp);
+        } else
+        {
+            bushLerp = 0;
+            jumpingOutBush = false;
+            didBushShake = false;
+            invicible = false;
+            bushScript.KillBush();
+        }
+    }
+
+    private void HandleJump()
+    {
+        bool pressedJump = false;
+
+        foreach(KeyCode keyBind in jumpBinds)
+        {
+            if (Input.GetKeyDown(keyBind))
+            {
+                pressedJump = true;
+                break;
+            }
+        }
+
+        if (pressedJump)
+        {
+            if (isGrounded || jumpOffJumpTimer > 0f) 
+            {   
+                if (isRolling && !isCeiling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    jumpOffJumpTimer = 0f;
+                    waitToCheckForJumpTimer = waitToCheckForJump;
+                    ChangeAnimationState(PLAYER_JUMP);
+                    StopRoll();
+                    StopAllCoroutines();
+                } else if (!isRolling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    jumpOffJumpTimer = 0f;
+                    waitToCheckForJumpTimer = waitToCheckForJump;
+                }
+                
+            } else if (currentNumOfJumps >= 1)
+            {
+                if (isRolling && !isCeiling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    currentNumOfJumps -= 1;
+                    ChangeAnimationState(PLAYER_JUMP);
+                } else if (!isRolling)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    currentNumOfJumps -= 1;
+                }
+            }
+        }
+    }
+
+    private void HandleMovementAnimations()
+    {
+        if (movementX == 0 && rb.velocity.y == 0)
+        {
+            ChangeAnimationState(PLAYER_IDLE);
+
+        } else if (rb.velocity.y < -0.01f || rb.velocity.y > 0.01f) 
+        {
+            if (rb.velocity.y > 0) 
+            {
+                ChangeAnimationState(PLAYER_JUMP);
+            } else 
+            {
+                ChangeAnimationState(PLAYER_FALL);
+            }
+
+        } else if (movementX != 0)
+        {
+            ChangeAnimationState(PLAYER_RUN);
+        } 
+    }
+
+    private void HandleDaggerThrowing()
+    {
+        bool pressedThrowDagger = false;
+
+        foreach(KeyCode keyBind in throwDaggerBinds)
+        {
+            if (Input.GetKeyDown(keyBind))
+            {
+                pressedThrowDagger = true;
+                break;
+            }
+        }
+
+        if (pressedThrowDagger && daggerThrowCooldownTimer <= 0 && currentDaggerAmmo > 0)
+        {
+            if (isFacingRight) 
+            {
+                Instantiate(dagger, daggerSpawnPoint.position, Quaternion.identity);
+                
+            } else
+            {
+                Instantiate(dagger, daggerSpawnPoint.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+            }
+            daggerThrowCooldownTimer = daggerThrowCooldown;
+            currentDaggerAmmo -= 1;
+            lastDaggerThrown = Time.time;
+            daggerUIScript.ChangeDaggerAmmoUI(currentDaggerAmmo);
+        }
+    }
+
+    private void HandleRoll()
+    {
+        bool pressedRoll = false;
+
+        foreach(KeyCode keyBind in rollBinds)
+        {
+            if (Input.GetKeyDown(keyBind))
+            {
+                pressedRoll = true;
+                break;
+            }
+        }
+
+        if (pressedRoll && canRoll)
+        {
+            if (currentStamina - rollStaminaAmount >= 0f)
+            {
+                StartCoroutine(Roll());
+            }
+        }
     }
 
     private bool IsAnimationPlaying(Animator animator, string stateName)

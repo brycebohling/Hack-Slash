@@ -43,7 +43,7 @@ public class bushC : MonoBehaviour
 
             if (color.a <= 0)
             {
-                GameManager.gameManager.BushDead(transform);
+                GameManager.gameManager.GetComponent<WaveSpawner>().BushDestroyed(transform);
                 Destroy(gameObject);
             }
         }
