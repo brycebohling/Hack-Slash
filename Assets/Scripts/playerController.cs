@@ -32,7 +32,7 @@ public class playerController : MonoBehaviour
     public float healthRegenerationPercent;
 
     [Header("Movement")]
-    private float movementX;
+    float movementX;
     public bool isFacingRight;
 
     [Header("Key Binds")]
@@ -43,11 +43,11 @@ public class playerController : MonoBehaviour
     [SerializeField] List<KeyCode> jumpInBushBinds = new List<KeyCode>();
     
     // Physics
-    private Rigidbody2D rb;
-    private BoxCollider2D bcoll;
+    Rigidbody2D rb;
+    BoxCollider2D bcoll;
 
     // Animatinon
-    private Animator anim;
+    Animator anim;
     SpriteRenderer spriteRend;
     string _currentState;
     const string PLAYER_IDLE = "idle";
@@ -62,16 +62,16 @@ public class playerController : MonoBehaviour
     
     [Header("Ground Check")]
     [SerializeField] Transform groundCheck;
-    [SerializeField] private LayerMask groundLayer;
-    private bool isGrounded;
-    private bool wasGrounded;
+    [SerializeField] LayerMask groundLayer;
+    bool isGrounded;
+    bool wasGrounded;
     [SerializeField] Vector2 groundCheckSize;
 
     [Header("Ceiling Check")]
     [SerializeField] Vector2 ceillingCheckSize;
     [SerializeField] Transform ceillingCheck;
-    [SerializeField] private LayerMask headHitters;
-    private bool isCeiling;
+    [SerializeField] LayerMask headHitters;
+    bool isCeiling;
 
     [Header("Jumping")]
     int currentNumOfJumps;
@@ -81,13 +81,14 @@ public class playerController : MonoBehaviour
     float waitToCheckForJumpTimer;
 
     [Header("Rolling")]
-    [SerializeField] private float rollWidth;
-    [SerializeField] private float rollHight;
-    [SerializeField] private float rollOffsetX;
-    [SerializeField] private float rollOffsetY;
-    [SerializeField] private float rollTime;
-    private bool canRoll = true;
-    private bool isRolling; 
+    [SerializeField] float rollWidth;
+    [SerializeField] float rollHight;
+    [SerializeField] float rollOffsetX;
+    [SerializeField] float rollOffsetY;
+    [SerializeField] float rollTime;
+    bool canRoll = true;
+    bool isRolling; 
+    bool wasRolling;
     float originalWidth;
     float originalHight;
     float originalOffsetX;
@@ -102,10 +103,10 @@ public class playerController : MonoBehaviour
 
     [Header("Melee Attack")]
     public static int noOfClicks = 0;
-    private float lastClickedTime = 0;
-    [SerializeField] private float maxComboDelay = 1;
-    private bool attacking;
-    [SerializeField] private float attackMovementSpeed;
+    float lastClickedTime = 0;
+    [SerializeField] float maxComboDelay = 1;
+    bool attacking;
+    [SerializeField] float attackMovementSpeed;
     [SerializeField] GameObject attackPoint;
     [SerializeField] float attackRadius;
     [SerializeField] LayerMask enemies;
@@ -118,7 +119,7 @@ public class playerController : MonoBehaviour
     int daggerAmmo = 3;
     [SerializeField] float daggerThrowCooldown;
     float daggerThrowCooldownTimer;
-    private int currentDaggerAmmo;
+    int currentDaggerAmmo;
     float lastDaggerThrown;
     [SerializeField] float daggerWaitToRechargeTime;
     [SerializeField] float daggerRechargingTime;
@@ -128,7 +129,7 @@ public class playerController : MonoBehaviour
 
     [Header("Health")]
     public float currentHealth;
-    private int currentWave = 1;
+    int currentWave = 1;
     [SerializeField] Transform dodgeParticles;
     [SerializeField] GameObject healingText;
 
@@ -383,7 +384,14 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        rb.velocity = new Vector2(movementX * movementSpeed, rb.velocity.y);
+        if (!isGrounded && wasRolling || wasGrounded && wasRolling)
+        {
+            rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);   
+        } else
+        {
+            rb.velocity = new Vector2(movementX * movementSpeed, rb.velocity.y);
+        }
+        
     }
     
     // ------------------------My homemade functions------------------------------
@@ -464,6 +472,8 @@ public class playerController : MonoBehaviour
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
+
+            wasRolling = false;
         }
     }
 
@@ -488,6 +498,7 @@ public class playerController : MonoBehaviour
         yield return new WaitUntil(() => !isCeiling);
         
         StopRoll();
+        wasRolling = true;
     }
 
     private void StopRoll()
@@ -613,31 +624,43 @@ public class playerController : MonoBehaviour
         }
     }
 
+    public void PlayerInHardcore()
+    {
+        currentHealth = 1f;
+        HB.SetHealth(currentHealth, maxHealth);
+    }
+
     public void PlayerHeal(float healAmount)
     {
-        float healthToMax = maxHealth - currentHealth;
-        
-        if (healAmount != 0 && healthToMax > 0)
+        if (GameManager.gameManager.difficulty == "normal")
         {
-            currentHealth += healAmount;
-
-            float textOffsetX = 1.5f;
-            float textOffsetY = 1f;
-
-            GameObject prefab = Instantiate(healingText, new Vector2(transform.position.x + textOffsetX, transform.position.y + textOffsetY), Quaternion.identity);
+            float healthToMax = maxHealth - currentHealth;
             
-            if (currentHealth > maxHealth)
+            if (healAmount != 0 && healthToMax > 0)
             {
-                currentHealth = maxHealth;
+                currentHealth += healAmount;
 
-                prefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healthToMax).ToString();
-            } else
-            {
-                prefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healAmount).ToString();
-            }            
+                float textOffsetX = 1.5f;
+                float textOffsetY = 1f;
+
+                GameObject prefab = Instantiate(healingText, new Vector2(transform.position.x + textOffsetX, transform.position.y + textOffsetY), Quaternion.identity);
+                
+                if (currentHealth > maxHealth)
+                {
+                    currentHealth = maxHealth;
+
+                    prefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healthToMax).ToString();
+                } else
+                {
+                    prefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healAmount).ToString();
+                }            
+            }
+            
+            HB.SetHealth(currentHealth, maxHealth);
+        } else if (GameManager.gameManager.difficulty == "hardcore")
+        {
+            GameManager.gameManager.IncScore(Mathf.RoundToInt(healAmount * 10));
         }
-        
-        HB.SetHealth(currentHealth, maxHealth);
     }
 
     private void Knockback(Transform attacker)
@@ -708,6 +731,7 @@ public class playerController : MonoBehaviour
         if (isGrounded)
         {
             wasGrounded = true;
+            wasRolling = false;
         } else 
         {
             wasGrounded = false;

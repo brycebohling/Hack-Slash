@@ -7,6 +7,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
+    public string difficulty;
     public GameObject bossHealthBar;
     public UnityEvent GamePaused;
     public UnityEvent GameResumed;
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     bool isPaused;
     public GameObject player;
     private playerController playerScript;
-    [SerializeField] UpgradeC upgrades;
+    [SerializeField] UpgradeC upgradesScript;
     Renderer playerRenderer;
     public bool isPlayerRendered;
     public bool isPLayerInvicible;
@@ -30,6 +31,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject scoreIncText;
     [SerializeField] Vector2 socreTextPos;
     public int killStreak;
+    [SerializeField] int firstKillStreakThreshold;
+    [SerializeField] int secondKillStreakThreshold;
+    [SerializeField] float firstKillStreakMultiplier;
+    [SerializeField] float secondKillStreakMultiplier;
     [SerializeField] Transform canvas;
     [SerializeField] float incScoreWaitTime;
     float incScoreWaitTimer;
@@ -122,11 +127,11 @@ public class GameManager : MonoBehaviour
 
                 prefab.GetComponent<TMP_Text>().text = incScoreValue.ToString();
 
-                if (killStreak >= 50)
+                if (killStreak >= secondKillStreakThreshold)
                 {
                     prefab.GetComponent<Animator>().Play("dropOrange");
 
-                } else if (killStreak >= 20)
+                } else if (killStreak >= firstKillStreakThreshold)
                 {
                     prefab.GetComponent<Animator>().Play("dropYellow");
 
@@ -148,12 +153,15 @@ public class GameManager : MonoBehaviour
 
     public void SetDifficulty()
     {
-        if (StoredVars.difficulty == "normal")
-        {
+        difficulty = StoredVars.difficulty;
 
-        } else if (StoredVars.difficulty == "hardcore")
+        if (difficulty == "normal")
         {
-            playerScript.currentHealth = 1f;
+        
+        } else if (difficulty == "hardcore")
+        {
+            
+            playerScript.PlayerInHardcore();
         }
     }
 
@@ -218,27 +226,29 @@ public class GameManager : MonoBehaviour
 
     public void EnemyDied(int scoreValue)
     {
+        killStreak++;
+
         IncScore(scoreValue);
     }
 
     public void BossKilled(int scoreValue)
     {
+        killStreak++;
+
         IncScore(scoreValue);
     }
 
     public void IncScore(int value)
     {
-        killStreak++;
-
-        if (killStreak >= 50)
+        if (killStreak >= secondKillStreakThreshold)
         {
-            score += value * 1.5f;
-            incScoreValue += value * 1.5f;
+            score += value * secondKillStreakMultiplier;
+            incScoreValue += value * secondKillStreakMultiplier;
 
-        } else if (killStreak >= 3)
+        } else if (killStreak >= firstKillStreakThreshold)
         {
-            score += value * 1.2f;
-            incScoreValue += value * 1.2f;
+            score += value * firstKillStreakMultiplier;
+            incScoreValue += value * firstKillStreakMultiplier;
 
         } else
         {

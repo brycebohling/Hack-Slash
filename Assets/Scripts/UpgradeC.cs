@@ -18,6 +18,7 @@ public class UpgradeC : MonoBehaviour
     string CardDrop = "Drop";
     string SelectedAnim = "Selected";
     public List <GameObject> powerUps = new List<GameObject>();
+    [SerializeField] List <GameObject> bannedHardcorePowerUps = new List<GameObject>();
     [SerializeField] Transform[] startPoints;
     [SerializeField] float cardDropOffest;
     [SerializeField] float cardUpOffset;
@@ -25,10 +26,7 @@ public class UpgradeC : MonoBehaviour
     int randomCard2;
     int randomCard3;
 
-    
-
-    // Player Stat Increase Amounts
-
+    [Header("Player Stat Increase Amounts")]
     [SerializeField] float movementSpeedIncAmount;
     [SerializeField] float jumpForceIncAmount;
     [SerializeField] int numberOfJumpsIncAmount;
@@ -72,6 +70,20 @@ public class UpgradeC : MonoBehaviour
         GameManager.gameManager.PauseResume();
 
         GameManager.gameManager.levelingUp = true;
+
+        if (GameManager.gameManager.difficulty == "hardcore")
+        {
+            foreach (GameObject bannedPowerUp in bannedHardcorePowerUps.ToArray())
+            {
+                foreach (GameObject powerUp in powerUps.ToArray())
+                {
+                    if (bannedPowerUp == powerUp)
+                    {
+                        powerUps.Remove(powerUp);
+                    }
+                }
+            }
+        }
 
         randomCard1 = Random.Range(0, powerUps.Count);
         randomCard2 = Random.Range(0, powerUps.Count);
