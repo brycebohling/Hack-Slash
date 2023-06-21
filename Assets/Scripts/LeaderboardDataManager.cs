@@ -4,13 +4,40 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using UnityEngine.UI;
+using TMPro;
 public class LeaderboardDataManager : MonoBehaviour
 {
-    public string url;
-    public GameObject leaderboardPanel;
+    [SerializeField] string url;
+    [SerializeField] GameObject leaderBoardTable;
+    [SerializeField] Transform entryContainer;
+    [SerializeField] Transform entryTemplate;
+    [SerializeField] float templateHeight;
 
+    bool isShowing;
 
-    public void GetData()
+    private void Update() 
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (isShowing)
+            {
+                HideLeaderboard();
+                isShowing = false;
+                
+            } else
+            {
+                ShowLeaderboard();
+                isShowing = true;
+            }
+            
+        }    
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            PostData();
+        }
+    }
+
+    public void ShowLeaderboard()
     {
         StartCoroutine(FetchData());
     }
@@ -36,24 +63,98 @@ public class LeaderboardDataManager : MonoBehaviour
                     break;
 
                 case UnityWebRequest.Result.Success:
-                    Debug.Log(webRequest.downloadHandler.text);
                     Leaderboard leaderboard = JsonConvert.DeserializeObject<Leaderboard>(webRequest.downloadHandler.text);  
-                    
-                    Debug.Log(leaderboard.playerLeaderboardStatsList.Count);
-                    Debug.Log(leaderboard.playerLeaderboardStatsList[0].wave);
-                    Debug.Log(leaderboard.playerLeaderboardStatsList[1].wave);
+
+                    for (int x = 0; x < leaderboard.data.Count; x++)
+                    {
+                        for (int y = x + 1; y < leaderboard.data.Count; y++)
+                        {
+                            if (leaderboard.data[y].score > leaderboard.data[x].score)
+                            {
+                                Data tmp = leaderboard.data[x];
+                                leaderboard.data[x] = leaderboard.data[y];
+                                leaderboard.data[y] = tmp;
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < leaderboard.data.Count; i++)
+                    {
+                        Transform entryTransform = Instantiate(entryTemplate, entryContainer);
+                        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                        entryRectTransform.anchoredPosition = new Vector2 (0, -templateHeight * i);
+
+                        entryTransform.Find("RankingText").GetComponent<TextMeshProUGUI>().text = i + 1 + "";
+                        entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
+                        entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].score + "";
+                    }
+
+                    leaderBoardTable.SetActive(true);
                     break;
+            }
+        }
+    }   
+
+    public void PostData()
+    {
+        StartCoroutine(SendData());
+    }
+
+    private IEnumerator SendData()
+    {
+        Data data = new Data();
+        // data.id = 100;
+        data.user = "Will";
+        data.score = 5;
+        data.wave = 9;
+        data.damage = 90;
+        data.difficulty = "hardcore";
+        data.kills = 1;
+        // data.version = "test";
+
+        string json = JsonUtility.ToJson(data);
+        Debug.Log(json);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(url, json))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
             }
         }
     }
 
-    public void PostData()
+    public void HideLeaderboard()
     {
-        StartCoroutine(PushData());
-    }
+        foreach (Transform child in entryContainer) 
+        {
+            Destroy(child.gameObject);
+        }
 
-    private IEnumerator PushData()
-    {
-        yield return null;
+        leaderBoardTable.SetActive(false);
     }
+}
+
+public class Leaderboard
+{
+    public int results;
+    public List<Data> data;
+}
+
+[System.Serializable] public class Data
+{
+    public int id;
+    public string user;
+    public int score;
+    public int wave;
+    public int damage;
+    public string difficulty;
+    public int kills;
+    public string version;
 }
