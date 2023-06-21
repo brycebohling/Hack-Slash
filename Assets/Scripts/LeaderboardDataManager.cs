@@ -12,6 +12,7 @@ public class LeaderboardDataManager : MonoBehaviour
     [SerializeField] Transform entryContainer;
     [SerializeField] Transform entryTemplate;
     [SerializeField] float templateHeight;
+    [SerializeField] int listYStartPos;
 
     bool isShowing;
 
@@ -82,7 +83,7 @@ public class LeaderboardDataManager : MonoBehaviour
                     {
                         Transform entryTransform = Instantiate(entryTemplate, entryContainer);
                         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                        entryRectTransform.anchoredPosition = new Vector2 (0, -templateHeight * i);
+                        entryRectTransform.anchoredPosition = new Vector2 (0, listYStartPos + (-templateHeight * i));
 
                         entryTransform.Find("RankingText").GetComponent<TextMeshProUGUI>().text = i + 1 + "";
                         entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
@@ -110,22 +111,22 @@ public class LeaderboardDataManager : MonoBehaviour
         data.damage = 90;
         data.difficulty = "hardcore";
         data.kills = 1;
-        // data.version = "test";
+        data.version = "test";
 
         string json = JsonUtility.ToJson(data);
         Debug.Log(json);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(url, json))
-        {
-            yield return www.SendWebRequest();
+        using (UnityWebRequest webPost = UnityWebRequest.Post(url, json))
+        {    
+            yield return webPost.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success)
+            if (webPost.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log(www.error);
+                Debug.Log(webPost.error);
             }
             else
             {
-                Debug.Log("Form upload complete!");
+                Debug.Log("Data sent");
             }
         }
     }
@@ -149,7 +150,6 @@ public class Leaderboard
 
 [System.Serializable] public class Data
 {
-    public int id;
     public string user;
     public int score;
     public int wave;
