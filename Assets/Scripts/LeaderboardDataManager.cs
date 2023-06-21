@@ -116,7 +116,7 @@ public class LeaderboardDataManager : MonoBehaviour
         string json = JsonUtility.ToJson(data);
         Debug.Log(json);
 
-        using (UnityWebRequest webPost = UnityWebRequest.Post(url, json))
+        using (UnityWebRequest webPost = UnityWebRequest.PostWwwForm(url, json))
         {    
             yield return webPost.SendWebRequest();
 
