@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 using UnityEngine.UI;
 using TMPro;
+
 public class LeaderboardDataManager : MonoBehaviour
 {
     [SerializeField] string url;
@@ -13,34 +14,40 @@ public class LeaderboardDataManager : MonoBehaviour
     [SerializeField] Transform entryTemplate;
     [SerializeField] float templateHeight;
     [SerializeField] int listYStartPos;
-
+    Leaderboard leaderboard;
     bool isShowing;
+    bool gotData;
 
-    private void Update() 
+
+    public void ShowHideLeaderboard()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (isShowing)
         {
-            if (isShowing)
-            {
-                HideLeaderboard();
-                isShowing = false;
-                
-            } else
-            {
-                ShowLeaderboard();
-                isShowing = true;
-            }
-            
-        }    
-        if (Input.GetKeyDown(KeyCode.N))
+            HideLeaderboard();
+        } else
         {
-            PostData();
+            StartCoroutine(FetchData());
+            StartCoroutine(ShowLeaderboard());
         }
     }
 
-    public void ShowLeaderboard()
+    private IEnumerator ShowLeaderboard()
     {
-        StartCoroutine(FetchData());
+        yield return new WaitUntil(() => gotData);
+
+        for (int i = 0; i < leaderboard.data.Count; i++)
+        {
+            Transform entryTransform = Instantiate(entryTemplate, entryContainer);
+            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+            entryRectTransform.anchoredPosition = new Vector2 (0, listYStartPos + (-templateHeight * i));
+
+            entryTransform.Find("RankingText").GetComponent<TextMeshProUGUI>().text = i + 1 + "";
+            entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
+            entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].score + "";
+        }
+
+        leaderBoardTable.SetActive(true);
+        isShowing = true;
     }
 
     private IEnumerator FetchData()
@@ -64,7 +71,7 @@ public class LeaderboardDataManager : MonoBehaviour
                     break;
 
                 case UnityWebRequest.Result.Success:
-                    Leaderboard leaderboard = JsonConvert.DeserializeObject<Leaderboard>(webRequest.downloadHandler.text);  
+                    leaderboard = JsonConvert.DeserializeObject<Leaderboard>(webRequest.downloadHandler.text); 
 
                     for (int x = 0; x < leaderboard.data.Count; x++)
                     {
@@ -78,23 +85,22 @@ public class LeaderboardDataManager : MonoBehaviour
                             }
                         }
                     }
-
-                    for (int i = 0; i < leaderboard.data.Count; i++)
-                    {
-                        Transform entryTransform = Instantiate(entryTemplate, entryContainer);
-                        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                        entryRectTransform.anchoredPosition = new Vector2 (0, listYStartPos + (-templateHeight * i));
-
-                        entryTransform.Find("RankingText").GetComponent<TextMeshProUGUI>().text = i + 1 + "";
-                        entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
-                        entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].score + "";
-                    }
-
-                    leaderBoardTable.SetActive(true);
+                    gotData = true; 
                     break;
             }
         }
     }   
+
+    private void HideLeaderboard()
+    {
+        foreach (Transform child in entryContainer) 
+        {
+            Destroy(child.gameObject);
+        }
+
+        leaderBoardTable.SetActive(false);
+        isShowing = false;
+    }
 
     public void PostData()
     {
@@ -104,7 +110,6 @@ public class LeaderboardDataManager : MonoBehaviour
     private IEnumerator SendData()
     {
         Data data = new Data();
-        // data.id = 100;
         data.user = "Will";
         data.score = 5;
         data.wave = 9;
@@ -114,9 +119,8 @@ public class LeaderboardDataManager : MonoBehaviour
         data.version = "test";
 
         string json = JsonUtility.ToJson(data);
-        Debug.Log(json);
 
-        using (UnityWebRequest webPost = UnityWebRequest.PostWwwForm(url, json))
+        using (UnityWebRequest webPost = UnityWebRequest.Post(url, json, "application/json"))
         {    
             yield return webPost.SendWebRequest();
 
@@ -124,21 +128,7 @@ public class LeaderboardDataManager : MonoBehaviour
             {
                 Debug.Log(webPost.error);
             }
-            else
-            {
-                Debug.Log("Data sent");
-            }
         }
-    }
-
-    public void HideLeaderboard()
-    {
-        foreach (Transform child in entryContainer) 
-        {
-            Destroy(child.gameObject);
-        }
-
-        leaderBoardTable.SetActive(false);
     }
 }
 
