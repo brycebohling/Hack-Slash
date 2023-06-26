@@ -9,17 +9,28 @@ using TMPro;
 public class LeaderboardDataManager : MonoBehaviour
 {
     [SerializeField] string url;
-    [SerializeField] GameObject leaderBoardTable;
+    [SerializeField] int entryLimit;
+    [SerializeField] string version;
     [SerializeField] Transform entryContainer;
     [SerializeField] Transform entryTemplate;
     [SerializeField] float templateHeight;
     [SerializeField] int listYStartPos;
     Leaderboard leaderboard;
     bool isShowing;
-    bool gotData;
+    public bool gotData;
 
 
-    public void ShowHideLeaderboard()
+    private void OnEnable() 
+    {
+        ShowHideLeaderboard();
+    }
+
+    private void OnDisable() 
+    {
+        HideLeaderboard();    
+    }
+
+    private void ShowHideLeaderboard()
     {
         if (isShowing)
         {
@@ -31,28 +42,78 @@ public class LeaderboardDataManager : MonoBehaviour
         }
     }
 
+    public void PostData()
+    {
+        StartCoroutine(SendData());
+    }
+
+    public bool IsTop100(float playerScore)
+    {
+        if (leaderboard.data.Count == 99)
+        {
+            if (playerScore > leaderboard.data[99].score)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        
+        } else if (leaderboard.data.Count < 99)
+        {
+            return true;
+        } else
+        {
+            Debug.Log("Too many leaderboard entries");
+            return false;
+        }
+        
+    }
+
+    public int Ranking(float playerScore)
+    {
+        int ranking = 1;
+        for (int i = 0; i < leaderboard.data.Count; i++)
+        {
+            ranking++;
+            if (playerScore > leaderboard.data.Count)
+            {   
+                break;
+            }
+        }
+
+        if (leaderboard.data.Count == 99)
+        {
+            // Remove 100ths
+        }
+
+        // and post new data
+
+        return ranking;
+    }
+
     private IEnumerator ShowLeaderboard()
     {
         yield return new WaitUntil(() => gotData);
-
+        gotData = false;
+        
         for (int i = 0; i < leaderboard.data.Count; i++)
         {
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
-            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2 (0, listYStartPos + (-templateHeight * i));
+            // RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+            // entryRectTransform.anchoredPosition = new Vector2 (0, listYStartPos + (-templateHeight * i));
 
             entryTransform.Find("RankingText").GetComponent<TextMeshProUGUI>().text = i + 1 + "";
             entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
             entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].score + "";
         }
 
-        leaderBoardTable.SetActive(true);
         isShowing = true;
     }
 
-    private IEnumerator FetchData()
+    public IEnumerator FetchData()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url + "limit=" + entryLimit + "&version=" + version))
         {
             yield return webRequest.SendWebRequest();
 
@@ -98,25 +159,19 @@ public class LeaderboardDataManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        leaderBoardTable.SetActive(false);
         isShowing = false;
-    }
-
-    public void PostData()
-    {
-        StartCoroutine(SendData());
     }
 
     private IEnumerator SendData()
     {
         Data data = new Data();
-        data.user = "Will";
-        data.score = 5;
-        data.wave = 9;
+        data.user = "Peter01";
+        data.score = 10;
+        data.wave = 7;
         data.damage = 90;
-        data.difficulty = "hardcore";
+        data.difficulty = "normal";
         data.kills = 1;
-        data.version = "test";
+        data.version = version;
 
         string json = JsonUtility.ToJson(data);
 

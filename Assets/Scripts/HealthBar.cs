@@ -62,7 +62,8 @@ public class HealthBar : MonoBehaviour
         {
             barImage.fillAmount = health / maxHealth;
             fadeWaitTimer = fadeWaitTime;
-            healthText.text = Mathf.RoundToInt(health) + "/" + Mathf.RoundToInt(maxHealth);
+            
+            
 
             if (health <= shakeThreshold)
             {
@@ -72,5 +73,7 @@ public class HealthBar : MonoBehaviour
                 shouldShake = false;
             }
         }
+
+        healthText.text = Mathf.RoundToInt(health) + "/" + Mathf.RoundToInt(maxHealth);
     }
 }

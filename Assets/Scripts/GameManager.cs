@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     private playerController playerScript;
     [SerializeField] UpgradeC upgradesScript;
+    [SerializeField] LeaderboardDataManager leaderboardDataManagerScript;
     Renderer playerRenderer;
     public bool isPlayerRendered;
     public bool isPLayerInvicible;
@@ -45,6 +46,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] float statShowOffset;
     bool showingStatsAnim;
     bool showPauseMenu;
+    [SerializeField] GameObject deathScreenUI;
+    [SerializeField] TMP_Text totalWaveText;
+    [SerializeField] List<GameObject> turnOffUI = new List<GameObject>();
+    [SerializeField] TMP_Text rankingText;
+    [SerializeField] TMP_InputField nameInput;
 
 
     void Awake()
@@ -92,10 +98,6 @@ public class GameManager : MonoBehaviour
         } else
         {
             isPLayerInvicible = false;
-        }
-        if (playerScript.isDead)
-        {
-            isPlayerDead = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && !levelingUp && !isPlayerDead && !showingStats && !showingStatsAnim)
@@ -299,6 +301,38 @@ public class GameManager : MonoBehaviour
             showingStatsAnim = false;
             PauseResume();
         }
+    }
+
+    public void PlayerDied()
+    {
+        isPlayerDead = true;
+
+        deathScreenUI.SetActive(true);
+
+        for(int i = 0; i < turnOffUI.Count; i++)
+        {
+            turnOffUI[i].SetActive(false);
+        }
+
+        totalWaveText.text = "You made it to Wave: " + WaveSpawner.waveSpawner.waveNumber;
+
+        StartCoroutine(leaderboardDataManagerScript.FetchData());
+        StartCoroutine(FindRanking());
+    }
+    private IEnumerator FindRanking()
+    {
+        yield return new WaitUntil(() => leaderboardDataManagerScript.gotData);
+        leaderboardDataManagerScript.gotData = false;
+        
+        if (leaderboardDataManagerScript.IsTop100(score))
+        {
+            int ranking = leaderboardDataManagerScript.Ranking(score);
+
+            rankingText.gameObject.SetActive(true);
+            nameInput.gameObject.SetActive(true);
+            
+            rankingText.text = "You ranked: " + ranking + "!";
+        } 
     }
 
     private bool IsAnimationPlaying(Animator animator, string stateName)

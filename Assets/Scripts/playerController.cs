@@ -143,7 +143,7 @@ public class playerController : MonoBehaviour
     [SerializeField] float knockbackPower;
 
     [Header("Death")]
-    public bool isDead;
+    bool isDead;
     [SerializeField] GameObject deathParticals;
     
     [Header("Bush Mechanics")]
@@ -169,16 +169,7 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask treeLayer;
 
     [Header("UI")]
-    [SerializeField] GameObject deathScreenUI;
     [SerializeField] GameObject bushInRangeUI;
-    [SerializeField] TMP_Text totalWaveText;
-    [System.Serializable] public struct TurnOffUI
-    {
-        public GameObject UIObject;
-        
-    }
-
-    public TurnOffUI[] turnOffUI;
 
     [Header("Bush Teleporter")]
     [SerializeField] GameObject autoDestroyTeleporter;
@@ -199,7 +190,9 @@ public class playerController : MonoBehaviour
         currentDaggerAmmo = daggerAmmo;
         currentStamina = maxStamina;
         jumpOffJumpTimer = jumpOffJumpTime;
-        waitToCheckForJumpTimer = waitToCheckForJump;    
+        waitToCheckForJumpTimer = waitToCheckForJump;   
+
+        HB.SetHealth(currentHealth, maxHealth);
     }
     
 
@@ -208,14 +201,7 @@ public class playerController : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
-            deathScreenUI.SetActive(true);
-
-            for(int i = 0; i < turnOffUI.Length; i++)
-            {
-                turnOffUI[i].UIObject.SetActive(false);
-            }
-
-            totalWaveText.text = "You made it to Wave: " + waveSpawnerScript.waveNumber;
+            GameManager.gameManager.PlayerDied();
 
             gameObject.SetActive(false);
             return;

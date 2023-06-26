@@ -5,6 +5,7 @@ using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
+    public static WaveSpawner waveSpawner { get; private set; }
     [SerializeField] UpgradeC upgradeC;
 
     [System.Serializable]
@@ -56,6 +57,17 @@ public class WaveSpawner : MonoBehaviour
     // Boss
     public bool inBossFight;
 
+
+    private void Awake() 
+    {
+        if (waveSpawner != null && waveSpawner != this)
+        {
+            Debug.Log("More than one WaveSpawner in a scene!");
+        } else
+        {
+            waveSpawner = this;
+        }    
+    }
 
     void Start()
     {
