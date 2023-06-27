@@ -51,6 +51,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> turnOffUI = new List<GameObject>();
     [SerializeField] TMP_Text rankingText;
     [SerializeField] TMP_InputField nameInput;
+    [SerializeField] GameObject restartBtn;
+    [SerializeField] GameObject menuBtn;
+    [SerializeField] GameObject submitBtn;
 
 
     void Awake()
@@ -323,16 +326,26 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => leaderboardDataManagerScript.gotData);
         leaderboardDataManagerScript.gotData = false;
-        
+
         if (leaderboardDataManagerScript.IsTop100(score))
         {
             int ranking = leaderboardDataManagerScript.Ranking(score);
 
             rankingText.gameObject.SetActive(true);
             nameInput.gameObject.SetActive(true);
+            submitBtn.SetActive(true);
             
             rankingText.text = "You ranked: " + ranking + "!";
-        } 
+        } else
+        {
+            restartBtn.SetActive(true);
+            menuBtn.SetActive(true);
+        }
+    }
+
+    private void SubittedName()
+    {
+            
     }
 
     private bool IsAnimationPlaying(Animator animator, string stateName)
