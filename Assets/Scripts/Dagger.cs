@@ -41,6 +41,7 @@ public class Dagger : MonoBehaviour
             foreach (Collider2D enemyGameobject in enemy)
             {
                 GameManager.gameManager.DamageEnemy(enemyGameobject, PC.daggerDmg, transform);
+                PC.totalDamageDealt += Mathf.RoundToInt(PC.daggerDmg);
             }
             
             Destroy(gameObject);

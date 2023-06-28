@@ -13,8 +13,6 @@ public class LeaderboardDataManager : MonoBehaviour
     [SerializeField] string version;
     [SerializeField] Transform entryContainer;
     [SerializeField] Transform entryTemplate;
-    [SerializeField] float templateHeight;
-    [SerializeField] int listYStartPos;
     Leaderboard leaderboard;
     bool isShowing;
     public bool gotData;
@@ -30,7 +28,7 @@ public class LeaderboardDataManager : MonoBehaviour
         HideLeaderboard();    
     }
 
-    private void ShowHideLeaderboard()
+    public void ShowHideLeaderboard()
     {
         if (isShowing)
         {
@@ -40,11 +38,6 @@ public class LeaderboardDataManager : MonoBehaviour
             StartCoroutine(FetchData());
             StartCoroutine(ShowLeaderboard());
         }
-    }
-
-    public void PostData()
-    {
-        StartCoroutine(SendData());
     }
 
     public bool IsTop100(float playerScore)
@@ -72,11 +65,11 @@ public class LeaderboardDataManager : MonoBehaviour
 
     public int Ranking(float playerScore)
     {
-        int ranking = 1;
+        int ranking = 0;
         for (int i = 0; i < leaderboard.data.Count; i++)
         {
             ranking++;
-            if (playerScore > leaderboard.data.Count)
+            if (playerScore > leaderboard.data[i].score)
             {   
                 break;
             }
@@ -100,8 +93,6 @@ public class LeaderboardDataManager : MonoBehaviour
         for (int i = 0; i < leaderboard.data.Count; i++)
         {
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
-            // RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-            // entryRectTransform.anchoredPosition = new Vector2 (0, listYStartPos + (-templateHeight * i));
 
             entryTransform.Find("RankingText").GetComponent<TextMeshProUGUI>().text = i + 1 + "";
             entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
@@ -162,15 +153,15 @@ public class LeaderboardDataManager : MonoBehaviour
         isShowing = false;
     }
 
-    private IEnumerator SendData()
+    public IEnumerator SendData(string name, int score, int wave, int damage, string difficulty, int kills)
     {
         Data data = new Data();
-        data.user = "Peter01";
-        data.score = 10;
-        data.wave = 7;
-        data.damage = 90;
-        data.difficulty = "normal";
-        data.kills = 1;
+        data.user = name;
+        data.score = score;
+        data.wave = wave;
+        data.damage = damage;
+        data.difficulty = difficulty;
+        data.kills = kills;
         data.version = version;
 
         string json = JsonUtility.ToJson(data);

@@ -330,7 +330,7 @@ public class GameManager : MonoBehaviour
         if (leaderboardDataManagerScript.IsTop100(score))
         {
             int ranking = leaderboardDataManagerScript.Ranking(score);
-
+            
             rankingText.gameObject.SetActive(true);
             nameInput.gameObject.SetActive(true);
             submitBtn.SetActive(true);
@@ -343,9 +343,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SubittedName()
+    public void SubittedName()
     {
-            
+        restartBtn.SetActive(true);
+        menuBtn.SetActive(true);
+        totalWaveText.gameObject.SetActive(false);
+        rankingText.gameObject.SetActive(false);
+        nameInput.gameObject.SetActive(false);
+        submitBtn.SetActive(false);
+
+        if (nameInput.text == "")
+        {
+            nameInput.text = "Untitled" + Random.Range(0, 1000);
+        }
+
+        StartCoroutine(leaderboardDataManagerScript.SendData(nameInput.text, Mathf.RoundToInt(score), WaveSpawner.waveSpawner.waveNumber, playerScript.totalDamageDealt, difficulty, WaveSpawner.waveSpawner.killedEnemies));
+
+        leaderboardDataManagerScript.gameObject.SetActive(true);
     }
 
     private bool IsAnimationPlaying(Animator animator, string stateName)

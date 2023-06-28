@@ -102,6 +102,7 @@ public class playerController : MonoBehaviour
     [SerializeField] float rollStaminaAmount;
 
     [Header("Melee Attack")]
+    public int totalDamageDealt;
     public static int noOfClicks = 0;
     float lastClickedTime = 0;
     [SerializeField] float maxComboDelay = 1;
@@ -544,6 +545,7 @@ public class playerController : MonoBehaviour
             {
                 GameManager.gameManager.DamageEnemy(enemyGameobject, meleeDmg * critDmg, transform);
                 Instantiate(critParticle, enemyGameobject.transform.position, Quaternion.identity);
+                totalDamageDealt += Mathf.RoundToInt(meleeDmg * critDmg);
             }
             
         } else
@@ -551,6 +553,7 @@ public class playerController : MonoBehaviour
             foreach (Collider2D enemyGameobject in enemy)
             {
                 GameManager.gameManager.DamageEnemy(enemyGameobject, meleeDmg, transform);
+                totalDamageDealt += Mathf.RoundToInt(meleeDmg);
             }
         }
     
