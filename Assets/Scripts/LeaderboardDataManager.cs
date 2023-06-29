@@ -18,6 +18,7 @@ public class LeaderboardDataManager : MonoBehaviour
     public string leaderboardDifficulty;
     Leaderboard leaderboard;
     bool isShowing;
+    bool isShowingExtraInfo;
     public bool gotData;
     bool addedEntries;
     int rank;
@@ -110,6 +111,9 @@ public class LeaderboardDataManager : MonoBehaviour
             entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
             entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].score + "";
 
+            Button btn = entryTransform.Find("ExtraInfoBtn").GetComponent<Button>();
+            btn.onClick.AddListener(() => ShowHideExtraInfo(entryTransform.gameObject));
+
             if (i % 2 == 0)
             {
                 entryTransform.Find("Background").GetComponent<Image>().color = alternateBG;
@@ -201,15 +205,44 @@ public class LeaderboardDataManager : MonoBehaviour
         }
     }
 
-    public void ShowExtraInfo(GameObject entry)
+    public void ShowHideExtraInfo(GameObject entry)
     {
-        Debug.Log("anim!");
-        Animator anim = entry.GetComponent<Animator>();
-        anim.Play("showExtraInfo");
+        if (!isShowingExtraInfo)
+        {
+            Animator anim = entry.GetComponent<Animator>();
+            anim.Play("showExtraInfo");
+            
+            int index = 0;
+            foreach (Transform child in entryContainer) 
+            {
+                if (entry.transform != child)
+                {
+                    child.gameObject.SetActive(false);
+                } else
+                {
+                    Transform extraInfoTransform = child.Find("ExtraInfo").GetComponent<Transform>();
+                    extraInfoTransform.Find("Kills").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].kills.ToString();
+                    extraInfoTransform.Find("DamageDealt").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].damage.ToString();
+                    extraInfoTransform.Find("Date").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].createdAt;
+                }
+                index++;
+            }
+
+            isShowingExtraInfo = true;
+        } else
+        {
+            Animator anim = entry.GetComponent<Animator>();
+            anim.Play("normal");
+
+            foreach (Transform child in entryContainer) 
+            {
+                child.gameObject.SetActive(true);
+            }
+    
+            isShowingExtraInfo = false;
+        }
     }
 }
-
-
 
 public class Leaderboard
 {
