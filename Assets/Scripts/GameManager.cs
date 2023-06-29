@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject restartBtn;
     [SerializeField] GameObject menuBtn;
     [SerializeField] GameObject submitBtn;
+    int ranking;
 
 
     void Awake()
@@ -77,6 +78,8 @@ public class GameManager : MonoBehaviour
 
         playerMaxHealth = playerScript.maxHealth;
         incScoreWaitTimer = incScoreWaitTime;
+
+        leaderboardDataManagerScript.leaderboardDifficulty = difficulty;
     }
 
     void Update()
@@ -329,7 +332,7 @@ public class GameManager : MonoBehaviour
 
         if (leaderboardDataManagerScript.IsTop100(score))
         {
-            int ranking = leaderboardDataManagerScript.Ranking(score);
+            ranking = leaderboardDataManagerScript.Ranking(score);
             
             rankingText.gameObject.SetActive(true);
             nameInput.gameObject.SetActive(true);

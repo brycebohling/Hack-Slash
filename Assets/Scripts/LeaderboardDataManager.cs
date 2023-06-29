@@ -13,9 +13,14 @@ public class LeaderboardDataManager : MonoBehaviour
     [SerializeField] string version;
     [SerializeField] Transform entryContainer;
     [SerializeField] Transform entryTemplate;
+    [SerializeField] Color alternateBG;
+    [SerializeField] Color backgroundNameHighlight;
+    public string leaderboardDifficulty;
     Leaderboard leaderboard;
     bool isShowing;
     public bool gotData;
+    bool addedEntries;
+    int rank;
 
 
     private void OnEnable() 
@@ -38,6 +43,13 @@ public class LeaderboardDataManager : MonoBehaviour
             StartCoroutine(FetchData());
             StartCoroutine(ShowLeaderboard());
         }
+    }
+
+    public void ChangeLeaderboardDifficulty(string difficulty)
+    {
+        leaderboardDifficulty = difficulty;
+        HideLeaderboard();
+        ShowHideLeaderboard(); 
     }
 
     public bool IsTop100(float playerScore)
@@ -65,31 +77,31 @@ public class LeaderboardDataManager : MonoBehaviour
 
     public int Ranking(float playerScore)
     {
-        int ranking = 0;
-        for (int i = 0; i < leaderboard.data.Count; i++)
+        rank = 0;
+        if (playerScore <= leaderboard.data[leaderboard.data.Count - 1].score)
         {
-            ranking++;
-            if (playerScore > leaderboard.data[i].score)
+            rank = leaderboard.data.Count + 1;
+        } else
+        {
+            
+            for (int i = 0; i < leaderboard.data.Count; i++)
             {   
-                break;
+                rank++;
+                if (playerScore > leaderboard.data[i].score)
+                {   
+                    break;
+                }
             }
         }
-
-        if (leaderboard.data.Count == 99)
-        {
-            // Remove 100ths
-        }
-
-        // and post new data
-
-        return ranking;
+        
+        return rank;
     }
 
     private IEnumerator ShowLeaderboard()
     {
         yield return new WaitUntil(() => gotData);
         gotData = false;
-        
+        Debug.Log(leaderboard.data[0].createdAt);
         for (int i = 0; i < leaderboard.data.Count; i++)
         {
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
@@ -97,6 +109,18 @@ public class LeaderboardDataManager : MonoBehaviour
             entryTransform.Find("RankingText").GetComponent<TextMeshProUGUI>().text = i + 1 + "";
             entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].user;
             entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = leaderboard.data[i].score + "";
+
+            if (i % 2 == 0)
+            {
+                entryTransform.Find("Background").GetComponent<Image>().color = alternateBG;
+            }
+        }
+
+        if (rank != 0)
+        {
+            Transform playerRankTransform = entryContainer.GetChild(rank - 1);
+
+            playerRankTransform.Find("Background").GetComponent<Image>().color = backgroundNameHighlight;
         }
 
         isShowing = true;
@@ -104,7 +128,7 @@ public class LeaderboardDataManager : MonoBehaviour
 
     public IEnumerator FetchData()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(url + "limit=" + entryLimit + "&version=" + version))
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url + "limit=" + entryLimit + "&version=" + version + "&difficulty=" + leaderboardDifficulty))
         {
             yield return webRequest.SendWebRequest();
 
@@ -176,7 +200,16 @@ public class LeaderboardDataManager : MonoBehaviour
             }
         }
     }
+
+    public void ShowExtraInfo(GameObject entry)
+    {
+        Debug.Log("anim!");
+        Animator anim = entry.GetComponent<Animator>();
+        anim.Play("showExtraInfo");
+    }
 }
+
+
 
 public class Leaderboard
 {
@@ -192,5 +225,6 @@ public class Leaderboard
     public int damage;
     public string difficulty;
     public int kills;
+    public string createdAt = System.DateTime.UtcNow.ToLocalTime().ToString("dd-MM-yyyy");
     public string version;
 }
