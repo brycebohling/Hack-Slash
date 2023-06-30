@@ -10,7 +10,8 @@ public class LeaderboardDataManager : MonoBehaviour
 {
     [SerializeField] string url;
     [SerializeField] int entryLimit;
-    [SerializeField] string version;
+    // Versions used test01, alpha01
+    string version = "alpha01";
     [SerializeField] Transform entryContainer;
     [SerializeField] Transform entryTemplate;
     [SerializeField] Color alternateBG;
@@ -79,6 +80,12 @@ public class LeaderboardDataManager : MonoBehaviour
     public int Ranking(float playerScore)
     {
         rank = 0;
+
+        if (leaderboard.data.Count == 0)
+        {
+            return rank = 1;
+        }
+
         if (playerScore <= leaderboard.data[leaderboard.data.Count - 1].score)
         {
             rank = leaderboard.data.Count + 1;
