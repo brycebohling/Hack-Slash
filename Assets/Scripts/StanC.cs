@@ -16,11 +16,8 @@ public class StanC : MonoBehaviour
     private Rigidbody2D rb;
     private bool isFacingRight = true;
     [SerializeField] private float speed;
-    [SerializeField] private float minAttackDisX;
     [SerializeField] float seeDistance;
     Vector2 targetLocationX;
-    Vector2 targetLocationY;
-    float playerDistanceY;
     float playerDistance;
     [SerializeField] Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;

@@ -67,7 +67,7 @@ Transform:
   - {fileID: 7740571308533723580}
   - {fileID: 7740571310210038177}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7740571309815858022
 SpriteRenderer:
@@ -141,6 +141,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &7740571309815858021
 Rigidbody2D:
   serializedVersion: 4
@@ -158,6 +159,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -172,6 +179,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -201,7 +227,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  minAttackDisX: 9
   seeDistance: 15
   groundCheck: {fileID: 7740571308533723580}
   groundLayer:
@@ -217,8 +242,8 @@ MonoBehaviour:
   patrolTurnHigh: 8
   patrolSpeed: 2
   waitToPatrolTime: 1
-  attackRadius: 9
-  attackTimer: 2.5
+  attackRadius: 8
+  attackTimer: 4
   root: {fileID: 2273161556815106873, guid: e8396c361de4345c2a257f1f985686df, type: 3}
   groundThickness: 0.85
   health: 30

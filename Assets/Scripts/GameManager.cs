@@ -7,6 +7,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
+    [SerializeField] float timeScale;
     public string difficulty;
     public GameObject bossHealthBar;
     public UnityEvent GamePaused;

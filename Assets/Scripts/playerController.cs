@@ -848,6 +848,8 @@ public class playerController : MonoBehaviour
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                     currentNumOfJumps -= 1;
                     ChangeAnimationState(PLAYER_JUMP);
+                    StopRoll();
+                    StopAllCoroutines();
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
