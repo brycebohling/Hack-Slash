@@ -102,7 +102,7 @@ public class LeaderboardDataManager : MonoBehaviour
     {
         yield return new WaitUntil(() => gotData);
         gotData = false;
-        Debug.Log(leaderboard.data[0].createdAt);
+
         for (int i = 0; i < leaderboard.data.Count; i++)
         {
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
@@ -190,6 +190,7 @@ public class LeaderboardDataManager : MonoBehaviour
         data.damage = damage;
         data.difficulty = difficulty;
         data.kills = kills;
+        data.createdAt = System.DateTime.Now.ToUniversalTime();
         data.version = version;
 
         string json = JsonUtility.ToJson(data);
@@ -205,7 +206,7 @@ public class LeaderboardDataManager : MonoBehaviour
         }
     }
 
-    public void ShowHideExtraInfo(GameObject entry)
+    private void ShowHideExtraInfo(GameObject entry)
     {
         if (!isShowingExtraInfo)
         {
@@ -223,7 +224,9 @@ public class LeaderboardDataManager : MonoBehaviour
                     Transform extraInfoTransform = child.Find("ExtraInfo").GetComponent<Transform>();
                     extraInfoTransform.Find("Kills").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].kills.ToString();
                     extraInfoTransform.Find("DamageDealt").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].damage.ToString();
-                    extraInfoTransform.Find("Date").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].createdAt;
+
+                    System.DateTime convertedDate = System.DateTime.SpecifyKind(System.DateTime.Parse(leaderboard.data[index].createdAt.ToString()), System.DateTimeKind.Utc);
+                    extraInfoTransform.Find("Date").GetComponent<TextMeshProUGUI>().text = convertedDate.ToLocalTime().ToShortDateString();
                 }
                 index++;
             }
@@ -258,6 +261,6 @@ public class Leaderboard
     public int damage;
     public string difficulty;
     public int kills;
-    public string createdAt = System.DateTime.UtcNow.ToLocalTime().ToString("dd-MM-yyyy");
+    public System.DateTime createdAt;
     public string version;
 }
