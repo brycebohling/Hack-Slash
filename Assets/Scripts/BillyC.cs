@@ -10,8 +10,9 @@ public class BillyC : MonoBehaviour
     string _currentState;
     const string ENEMY_ATTACK = "attack";
     const string ENEMY_DAMAGED = "damaged";
-    const string ENEMY_NORMAL = "normal";
-    const string ENEMY_HEALING = "normal";
+    const string ENEMY_IDLE = "idle";
+    const string ENEMY_HEALING = "heal";
+    const string ENEMY_WALK = "walk";
 
     // Movement
     private Rigidbody2D rb;
@@ -54,8 +55,8 @@ public class BillyC : MonoBehaviour
     [SerializeField] float maxHealth;
     [SerializeField] float healAmount;
     bool isHealing;
-    [SerializeField] float timeBetweenChanceToHeal;
-    float timeBetweenChanceToHealTimer;
+    [SerializeField] float timeBetweenHeal;
+    float timeBetweenHealTimer;
     [SerializeField] GameObject healingText;
 
     // Damaged
@@ -63,15 +64,11 @@ public class BillyC : MonoBehaviour
     bool takingDmg;
     float dmgTimerCountdown;
     [SerializeField] float dmgTime;
-    [SerializeField] float knockbackPower;
-    [SerializeField] float knockbackTime;
-    bool beingKnockedback;
-
 
     // Death
     bool isDead;
     [SerializeField] GameObject deathParticals;
-    int scoreValue = 50;
+    int scoreValue = 200;
 
 
 
@@ -79,8 +76,10 @@ public class BillyC : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
         currentHealth = maxHealth;
         waitToPatrolTimer = waitToPatrolTime;
+        timeBetweenHealTimer = timeBetweenHeal;
     }
 
     private void Update()
@@ -93,49 +92,30 @@ public class BillyC : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (attackCountdown > 0)
+        {
+            attackCountdown -= Time.deltaTime;
+        }
+
         if (takingDmg)
         {
             dmgTimerCountdown -= Time.deltaTime;
 
             if (dmgTimerCountdown <= 0) 
             {
-                ChangeAnimationState(ENEMY_NORMAL);
+                ChangeAnimationState(ENEMY_IDLE);
                 takingDmg = false;
-            }          
+            } else 
+            {
+                return;
+            } 
         }
+        
+        HandleHeal();
 
         if (isHealing)
         {
-            if (!IsAnimationPlaying(anim, ENEMY_HEALING))
-            {
-                currentHealth += healAmount;
-                GameObject textPrefab = Instantiate(healingText, transform.position, Quaternion.identity);
-
-                textPrefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healAmount).ToString();
-
-                isHealing = false;
-            } else
-            {
-                return;
-            }
-        }
-
-        if (currentHealth <= maxHealth / 2)
-        {
-            if (timeBetweenChanceToHealTimer <= 0)
-            {
-                Heal();
-                timeBetweenChanceToHealTimer = timeBetweenChanceToHeal;
-                return;
-            } else
-            {
-                timeBetweenChanceToHealTimer -= Time.deltaTime;
-            }
-        }
-
-        if (attackCountdown > 0)
-        {
-            attackCountdown -= Time.deltaTime;
+            return;
         }
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.5f, 0.3f), 0, groundLayer);
@@ -148,10 +128,7 @@ public class BillyC : MonoBehaviour
         playerDir = GameManager.gameManager.player.transform.position - transform.position;
         groundInWay = Physics2D.Raycast(transform.position, playerDir, playerDistance, groundLayer);
 
-        if (beingKnockedback)
-        {
-            return;
-        }
+        
 
         if (isGrounded)
         {
@@ -163,7 +140,7 @@ public class BillyC : MonoBehaviour
 
                 if (playerDistance > minDistanceX)
                 {
-                    ChangeAnimationState(ENEMY_NORMAL);
+                    ChangeAnimationState(ENEMY_WALK);
                     transform.position =  Vector2.MoveTowards(transform.position, targetLocationX, speed * Time.deltaTime);     
                 } else
                 { 
@@ -173,13 +150,15 @@ public class BillyC : MonoBehaviour
                         attackCountdown = attackTimer;
                     } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
                     {
-                        ChangeAnimationState(ENEMY_NORMAL);
+                        ChangeAnimationState(ENEMY_IDLE);
                     }
                 }
             } else if (!IsAnimationPlaying(anim, ENEMY_ATTACK))
             {
                 if (waitToPatrolTimer < 0f)
                 {
+                    ChangeAnimationState(ENEMY_WALK);
+
                     if (patrolTurnTimer < 0f)
                     {
                         patrolTurnTimer = Random.Range(patrolTurnLow, patrolTurnHigh);
@@ -211,12 +190,13 @@ public class BillyC : MonoBehaviour
                 } else
                 {
                     waitToPatrolTimer -= Time.deltaTime;
+                    ChangeAnimationState(ENEMY_IDLE);
                 }
             }
         } 
     }
 
-    public void DmgPlayer()
+    private void DmgPlayer()
     {
         canDmgPlayer = Physics2D.OverlapCircle(attckPoint.position, attackRadius, attackLayer);
         if (canDmgPlayer)
@@ -250,7 +230,7 @@ public class BillyC : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    public void DmgRedBoy(float dmg, Transform attacker)
+    public void DmgBilly(float dmg, Transform attacker)
     {
         currentHealth -= dmg;   
 
@@ -262,24 +242,8 @@ public class BillyC : MonoBehaviour
             dmgTimerCountdown = dmgTime;
             takingDmg = true;
             ChangeAnimationState(ENEMY_DAMAGED);
-            Knockback(attacker);
+            StopHeal();
         }
-    }
-
-    private void Knockback(Transform attacker)
-    {
-        StopAllCoroutines();
-        Vector2 hitDir = (transform.position - attacker.position).normalized;
-        rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
-        StartCoroutine(CancelKnockback());
-        beingKnockedback = true;
-    }
-
-    private IEnumerator CancelKnockback()
-    {
-        yield return new WaitForSeconds(knockbackTime);
-        beingKnockedback = false;
-        rb.velocity = Vector3.zero;
     }
 
     private void ChangeAnimationState(string newState)
@@ -293,11 +257,41 @@ public class BillyC : MonoBehaviour
         _currentState = newState;
     }
 
-    private void Heal()
+    private void HandleHeal()
     {
-        isHealing = true;
+        if (isHealing)
+        {
+            if (!IsAnimationPlaying(anim, ENEMY_HEALING))
+            {
+                currentHealth += healAmount;
+                GameObject textPrefab = Instantiate(healingText, transform.position, Quaternion.identity);
 
-        ChangeAnimationState(ENEMY_HEALING);
+                textPrefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healAmount).ToString();
+
+                StopHeal();
+            }
+
+            return;
+        }
+
+        if (currentHealth <= maxHealth / 2)
+        {
+            timeBetweenHealTimer -= Time.deltaTime;
+
+            if (timeBetweenHealTimer <= 0)
+            {
+                ChangeAnimationState(ENEMY_HEALING);
+
+                isHealing = true;
+                timeBetweenHealTimer = timeBetweenHeal;
+            }
+        }
+    }
+
+    private void StopHeal()
+    {
+        timeBetweenHealTimer = timeBetweenHeal;
+        isHealing = false;
     }
 
     private bool IsAnimationPlaying(Animator animator, string stateName)

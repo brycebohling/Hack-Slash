@@ -234,7 +234,7 @@ MonoBehaviour:
   - {fileID: 8719356053838473594}
   currentHealth: 0
   maxHealth: 250
-  deathParticals: {fileID: 901058660515239618, guid: 38e29c35688ca43b98acf0b9587f55b8, type: 3}
+  deathParticals: {fileID: 901058660515239618, guid: bec968c79087e41398bc5ef935b1d2f6, type: 3}
   teleporter: {fileID: 4490126659960503450, guid: 355b8ebf8cd034547b0416e17845e2ba, type: 3}
 --- !u!50 &7933846560886543200
 Rigidbody2D:
@@ -253,6 +253,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -267,6 +273,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -303,6 +328,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8719356053535738206
 GameObject:
   m_ObjectHideFlags: 0

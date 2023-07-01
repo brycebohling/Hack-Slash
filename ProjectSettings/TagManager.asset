@@ -12,6 +12,7 @@ TagManager:
   - stan
   - ivan
   - bossHealthBar
+  - billy
   layers:
   - Default
   - TransparentFX

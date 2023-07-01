@@ -220,6 +220,9 @@ public class GameManager : MonoBehaviour
         } else if (enemy.CompareTag("ivan"))
         {
             enemy.gameObject.GetComponent<IvanC>().DmgIvan(dmg, attacker);
+        } else if (enemy.CompareTag("billy"))
+        {
+            enemy.gameObject.GetComponent<BillyC>().DmgBilly(dmg, attacker);
         }
     }
 

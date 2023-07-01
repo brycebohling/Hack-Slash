@@ -13,6 +13,7 @@ public class WaveSpawner : MonoBehaviour
     {
         public GameObject prefab;
         public float value; 
+        public int spawnableWave;
     }
 
     [SerializeField] GameObject ivanPrefab;
@@ -194,12 +195,12 @@ public class WaveSpawner : MonoBehaviour
 
     bool CanSpawnEnemyType(int index)
     {
-        if (waveNumber < 5 && enemyTypes[index].prefab.name == "Stan")
-        {
-            return false;
-        } else 
+        if (waveNumber >= enemyTypes[index].spawnableWave)
         {
             return true;
+        } else 
+        {
+            return false;
         }
     }
 
