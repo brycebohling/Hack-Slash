@@ -10,8 +10,8 @@ public class LeaderboardDataManager : MonoBehaviour
 {
     [SerializeField] string url;
     [SerializeField] int entryLimit;
-    // Versions used test01, alpha01
-    string version = "alpha01";
+    // Versions used test03, alpha02
+    static string version = "alpha02";
     [SerializeField] Transform entryContainer;
     [SerializeField] Transform entryTemplate;
     [SerializeField] Color alternateBG;

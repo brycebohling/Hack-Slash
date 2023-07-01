@@ -7,7 +7,6 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
-    [SerializeField] float timeScale;
     public string difficulty;
     public GameObject bossHealthBar;
     public UnityEvent GamePaused;
@@ -51,11 +50,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text totalWaveText;
     [SerializeField] List<GameObject> turnOffUI = new List<GameObject>();
     [SerializeField] TMP_Text rankingText;
+    [SerializeField] int maxNameLength;
     [SerializeField] TMP_InputField nameInput;
+    [SerializeField] TextMeshProUGUI warningText;
     [SerializeField] GameObject restartBtn;
     [SerializeField] GameObject menuBtn;
     [SerializeField] GameObject submitBtn;
     int ranking;
+
 
 
     void Awake()
@@ -348,6 +350,22 @@ public class GameManager : MonoBehaviour
             restartBtn.SetActive(true);
             menuBtn.SetActive(true);
         }
+    }
+
+    public void IsOverMaxLength(TMP_InputField nameInput)
+    {
+        if (nameInput.text.Length > maxNameLength)
+        {
+            nameInput.text = nameInput.text.Remove(nameInput.text.Length - 1);
+            warningText.gameObject.SetActive(true);
+            CancelInvoke("CancelNameLengthWarning");
+            Invoke("CancelNameLengthWarning", 1.5f);
+        }
+    }
+
+    private void CancelNameLengthWarning()
+    {
+        warningText.gameObject.SetActive(false);
     }
 
     public void SubittedName()
