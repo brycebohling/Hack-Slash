@@ -574,7 +574,7 @@ public class playerController : MonoBehaviour
             var rootScript = root.GetComponent<RootC>();
             if (rootScript.canAttack)
             {
-            rootScript.killed = true;
+                rootScript.killed = true;
             }
         } 
     }

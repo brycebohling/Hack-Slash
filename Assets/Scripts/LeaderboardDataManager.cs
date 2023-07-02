@@ -10,13 +10,13 @@ public class LeaderboardDataManager : MonoBehaviour
 {
     [SerializeField] string url;
     [SerializeField] int entryLimit;
-    // Versions used test03, alpha02
-    static string version = "alpha02";
+    // Versions used test04, alpha03
+    static string version = "alpha03";
     [SerializeField] Transform entryContainer;
     [SerializeField] Transform entryTemplate;
     [SerializeField] Color alternateBG;
     [SerializeField] Color backgroundNameHighlight;
-    public string leaderboardDifficulty;
+    public string leaderboardDifficulty = "normal";
     Leaderboard leaderboard;
     bool isShowing;
     bool isShowingExtraInfo;
@@ -54,11 +54,11 @@ public class LeaderboardDataManager : MonoBehaviour
         ShowHideLeaderboard(); 
     }
 
-    public bool IsTop100(float playerScore)
+    public bool IsTopOnLeaderBoard(float playerScore)
     {
-        if (leaderboard.data.Count == 99)
+        if (leaderboard.data.Count == entryLimit)
         {
-            if (playerScore > leaderboard.data[99].score)
+            if (playerScore >= leaderboard.data[entryLimit - 1].score)
             {
                 return true;
             } else
@@ -66,7 +66,7 @@ public class LeaderboardDataManager : MonoBehaviour
                 return false;
             }
         
-        } else if (leaderboard.data.Count < 99)
+        } else if (leaderboard.data.Count < entryLimit)
         {
             return true;
         } else
@@ -86,19 +86,12 @@ public class LeaderboardDataManager : MonoBehaviour
             return rank = 1;
         }
 
-        if (playerScore <= leaderboard.data[leaderboard.data.Count - 1].score)
-        {
-            rank = leaderboard.data.Count + 1;
-        } else
-        {
-            
-            for (int i = 0; i < leaderboard.data.Count; i++)
+        for (int i = 0; i < leaderboard.data.Count; i++)
+        {   
+            rank++;
+            if (playerScore >= leaderboard.data[i].score)
             {   
-                rank++;
-                if (playerScore > leaderboard.data[i].score)
-                {   
-                    break;
-                }
+                break;
             }
         }
         
@@ -160,18 +153,18 @@ public class LeaderboardDataManager : MonoBehaviour
                 case UnityWebRequest.Result.Success:
                     leaderboard = JsonConvert.DeserializeObject<Leaderboard>(webRequest.downloadHandler.text); 
 
-                    for (int x = 0; x < leaderboard.data.Count; x++)
-                    {
-                        for (int y = x + 1; y < leaderboard.data.Count; y++)
-                        {
-                            if (leaderboard.data[y].score > leaderboard.data[x].score)
-                            {
-                                Data tmp = leaderboard.data[x];
-                                leaderboard.data[x] = leaderboard.data[y];
-                                leaderboard.data[y] = tmp;
-                            }
-                        }
-                    }
+                    // for (int x = 0; x < leaderboard.data.Count; x++)
+                    // {
+                    //     for (int y = x + 1; y < leaderboard.data.Count; y++)
+                    //     {
+                    //         if (leaderboard.data[y].score > leaderboard.data[x].score)
+                    //         {
+                    //             Data tmp = leaderboard.data[x];
+                    //             leaderboard.data[x] = leaderboard.data[y];
+                    //             leaderboard.data[y] = tmp;
+                    //         }
+                    //     }
+                    // }
                     gotData = true; 
                     break;
             }

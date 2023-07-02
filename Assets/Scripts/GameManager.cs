@@ -326,7 +326,7 @@ public class GameManager : MonoBehaviour
             turnOffUI[i].SetActive(false);
         }
 
-        totalWaveText.text = "You made it to Wave: " + WaveSpawner.waveSpawner.waveNumber;
+        totalWaveText.text = "You made it to Wave: " + score;
 
         StartCoroutine(leaderboardDataManagerScript.FetchData());
         StartCoroutine(FindRanking());
@@ -336,7 +336,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => leaderboardDataManagerScript.gotData);
         leaderboardDataManagerScript.gotData = false;
 
-        if (leaderboardDataManagerScript.IsTop100(score))
+        if (leaderboardDataManagerScript.IsTopOnLeaderBoard(score))
         {
             ranking = leaderboardDataManagerScript.Ranking(score);
             
@@ -383,7 +383,6 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(leaderboardDataManagerScript.SendData(nameInput.text, Mathf.RoundToInt(score), WaveSpawner.waveSpawner.waveNumber, playerScript.totalDamageDealt, difficulty, WaveSpawner.waveSpawner.killedEnemies));
-
         leaderboardDataManagerScript.gameObject.SetActive(true);
     }
 

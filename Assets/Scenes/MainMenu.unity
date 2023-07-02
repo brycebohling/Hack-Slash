@@ -5231,7 +5231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   url: https://api.brycebohling.com/leaderboards?
-  entryLimit: 100
+  entryLimit: 10
   entryContainer: {fileID: 650141641}
   entryTemplate: {fileID: 1230852471154433843, guid: 085a6ab3acd4c4a7cace269c11200a3b, type: 3}
   alternateBG: {r: 0, g: 0, b: 0, a: 0}

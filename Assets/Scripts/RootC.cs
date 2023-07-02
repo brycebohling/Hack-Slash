@@ -18,7 +18,6 @@ public class RootC : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-
     }
 
     
