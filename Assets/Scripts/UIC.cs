@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class UIC : MonoBehaviour 
 {
     [SerializeField] GameObject[] tabs;
+    [SerializeField] Animator[] tabBtnsAnims;
+    List<bool> tabBtnsSelection = new List<bool>();
 
+    private void Start() 
+    {
+        for (int i = 0; i < tabBtnsAnims.Length; i++)
+        {
+            tabBtnsSelection.Add(false);
+        }    
+    }
 
     public void Play()
     {
@@ -38,8 +46,64 @@ public class UIC : MonoBehaviour
             } else
             {
                 tabs[i].SetActive(true);
-                // selectedTab.GetComponent<Animator>().Play("");
             }
         }
+    }
+
+    public void TabBtnEnter(Animator anim)
+    {
+        foreach(Animator tabAnim in tabBtnsAnims)
+        {
+            if (tabAnim == anim)
+            {
+                anim.Play("hover");
+                break;
+            }
+        }
+
+        // Play sound
+    }
+    
+    public void TabBtnExit(Animator anim)
+    {
+        int index = 0;
+
+        foreach(Animator tabAnim in tabBtnsAnims)
+        {
+            if (tabAnim == anim)
+            {
+                if (tabBtnsSelection[index] == true)
+                {
+                    anim.Play("selected");
+                } else
+                {
+                    anim.Play("normal");
+                }
+                break;
+            }
+
+            index++;
+        }
+    }  
+
+    public void TabBtnSelected(Animator anim)
+    {
+        int index = 0;
+        foreach(Animator tabAnim in tabBtnsAnims)
+        {
+            if (tabAnim == anim)
+            {
+                tabBtnsSelection[index] = true;
+            } else
+            {
+                tabBtnsSelection[index] = false;
+                tabAnim.Play("normal");
+            }
+
+            index++;
+        }
+
+        anim.Play("selected");
+        // Play sound
     }
 }

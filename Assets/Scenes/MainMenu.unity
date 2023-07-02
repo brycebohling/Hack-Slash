@@ -1442,6 +1442,12 @@ MonoBehaviour:
   - {fileID: 1292049735}
   - {fileID: 1146367708}
   - {fileID: 858429543}
+  tabBtnsAnims:
+  - {fileID: 1749273111}
+  - {fileID: 1770645385}
+  - {fileID: 1115468972}
+  - {fileID: 912136106}
+  - {fileID: 1416214656}
 --- !u!1 &282275823
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,7 +3246,7 @@ Animator:
   m_GameObject: {fileID: 912136104}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4f833368e24864f91943c29b94441e78, type: 2}
+  m_Controller: {fileID: 9100000, guid: 99a1071e5865b4f9aae11ee736100f4b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3271,7 +3277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
+  m_Sprite: {fileID: -624259312, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3313,6 +3319,50 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 1146367708}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnSelected
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 912136106}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 912136106}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: hover
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnExit
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 912136106}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -3936,7 +3986,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
+  m_Sprite: {fileID: -624259312, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3964,7 +4014,7 @@ Animator:
   m_GameObject: {fileID: 1115468967}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4f833368e24864f91943c29b94441e78, type: 2}
+  m_Controller: {fileID: 9100000, guid: 99a1071e5865b4f9aae11ee736100f4b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4002,6 +4052,50 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnSelected
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1115468972}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1115468972}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: hover
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnExit
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1115468972}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: normal
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1146367708
@@ -4417,6 +4511,7 @@ GameObject:
   - component: {fileID: 1416214654}
   - component: {fileID: 1416214653}
   - component: {fileID: 1416214655}
+  - component: {fileID: 1416214656}
   m_Layer: 5
   m_Name: ControlsBtn
   m_TagString: Untagged
@@ -4465,7 +4560,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
+  m_Sprite: {fileID: -624259312, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4512,6 +4607,71 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnSelected
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1416214656}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1416214656}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnExit
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1416214656}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!95 &1416214656
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416214650}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 99a1071e5865b4f9aae11ee736100f4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1453796301
 GameObject:
   m_ObjectHideFlags: 0
@@ -5072,7 +5232,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   url: https://api.brycebohling.com/leaderboards?
   entryLimit: 100
-  version: alpha01
   entryContainer: {fileID: 650141641}
   entryTemplate: {fileID: 1230852471154433843, guid: 085a6ab3acd4c4a7cace269c11200a3b, type: 3}
   alternateBG: {r: 0, g: 0, b: 0, a: 0}
@@ -5091,6 +5250,7 @@ GameObject:
   - component: {fileID: 1749273109}
   - component: {fileID: 1749273108}
   - component: {fileID: 1749273110}
+  - component: {fileID: 1749273111}
   m_Layer: 5
   m_Name: DonateBtn
   m_TagString: Untagged
@@ -5139,7 +5299,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
+  m_Sprite: {fileID: -624259312, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5186,6 +5346,59 @@ MonoBehaviour:
             m_StringArgument: https://ko-fi.com/brycebohling
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1749273111}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: hover
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnExit
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1749273111}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: normal
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!95 &1749273111
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749273105}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 99a1071e5865b4f9aae11ee736100f4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1749963145
 GameObject:
   m_ObjectHideFlags: 0
@@ -5323,7 +5536,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
+  m_Sprite: {fileID: -624259312, guid: e7706f71f8d2441c89a0b9a3982f2a34, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5351,7 +5564,7 @@ Animator:
   m_GameObject: {fileID: 1770645380}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4f833368e24864f91943c29b94441e78, type: 2}
+  m_Controller: {fileID: 9100000, guid: 99a1071e5865b4f9aae11ee736100f4b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5389,6 +5602,38 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: https://forms.gle/AnEgKUhdpHGJQqoJ6
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnEnter
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1770645385}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: hover
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 281917492}
+          m_TargetAssemblyTypeName: UIC, Assembly-CSharp
+          m_MethodName: TabBtnExit
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1770645385}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: normal
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1791390871
