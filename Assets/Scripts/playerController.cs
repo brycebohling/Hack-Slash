@@ -483,9 +483,8 @@ public class playerController : MonoBehaviour
 
         yield return new WaitForSeconds(rollTime);
         yield return new WaitUntil(() => !isCeiling);
-        
-        StopRoll();
-        wasRolling = true;
+
+        StopRoll();        
     }
 
     private void StopRoll()
@@ -495,6 +494,7 @@ public class playerController : MonoBehaviour
         invicible = false;
         isRolling = false;
         canRoll = true;
+        wasRolling = true;
     }
 
     private void AttackAnim()
@@ -573,7 +573,7 @@ public class playerController : MonoBehaviour
         {
             var rootScript = root.GetComponent<RootC>();
             if (rootScript.canAttack)
-            {
+            {   
                 rootScript.killed = true;
             }
         } 
@@ -846,14 +846,14 @@ public class playerController : MonoBehaviour
                 if (isRolling && !isCeiling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    currentNumOfJumps -= 1;
+                    currentNumOfJumps--;
                     ChangeAnimationState(PLAYER_JUMP);
                     StopRoll();
                     StopAllCoroutines();
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    currentNumOfJumps -= 1;
+                    currentNumOfJumps--;
                 }
             }
         }
