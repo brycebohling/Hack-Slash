@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 3077376229429079647}
   - component: {fileID: 3237002121348197719}
   m_Layer: 5
-  m_Name: DamageDealtTitle
+  m_Name: TotalWaveTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Damage Dealt
+  m_text: Total Wave
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}
   m_sharedMaterial: {fileID: -3600672583327299092, guid: 292882e9404ac44e88756ad3fb0a6adc, type: 2}
@@ -1134,7 +1134,7 @@ GameObject:
   - component: {fileID: 7577073233870271311}
   - component: {fileID: 5067430179533697964}
   m_Layer: 5
-  m_Name: DamageDealt
+  m_Name: TotalWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

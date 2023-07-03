@@ -223,7 +223,7 @@ public class LeaderboardDataManager : MonoBehaviour
                 {
                     Transform extraInfoTransform = child.Find("ExtraInfo").GetComponent<Transform>();
                     extraInfoTransform.Find("Kills").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].kills.ToString();
-                    extraInfoTransform.Find("DamageDealt").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].damage.ToString();
+                    extraInfoTransform.Find("TotalWave").GetComponent<TextMeshProUGUI>().text = leaderboard.data[index].wave.ToString();
 
                     System.DateTime convertedDate = System.DateTime.SpecifyKind(System.DateTime.Parse(leaderboard.data[index].createdAt.ToString()), System.DateTimeKind.Utc);
                     extraInfoTransform.Find("Date").GetComponent<TextMeshProUGUI>().text = convertedDate.ToLocalTime().ToShortDateString();
