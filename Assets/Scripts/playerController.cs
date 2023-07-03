@@ -339,7 +339,7 @@ public class playerController : MonoBehaviour
 
     private void UpdateDaggerAmmo()
     {
-        if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo + 1 <= daggerAmmo)
+        if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo < daggerAmmo)
         {
             currentDaggerRechargingTime = daggerRechargingTime;
             currentDaggerAmmo++;

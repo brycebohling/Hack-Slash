@@ -326,7 +326,7 @@ public class GameManager : MonoBehaviour
             turnOffUI[i].SetActive(false);
         }
 
-        totalWaveText.text = "You made it to Wave: " + score;
+        totalWaveText.text = "You made it to Wave: " + WaveSpawner.waveSpawner.waveNumber;
 
         StartCoroutine(leaderboardDataManagerScript.FetchData());
         StartCoroutine(FindRanking());
