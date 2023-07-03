@@ -138,7 +138,7 @@ public class playerController : MonoBehaviour
     [SerializeField] float iFrameTime;
     float iFrameCountdown;
     public bool invicible;
-    bool takingDmg;
+    bool isTakingDmg;
     [SerializeField] float dmgTime;
     float dmgTimerCountdown;
     [SerializeField] float knockbackPower;
@@ -201,68 +201,48 @@ public class playerController : MonoBehaviour
     {   
         if (isDead)
         {
-            Instantiate(deathParticals, transform.position, Quaternion.identity);
-            GameManager.gameManager.PlayerDied();
-
-            gameObject.SetActive(false);
+            Died();
             return;
         }
 
+        movementX = Input.GetAxisRaw("Horizontal");
+
         DidWaveChange();    
         UpdateTimers();
-        
-        if (staminaRechargeTimer > 0f)
-        {
-            staminaRechargeTimer -= Time.deltaTime;
-        } else if (currentStamina < maxStamina)
-        {
-            currentStamina += Time.deltaTime * staminaRechargeSpeed;
-            if (currentStamina > maxStamina)
-            {
-                currentStamina = maxStamina;
-            }
-            SB.SetStamina(currentStamina);
-        }
+        UpdateStaminaBar();
+        UpdateDaggerAmmo();
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
         isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
 
         UpdateJumpStatus();
-
-        if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo + 1 <= daggerAmmo)
-        {
-            currentDaggerRechargingTime = daggerRechargingTime;
-            currentDaggerAmmo++;
-            daggerUIScript.ChangeDaggerAmmoUI(currentDaggerAmmo);
-        }
         
+        BushJumpCheck();
         if (jumpingIntoBush)
         {
             JumpIntoBush();
-
             return;
         }
 
         if (jumpingOutBush)
         {
             JumpOutBush();
-
             return;
         }
 
-        if (takingDmg)
+        if (isTakingDmg)
         {
             dmgTimerCountdown -= Time.deltaTime;
 
             if (dmgTimerCountdown <= 0) 
             {
-                takingDmg = false;
+                isTakingDmg = false;
             }
 
             return;
         } else
         {
-            takingDmg = false;
+            isTakingDmg = false;
         }
 
         if (!IsAnimationPlaying(anim, PLAYER_ATTACK_1))
@@ -289,6 +269,86 @@ public class playerController : MonoBehaviour
 
         HandleJump();
 
+        HandleAttack();
+        if (attacking)
+        {
+            return;
+        }
+        
+        if (isRolling)
+        {
+            return;
+        }
+
+        Flip();
+
+        HandleMovementAnimations();
+
+        HandleRoll();
+
+        HandleDaggerThrowing();
+
+        UpdateBushUI();
+    }
+
+    // -------------------------------- Fixed Update -----------------------------
+
+    private void FixedUpdate() 
+    {
+        if (isRolling || attacking || isTakingDmg || isDead)
+        {
+            return;
+        }
+
+        if (!isGrounded && wasRolling || wasGrounded && wasRolling)
+        {
+            rb.velocity = new Vector2(movementX * rollSpeed, rb.velocity.y);   
+        } else
+        {
+            rb.velocity = new Vector2(movementX * movementSpeed, rb.velocity.y);
+        }
+        
+    }
+    
+    // ------------------------My homemade functions------------------------------
+
+
+    private void Died()
+    {
+        Instantiate(deathParticals, transform.position, Quaternion.identity);
+        GameManager.gameManager.PlayerDied();
+
+        gameObject.SetActive(false);
+    }
+
+    private void UpdateStaminaBar()
+    {
+        if (staminaRechargeTimer > 0f)
+        {
+            staminaRechargeTimer -= Time.deltaTime;
+        } else if (currentStamina < maxStamina)
+        {
+            currentStamina += Time.deltaTime * staminaRechargeSpeed;
+            if (currentStamina > maxStamina)
+            {
+                currentStamina = maxStamina;
+            }
+            SB.SetStamina(currentStamina);
+        }
+    }
+
+    private void UpdateDaggerAmmo()
+    {
+        if (Time.time - lastDaggerThrown > daggerWaitToRechargeTime && currentDaggerRechargingTime <= 0f && currentDaggerAmmo + 1 <= daggerAmmo)
+        {
+            currentDaggerRechargingTime = daggerRechargingTime;
+            currentDaggerAmmo++;
+            daggerUIScript.ChangeDaggerAmmoUI(currentDaggerAmmo);
+        }
+    }
+
+    private void HandleAttack()
+    {
         bool pressedAttack = false;
 
         foreach(KeyCode keyBind in meleeAttackBinds)
@@ -302,86 +362,29 @@ public class playerController : MonoBehaviour
 
         if (pressedAttack)
         {
-            if (isRolling && !isCeiling)
+            if (isRolling && !isCeiling || !isRolling)
             {
                 AttackAnim();
                 attacking = true;
-                StopRoll();
-                StopAllCoroutines();
-                if (isGrounded)
-                {
-                    rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
-                }
-                else
-                {
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                }
-                return;
 
-            } else if (!isRolling)
-            {
-                AttackAnim();
-                attacking = true;
+                if (isRolling && !isCeiling)
+                {
+                    StopCoroutine(Roll());
+                    StopRoll();
+                }
+
                 if (isGrounded)
                 {
                     rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
-                }
-                else
+                } else
                 {
                     rb.velocity = new Vector2(0, rb.velocity.y);
                 }
+
                 return;
             }
         }
-
-        if (isRolling)
-        {
-            return;
-        }
-
-        movementX = Input.GetAxisRaw("Horizontal");
-
-        Flip();
-
-        HandleMovementAnimations();
-
-        HandleRoll();
-
-        HandleDaggerThrowing();
-
-        bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
-
-        if (bushInRange.Length > 0)
-        {
-            bushInRangeUI.SetActive(true);
-        } else
-        {
-            bushInRangeUI.SetActive(false);
-        }
-
-        BushJumpCheck();
     }
-
-    // -------------------------------- Fixed Update -----------------------------
-
-    private void FixedUpdate() 
-    {
-        if (isRolling || attacking || takingDmg || isDead)
-        {
-            return;
-        }
-
-        if (!isGrounded && wasRolling || wasGrounded && wasRolling)
-        {
-            rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);   
-        } else
-        {
-            rb.velocity = new Vector2(movementX * movementSpeed, rb.velocity.y);
-        }
-        
-    }
-    
-    // ------------------------My homemade functions------------------------------
 
     void BushJumpCheck()
     {
@@ -601,7 +604,7 @@ public class playerController : MonoBehaviour
                     camC.CameraStartShake(2, 2);
                     dmgTimerCountdown = dmgTime;
                     iFrameCountdown = iFrameTime;
-                    takingDmg = true;
+                    isTakingDmg = true;
                     ChangeAnimationState(PLAYER_DAMAGED);
                     Knockback(attacker);
                 }
@@ -832,15 +835,15 @@ public class playerController : MonoBehaviour
                     jumpOffJumpTimer = 0f;
                     waitToCheckForJumpTimer = waitToCheckForJump;
                     ChangeAnimationState(PLAYER_JUMP);
+                    StopCoroutine(Roll());
                     StopRoll();
-                    StopAllCoroutines();
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                     jumpOffJumpTimer = 0f;
                     waitToCheckForJumpTimer = waitToCheckForJump;
                 }
-                
+        
             } else if (currentNumOfJumps >= 1)
             {
                 if (isRolling && !isCeiling)
@@ -848,8 +851,8 @@ public class playerController : MonoBehaviour
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                     currentNumOfJumps--;
                     ChangeAnimationState(PLAYER_JUMP);
+                    StopCoroutine(Roll());
                     StopRoll();
-                    StopAllCoroutines();
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -930,6 +933,19 @@ public class playerController : MonoBehaviour
             {
                 StartCoroutine(Roll());
             }
+        }
+    }
+
+    private void UpdateBushUI()
+    {
+        bushInRange =  Physics2D.OverlapBoxAll(transform.position, bushCheckSize, 0, bushLayer);
+
+        if (bushInRange.Length > 0)
+        {
+            bushInRangeUI.SetActive(true);
+        } else
+        {
+            bushInRangeUI.SetActive(false);
         }
     }
 
