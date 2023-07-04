@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class UIC : MonoBehaviour 
 {
+    [SerializeField] GameObject tabsParent;
+    [SerializeField] AudioClip tabSelectedSFX;
+    [SerializeField] AudioClip tabHoverSFX;
     [SerializeField] GameObject[] tabs;
     [SerializeField] Animator[] tabBtnsAnims;
     List<bool> tabBtnsSelection = new List<bool>();
@@ -61,7 +64,7 @@ public class UIC : MonoBehaviour
             }
         }
 
-        // Play sound
+        tabsParent.GetComponent<AudioSource>().PlayOneShot(tabHoverSFX, 0.15f);
     }
     
     public void TabBtnExit(Animator anim)
@@ -104,6 +107,7 @@ public class UIC : MonoBehaviour
         }
 
         anim.Play("selected");
-        // Play sound
+        
+        tabsParent.GetComponent<AudioSource>().PlayOneShot(tabSelectedSFX);
     }
 }

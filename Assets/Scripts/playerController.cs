@@ -73,8 +73,8 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask headHitters;
     bool isCeiling;
 
-    [Header("Jumping")]
     int currentNumOfJumps;
+    [Header("Jumping")]
     [SerializeField] float jumpOffJumpTime;
     float jumpOffJumpTimer;
     [SerializeField] float waitToCheckForJump;
@@ -175,6 +175,10 @@ public class playerController : MonoBehaviour
     [Header("Bush Teleporter")]
     [SerializeField] GameObject autoDestroyTeleporter;
 
+    [Header("SFX")]
+    [SerializeField] AudioClip meleeSFX;
+    [SerializeField] AudioClip daggerSFX;
+
 
     private void Start()
     {
@@ -211,7 +215,7 @@ public class playerController : MonoBehaviour
         UpdateTimers();
         UpdateStaminaBar();
         UpdateDaggerAmmo();
-
+        
         isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
         isCeiling = Physics2D.OverlapBox(ceillingCheck.position, ceillingCheckSize, 0, headHitters);
 
@@ -300,7 +304,7 @@ public class playerController : MonoBehaviour
             return;
         }
 
-        if (!isGrounded && wasRolling || wasGrounded && wasRolling)
+        if (!isGrounded && wasRolling)
         {
             rb.velocity = new Vector2(movementX * rollSpeed, rb.velocity.y);   
         } else
@@ -366,6 +370,7 @@ public class playerController : MonoBehaviour
             {
                 AttackAnim();
                 attacking = true;
+                gameObject.GetComponent<AudioSource>().PlayOneShot(meleeSFX);
 
                 if (isRolling && !isCeiling)
                 {
@@ -483,21 +488,27 @@ public class playerController : MonoBehaviour
         bcoll.size = new Vector2(rollWidth, rollHight);
         bcoll.offset = new Vector2(rollOffsetX, rollOffsetY);
         rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);
-
+    
         yield return new WaitForSeconds(rollTime);
         yield return new WaitUntil(() => !isCeiling);
-
+        yield return null;
+    
         StopRoll();        
+        // The Roll Countine CAN NOT be stopped
     }
 
     private void StopRoll()
     {
-        bcoll.size = new Vector2(originalWidth, originalHight);
-        bcoll.offset = new Vector2(originalOffsetX, originalOffsetY);
-        invicible = false;
-        isRolling = false;
-        canRoll = true;
-        wasRolling = true;
+        // To check if StopRoll has already been called
+        if (isRolling)
+        {
+            wasRolling = true;
+            bcoll.size = new Vector2(originalWidth, originalHight);
+            bcoll.offset = new Vector2(originalOffsetX, originalOffsetY);
+            invicible = false;
+            isRolling = false;
+            canRoll = true;
+        }
     }
 
     private void AttackAnim()
@@ -710,11 +721,6 @@ public class playerController : MonoBehaviour
 
     private void UpdateJumpStatus()
     {
-        if (!isGrounded && jumpOffJumpTimer > 0f)
-        {
-            jumpOffJumpTimer -= Time.deltaTime;
-        }
-
         if (!isGrounded && wasGrounded)
         {
             currentNumOfJumps = numberOfJumps;
@@ -723,15 +729,20 @@ public class playerController : MonoBehaviour
         if (isGrounded)
         {
             wasGrounded = true;
-            wasRolling = false;
         } else 
         {
             wasGrounded = false;
         }
 
+        if (!isGrounded && jumpOffJumpTimer > 0f)
+        {
+            jumpOffJumpTimer -= Time.deltaTime;
+        }
+
         if (isGrounded && waitToCheckForJumpTimer < 0f)
         {
             jumpOffJumpTimer = jumpOffJumpTime;
+            wasRolling = false;
         } else
         {
             waitToCheckForJumpTimer -= Time.deltaTime;
@@ -907,10 +918,13 @@ public class playerController : MonoBehaviour
             {
                 Instantiate(dagger, daggerSpawnPoint.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
             }
+
             daggerThrowCooldownTimer = daggerThrowCooldown;
             currentDaggerAmmo -= 1;
             lastDaggerThrown = Time.time;
             daggerUIScript.ChangeDaggerAmmoUI(currentDaggerAmmo);
+
+            gameObject.GetComponent<AudioSource>().PlayOneShot(daggerSFX, 0.5f);
         }
     }
 

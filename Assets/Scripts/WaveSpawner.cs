@@ -231,6 +231,11 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
+    public void TreeSpawnedEnemy()
+    {
+        enemiesSpawned++;
+    }
+
     public void TreeDestroyed(Transform location)
     {
         for (int i = 0; i < treePositions.Count; i++)

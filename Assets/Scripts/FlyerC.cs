@@ -60,13 +60,11 @@ public class FlyerC : MonoBehaviour
     // Spawning with tree
     bool spawningFromTree;
     Transform goToPoint;
-    bool noAddToEnemies;
 
     // Death
     int scoreValue = 70;
     [SerializeField] GameObject deathParticals;
     bool isDead;
-
 
 
     void Start()
@@ -80,13 +78,8 @@ public class FlyerC : MonoBehaviour
     {
         if (isDead)
         {
-            Instantiate(deathParticals, transform.position, Quaternion.identity);
-            if (!noAddToEnemies)
-            {
-                GameManager.gameManager.EnemyDied(scoreValue);
-                GameManager.gameManager.GetComponent<WaveSpawner>().killedEnemies++;
-            }
-            Destroy(gameObject);
+            Died();
+            return;
         }
 
         targetLocationX = new Vector2(GameManager.gameManager.player.transform.position.x, transform.position.y);
@@ -121,8 +114,6 @@ public class FlyerC : MonoBehaviour
 
         if (spawningFromTree)
         {
-            noAddToEnemies = true;
-
             if (!transform)
             {
                 transform.position =  Vector2.Lerp(transform.position, goToPoint.position, speed * Time.deltaTime);
@@ -245,6 +236,16 @@ public class FlyerC : MonoBehaviour
         yield return new WaitForSeconds(knockbackTime);
         beingKnockedback = false;
         rb.velocity = Vector3.zero;
+    }
+
+    private void Died()
+    {
+        Instantiate(deathParticals, transform.position, Quaternion.identity);
+
+        GameManager.gameManager.EnemyDied(scoreValue, tag);
+        GameManager.gameManager.GetComponent<WaveSpawner>().killedEnemies++; 
+
+        Destroy(gameObject);
     }
 
     private void ChangeAnimationState(string newState)

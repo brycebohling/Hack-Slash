@@ -81,7 +81,7 @@ public class RedBoyC : MonoBehaviour
         if (isDead)
         {
             Instantiate(deathParticals, transform.position, Quaternion.identity);
-            GameManager.gameManager.EnemyDied(scoreValue);
+            GameManager.gameManager.EnemyDied(scoreValue, tag);
             GameManager.gameManager.GetComponent<WaveSpawner>().killedEnemies++;
             Destroy(gameObject);
         }

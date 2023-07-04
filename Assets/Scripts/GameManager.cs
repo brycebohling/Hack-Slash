@@ -58,6 +58,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject submitBtn;
     int ranking;
 
+    [Header("SFX")]
+    [SerializeField] AudioClip flyerDeathSFX;
+    [SerializeField] AudioClip redBoyDeathSFX;
+
 
 
     void Awake()
@@ -238,11 +242,18 @@ public class GameManager : MonoBehaviour
         playerScript.PlayerHeal(healAmount);
     }
 
-    public void EnemyDied(int scoreValue)
+    public void EnemyDied(int scoreValue, string enemyTag)
     {
         killStreak++;
-
         IncScore(scoreValue);
+
+        if (enemyTag == "flyer")
+        {
+            gameObject.GetComponent<AudioSource>().PlayOneShot(flyerDeathSFX, 0.25f);
+        } else if (enemyTag == "redBoy")
+        {
+            gameObject.GetComponent<AudioSource>().PlayOneShot(redBoyDeathSFX, 0.25f);
+        }            
     }
 
     public void BossKilled(int scoreValue)

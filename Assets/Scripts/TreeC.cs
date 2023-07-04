@@ -103,10 +103,10 @@ public class TreeC : MonoBehaviour
     private IEnumerator SpawnEnemy(int randomSpawnPoint)
     {
         yield return new WaitForSeconds(enemySpawnDelay);
-        var instScript = Instantiate(flyerPrefab, spawnPoints[randomSpawnPoint].spawnPoint.position, Quaternion.identity).GetComponent<FlyerC>();
+        Instantiate(flyerPrefab, spawnPoints[randomSpawnPoint].spawnPoint.position, Quaternion.identity).GetComponent<FlyerC>();
         int randomNum = Random.Range(0, flyerPoints.Length);
 
-        instScript.SpawningInTree(flyerPoints[randomNum].flyerPoint);
+        WaveSpawner.waveSpawner.TreeSpawnedEnemy();
     }
 
     private void ChangeAnimationState(string newState)
