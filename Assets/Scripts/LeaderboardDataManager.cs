@@ -137,7 +137,6 @@ public class LeaderboardDataManager : MonoBehaviour
 
     public IEnumerator FetchData()
     {
-        Debug.Log(leaderboardDifficulty);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url + "limit=" + entryLimit + "&version=" + version + "&difficulty=" + leaderboardDifficulty))
         {
             yield return webRequest.SendWebRequest();
@@ -158,19 +157,6 @@ public class LeaderboardDataManager : MonoBehaviour
 
                 case UnityWebRequest.Result.Success:
                     leaderboard = JsonConvert.DeserializeObject<Leaderboard>(webRequest.downloadHandler.text); 
-
-                    // for (int x = 0; x < leaderboard.data.Count; x++)
-                    // {
-                    //     for (int y = x + 1; y < leaderboard.data.Count; y++)
-                    //     {
-                    //         if (leaderboard.data[y].score > leaderboard.data[x].score)
-                    //         {
-                    //             Data tmp = leaderboard.data[x];
-                    //             leaderboard.data[x] = leaderboard.data[y];
-                    //             leaderboard.data[y] = tmp;
-                    //         }
-                    //     }
-                    // }
                     gotData = true; 
                     break;
             }
