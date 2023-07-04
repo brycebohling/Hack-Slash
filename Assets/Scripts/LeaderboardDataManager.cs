@@ -86,6 +86,11 @@ public class LeaderboardDataManager : MonoBehaviour
             return rank = 1;
         }
 
+        if (playerScore >= leaderboard.data[leaderboard.data.Count - 1].score)
+        {
+            return rank = leaderboard.data.Count;
+        }
+
         for (int i = 0; i < leaderboard.data.Count; i++)
         {   
             rank++;
@@ -132,6 +137,7 @@ public class LeaderboardDataManager : MonoBehaviour
 
     public IEnumerator FetchData()
     {
+        Debug.Log(leaderboardDifficulty);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url + "limit=" + entryLimit + "&version=" + version + "&difficulty=" + leaderboardDifficulty))
         {
             yield return webRequest.SendWebRequest();
