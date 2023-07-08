@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Dagger : MonoBehaviour
 {
     playerController PC;
     bool isRotating = false;
     float angle;
-    [SerializeField] LayerMask enemyLayer;
+    [SerializeField] LayerMask enemyLayer;  
     [SerializeField] LayerMask TouchableObjects;
     bool isTouchingObject;
     [SerializeField] int enemyLayerNum;
     private Rigidbody2D rb;
-    GameObject enemyObject;
+    [SerializeField] Vector2 coliderSize;
 
 
     void Start()
@@ -32,12 +33,12 @@ public class Dagger : MonoBehaviour
             rb.velocity = transform.right * PC.daggerSpeed;
         }  
         
-        isTouchingObject = Physics2D.OverlapBox(transform.position, new Vector2(1f, 0.5f), transform.rotation.z, TouchableObjects);
+        isTouchingObject = Physics2D.OverlapBox(transform.position, coliderSize, 0, TouchableObjects);
 
         if (isTouchingObject)
         {
-            Collider2D[] enemy = Physics2D.OverlapBoxAll(transform.position, new Vector2(1f, 0.5f), enemyLayer);
-
+            Collider2D[] enemy = Physics2D.OverlapBoxAll(transform.position, coliderSize, 0, enemyLayer);
+            
             foreach (Collider2D enemyGameobject in enemy)
             {
                 GameManager.gameManager.DamageEnemy(enemyGameobject, PC.daggerDmg, transform);
@@ -52,10 +53,10 @@ public class Dagger : MonoBehaviour
     {
         if (collision.gameObject.layer == enemyLayerNum)
         {
-            enemyObject = collision.gameObject;
+            Transform enemyObject = collision.transform;
 
             Vector2 daggerPos = new Vector2(transform.position.x, transform.position.y);
-            Vector2 collisionPos = new Vector2(enemyObject.transform.position.x, enemyObject.transform.position.y);
+            Vector2 collisionPos = new Vector2(enemyObject.position.x, enemyObject.position.y);
             Vector2 direction = collisionPos - daggerPos;
             
             angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
@@ -66,6 +67,6 @@ public class Dagger : MonoBehaviour
 
     private void OnDrawGizmos() 
     {
-        Gizmos.DrawWireCube(transform.position, new Vector2(1.0f, 0.5f));    
+        Gizmos.DrawWireCube(transform.position, coliderSize);    
     }
 }

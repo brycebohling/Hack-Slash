@@ -11,8 +11,6 @@ public class playerController : MonoBehaviour
     [SerializeField] HealthBar HB;
     [SerializeField] StaminaBarC SB;
     daggerAmmoUI daggerUIScript;
-    [SerializeField] WaveSpawner waveSpawnerScript;
-    
 
     [Header("Stats")]
     public float movementSpeed;
@@ -65,6 +63,7 @@ public class playerController : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     bool isGrounded;
     bool wasGrounded;
+    bool wasNotGround;
     [SerializeField] Vector2 groundCheckSize;
 
     [Header("Ceiling Check")]
@@ -118,7 +117,7 @@ public class playerController : MonoBehaviour
     [Header("Dagger")]
     public GameObject dagger;
     int daggerAmmo = 3;
-    [SerializeField] float daggerThrowCooldown;
+    [SerializeField] float daggerThrowTime;
     float daggerThrowCooldownTimer;
     int currentDaggerAmmo;
     float lastDaggerThrown;
@@ -175,9 +174,16 @@ public class playerController : MonoBehaviour
     [Header("Bush Teleporter")]
     [SerializeField] GameObject autoDestroyTeleporter;
 
+    
     [Header("SFX")]
+    AudioSource audioSource;
+    [SerializeField] AudioClip runSFX;
     [SerializeField] AudioClip meleeSFX;
     [SerializeField] AudioClip daggerSFX;
+    [SerializeField] AudioClip hitSFX;
+    [SerializeField] AudioClip hit1SFX;
+    [SerializeField] AudioClip jumpSFX;
+    [SerializeField] AudioClip rollSFX;
 
 
     private void Start()
@@ -187,9 +193,9 @@ public class playerController : MonoBehaviour
         bcoll = GetComponent<BoxCollider2D>();
         camC = GameObject.FindGameObjectWithTag("vcam").GetComponent<CameraC>();
         spriteRend = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         daggerUIScript = GameObject.Find("DaggerAmmo").GetComponent<daggerAmmoUI>();
-        waveSpawnerScript = GameManager.gameManager.GetComponent<WaveSpawner>();
 
         currentHealth = maxHealth;
         currentDaggerAmmo = daggerAmmo;
@@ -286,13 +292,21 @@ public class playerController : MonoBehaviour
 
         Flip();
 
-        HandleMovementAnimations();
+        HandleMovementAnim_SFX();
 
         HandleRoll();
 
         HandleDaggerThrowing();
 
         UpdateBushUI();
+
+        if (isGrounded)
+        {
+            wasGrounded = true;
+        } else 
+        {
+            wasGrounded = false;
+        }
     }
 
     // -------------------------------- Fixed Update -----------------------------
@@ -370,7 +384,7 @@ public class playerController : MonoBehaviour
             {
                 AttackAnim();
                 attacking = true;
-                gameObject.GetComponent<AudioSource>().PlayOneShot(meleeSFX);
+                audioSource.PlayOneShot(meleeSFX);
 
                 if (isRolling && !isCeiling)
                 {
@@ -489,6 +503,8 @@ public class playerController : MonoBehaviour
         bcoll.offset = new Vector2(rollOffsetX, rollOffsetY);
         rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);
     
+        audioSource.PlayOneShot(rollSFX, 1f);
+
         yield return new WaitForSeconds(rollTime);
         yield return new WaitUntil(() => !isCeiling);
         yield return null;
@@ -507,7 +523,7 @@ public class playerController : MonoBehaviour
             bcoll.offset = new Vector2(originalOffsetX, originalOffsetY);
             invicible = false;
             isRolling = false;
-            canRoll = true;
+            canRoll = true; 
         }
     }
 
@@ -551,6 +567,7 @@ public class playerController : MonoBehaviour
     {
         // Dmg Enemies 
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
+
         if (willCrit || rb.velocity.y < -4f)
         {
             willCrit = false;
@@ -602,6 +619,14 @@ public class playerController : MonoBehaviour
             if (hitChance >= dodgeChance)
             {
                 currentHealth -= dmg * (1 - dmgReduction);
+
+                int randomSound = Random.Range(0, 2);
+                if (randomSound == 0)
+                {
+                    audioSource.PlayOneShot(hitSFX, 0.3f);
+                } else {
+                    audioSource.PlayOneShot(hit1SFX, 0.3f);
+                }
                 
                 HB.SetHealth(currentHealth, maxHealth);
             
@@ -676,9 +701,9 @@ public class playerController : MonoBehaviour
 
     private void DidWaveChange()
     {
-        if (currentWave != waveSpawnerScript.waveNumber)
+        if (currentWave != WaveSpawner.waveSpawner.waveNumber)
         {
-            currentWave = waveSpawnerScript.waveNumber;
+            currentWave = WaveSpawner.waveSpawner.waveNumber;
             PlayerHeal(maxHealth * healthRegenerationPercent); 
         } 
     }
@@ -708,9 +733,9 @@ public class playerController : MonoBehaviour
             iFrameCountdown -= Time.deltaTime;
         }
 
-        if (daggerThrowCooldown > 0f)
+        if (daggerThrowCooldownTimer > 0f)
         {
-            daggerThrowCooldown -= Time.deltaTime;
+            daggerThrowCooldownTimer -= Time.deltaTime;
         }
 
         if (currentDaggerRechargingTime > 0f)
@@ -724,14 +749,6 @@ public class playerController : MonoBehaviour
         if (!isGrounded && wasGrounded)
         {
             currentNumOfJumps = numberOfJumps;
-        }
-
-        if (isGrounded)
-        {
-            wasGrounded = true;
-        } else 
-        {
-            wasGrounded = false;
         }
 
         if (!isGrounded && jumpOffJumpTimer > 0f)
@@ -843,6 +860,7 @@ public class playerController : MonoBehaviour
                 if (isRolling && !isCeiling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    audioSource.PlayOneShot(jumpSFX, 0.5f);
                     jumpOffJumpTimer = 0f;
                     waitToCheckForJumpTimer = waitToCheckForJump;
                     ChangeAnimationState(PLAYER_JUMP);
@@ -851,6 +869,7 @@ public class playerController : MonoBehaviour
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    audioSource.PlayOneShot(jumpSFX, 0.5f);
                     jumpOffJumpTimer = 0f;
                     waitToCheckForJumpTimer = waitToCheckForJump;
                 }
@@ -860,6 +879,7 @@ public class playerController : MonoBehaviour
                 if (isRolling && !isCeiling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    audioSource.PlayOneShot(jumpSFX, 0.5f);
                     currentNumOfJumps--;
                     ChangeAnimationState(PLAYER_JUMP);
                     StopCoroutine(Roll());
@@ -867,13 +887,14 @@ public class playerController : MonoBehaviour
                 } else if (!isRolling)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    audioSource.PlayOneShot(jumpSFX, 0.5f);
                     currentNumOfJumps--;
                 }
             }
         }
     }
 
-    private void HandleMovementAnimations()
+    private void HandleMovementAnim_SFX()
     {
         if (movementX == 0 && rb.velocity.y == 0)
         {
@@ -892,7 +913,7 @@ public class playerController : MonoBehaviour
         } else if (movementX != 0)
         {
             ChangeAnimationState(PLAYER_RUN);
-        } 
+        }
     }
 
     private void HandleDaggerThrowing()
@@ -907,7 +928,7 @@ public class playerController : MonoBehaviour
                 break;
             }
         }
-
+        
         if (pressedThrowDagger && daggerThrowCooldownTimer <= 0 && currentDaggerAmmo > 0)
         {
             if (isFacingRight) 
@@ -919,12 +940,12 @@ public class playerController : MonoBehaviour
                 Instantiate(dagger, daggerSpawnPoint.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
             }
 
-            daggerThrowCooldownTimer = daggerThrowCooldown;
+            daggerThrowCooldownTimer = daggerThrowTime;
             currentDaggerAmmo -= 1;
             lastDaggerThrown = Time.time;
             daggerUIScript.ChangeDaggerAmmoUI(currentDaggerAmmo);
 
-            gameObject.GetComponent<AudioSource>().PlayOneShot(daggerSFX, 0.5f);
+            audioSource.PlayOneShot(daggerSFX, 0.5f);
         }
     }
 

@@ -66,9 +66,14 @@ public class ArcherC : MonoBehaviour
     [SerializeField] GameObject deathParticals;
     int scoreValue = 100;
 
+    [Header("SFX")]
+    AudioSource audioSource;
+    [SerializeField] AudioClip releaseArrowSFX;
+
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentHealth = health;
@@ -200,9 +205,11 @@ public class ArcherC : MonoBehaviour
         if (isFacingRight)
         {
             Instantiate(arrow, attckPoint.position, Quaternion.identity);
+            audioSource.PlayOneShot(releaseArrowSFX, 0.25f);
         } else
         {
             Instantiate(arrow, attckPoint.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+            audioSource.PlayOneShot(releaseArrowSFX, 0.25f);
         }
         
     }

@@ -25,6 +25,7 @@ public class UpgradeC : MonoBehaviour
     int randomCard1;
     int randomCard2;
     int randomCard3;
+    bool isCardSelected;
 
     [Header("Player Stat Increase Amounts")]
     [SerializeField] float movementSpeedIncAmount;
@@ -59,10 +60,17 @@ public class UpgradeC : MonoBehaviour
     [SerializeField] float maxMeleeSpeed;
     [SerializeField] float maxH_Regen;
 
+    [Header("SFX")]
+    AudioSource audioSource;
+    [SerializeField] AudioClip cardsAppearSFX;
+    [SerializeField] AudioClip cardHoverSFX;
+    [SerializeField] AudioClip cardSelectedSFX;
+
 
     private void Start() 
     {
         PC = GameObject.FindGameObjectWithTag("Player").GetComponent<playerController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public IEnumerator LevelUp()
@@ -114,17 +122,22 @@ public class UpgradeC : MonoBehaviour
         btn1.interactable = false;
         anim1.Play(CardDrop);
 
+        audioSource.PlayOneShot(cardsAppearSFX, 1f);
+
         yield return new WaitForSecondsRealtime(cardDropOffest);
         
         powerUps[randomCard2].SetActive(true);
         btn2.interactable = false;
         anim2.Play(CardDrop);
 
+        audioSource.PlayOneShot(cardsAppearSFX, 1f);
+
         yield return new WaitForSecondsRealtime(cardDropOffest);
 
         powerUps[randomCard3].SetActive(true);
         btn3.interactable = false;
         anim3.Play(CardDrop);
+        audioSource.PlayOneShot(cardsAppearSFX, 1f);
 
         yield return new WaitForSecondsRealtime(cardDropOffest);
 
@@ -135,16 +148,22 @@ public class UpgradeC : MonoBehaviour
 
     private IEnumerator CardSelected(GameObject caller, bool shouldRemove)
     {
+        isCardSelected = true;
+
+        audioSource.PlayOneShot(cardSelectedSFX, 1f);
+
         btn1.interactable = false;
         btn2.interactable = false;
         btn3.interactable = false;
-
+    
         if (caller == powerUps[randomCard1])
         {
             anim1.Play(SelectedAnim);
             yield return new WaitForSecondsRealtime(cardUpOffset);
+
             anim2.Play(SelectedAnim);
             yield return new WaitForSecondsRealtime(cardUpOffset);
+
             anim3.Play(SelectedAnim);
             yield return new WaitForSecondsRealtime(cardUpOffset);
 
@@ -171,7 +190,6 @@ public class UpgradeC : MonoBehaviour
             yield return new WaitForSecondsRealtime(cardUpOffset);
 
             yield return new WaitUntil(() => !IsAnimationPlaying(anim1, SelectedAnim));
-
         }
 
         powerUps[randomCard1].SetActive(false);
@@ -183,343 +201,401 @@ public class UpgradeC : MonoBehaviour
             powerUps.Remove(caller);
         }
         
-        GameManager.gameManager.levelingUp = false;
+        isCardSelected = false;
 
+        GameManager.gameManager.levelingUp = false;
         GameManager.gameManager.PauseResume();
+    }
+
+    public void canPlayHoverSFX()
+    {
+        if (!isCardSelected)
+        {
+            audioSource.PlayOneShot(cardHoverSFX, 0.15f);
+        }
     }
 
     public void IncMovementSpeed(GameObject callerObject)
     {
-        PC.movementSpeed += movementSpeedIncAmount;
+        if (!isCardSelected)
+        {
+            PC.movementSpeed += movementSpeedIncAmount;
 
-        if (PC.movementSpeed >= maxMovementSpeed)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "MovementSpeed") 
+            if (PC.movementSpeed >= maxMovementSpeed)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Movement Speed: " + PC.movementSpeed;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "MovementSpeed") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Movement Speed: " + PC.movementSpeed;
+                    break;
+                }
             }
         }
     }
 
     public void IncJumpForce(GameObject callerObject)
     {
-        PC.jumpForce += jumpForceIncAmount;
+        if (!isCardSelected)
+        {
+            PC.jumpForce += jumpForceIncAmount;
 
-        if (PC.jumpForce >= maxJumpForce)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "JumpForce") 
+            if (PC.jumpForce >= maxJumpForce)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Jump Force: " + PC.jumpForce;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "JumpForce") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Jump Force: " + PC.jumpForce;
+                    break;
+                }
             }
         }
+        
     }
 
     public void IncNumberOfJumps(GameObject callerObject)
     {
-        PC.numberOfJumps += numberOfJumpsIncAmount;
+        if (!isCardSelected)
+        {
+            PC.numberOfJumps += numberOfJumpsIncAmount;
 
-        if (PC.numberOfJumps >= maxNumberOfJumps)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "#OfJumps") 
+            if (PC.numberOfJumps >= maxNumberOfJumps)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Number of Jumps: " + PC.numberOfJumps;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "#OfJumps") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Number of Jumps: " + PC.numberOfJumps;
+                    break;
+                }
             }
         }
+        
     }
     
     public void IncMaxHealth(GameObject callerObject)
     {
-        PC.maxHealth += maxHealthIncAmount;
-
-        HB.SetHealth(PC.currentHealth, PC.maxHealth);
-
-        PC.PlayerHeal(maxHealthIncAmount);
-
-        if (PC.maxHealth >= maxMaxHealth)
+        if (!isCardSelected)
         {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
+            PC.maxHealth += maxHealthIncAmount;
 
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "MaxHealth") 
+            HB.SetHealth(PC.currentHealth, PC.maxHealth);
+
+            PC.PlayerHeal(maxHealthIncAmount);
+
+            if (PC.maxHealth >= maxMaxHealth)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Max Health: " + PC.maxHealth;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "MaxHealth") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Max Health: " + PC.maxHealth;
+                    break;
+                }
             }
         }
     }
 
     public void IncMaxStamina(GameObject callerObject)
     {
-        PC.maxStamina += maxStaminaIncAmount;
-
-        SB.SetStamina(PC.currentStamina);
-
-        if (PC.maxStamina >= maxMaxStamina)
+        if (!isCardSelected)
         {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
+            PC.maxStamina += maxStaminaIncAmount;
 
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "MaxStamina") 
+            SB.SetStamina(PC.currentStamina);
+
+            if (PC.maxStamina >= maxMaxStamina)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Max Stamina: " + PC.maxStamina;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "MaxStamina") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Max Stamina: " + PC.maxStamina;
+                    break;
+                }
             }
         }
     }
     
     public void IncMeleeDmg(GameObject callerObject)
     {
-        PC.meleeDmg += meleeDmgIncAmount;
+        if (!isCardSelected)
+        {
+            PC.meleeDmg += meleeDmgIncAmount;
 
-        if (PC.meleeDmg >= maxMeleeDmg)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "MeleeDamage") 
+            if (PC.meleeDmg >= maxMeleeDmg)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Melee Damage: " + PC.meleeDmg;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "MeleeDamage") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Melee Damage: " + PC.meleeDmg;
+                    break;
+                }
             }
         }
+        
     }
 
     public void IncDaggerDmg(GameObject callerObject)
     {
-        PC.daggerDmg += daggerDmgIncAmount;
+        if (!isCardSelected)
+        {
+            PC.daggerDmg += daggerDmgIncAmount;
 
-        if (PC.daggerDmg >= maxDaggerDmg)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "DaggerDamage") 
+            if (PC.daggerDmg >= maxDaggerDmg)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dagger Damage: " + PC.daggerDmg;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "DaggerDamage") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dagger Damage: " + PC.daggerDmg;
+                    break;
+                }
             }
         }
     }
     
     public void IncDaggerSpeed(GameObject callerObject)
     {
-        PC.daggerSpeed += daggerSpeedIncAmount;
+        if (!isCardSelected)
+        {
+            PC.daggerSpeed += daggerSpeedIncAmount;
 
-        if (PC.daggerSpeed >= maxDaggerSpeed)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "DaggerSpeed") 
+            if (PC.daggerSpeed >= maxDaggerSpeed)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dagger Speed: " + PC.daggerSpeed;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "DaggerSpeed") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dagger Speed: " + PC.daggerSpeed;
+                    break;
+                }
             }
         }
+        
     }
 
     public void IncHealthDropChance(GameObject callerObject)
     {
-        PC.healthDropChance += healthDropChanceIncAmount;
+        if (!isCardSelected)
+        {
+            PC.healthDropChance += healthDropChanceIncAmount;
 
-        if (PC.healthDropChance >= maxHealthDropChance)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "HealthDropChance") 
+            if (PC.healthDropChance >= maxHealthDropChance)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Health Drop Chance: " + PC.healthDropChance * 100 + "%";
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "HealthDropChance") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Health Drop Chance: " + PC.healthDropChance * 100 + "%";
+                    break;
+                }
             }
         }
     }
 
     public void IncDmgReduction(GameObject callerObject)
     {
-        PC.dmgReduction += dmgReductionIncAmount;
+        if (!isCardSelected)
+        {
+            PC.dmgReduction += dmgReductionIncAmount;
 
-        if (PC.dmgReduction >= maxDmgReduction)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "DamageReduction") 
+            if (PC.dmgReduction >= maxDmgReduction)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Damage Reduction: " + PC.dmgReduction * 100 + "%";
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "DamageReduction") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Damage Reduction: " + PC.dmgReduction * 100 + "%";
+                    break;
+                }
             }
         }
     }
 
     public void IncCritDmg(GameObject callerObject)
     {
-        PC.critDmg += critDmgIncAmount;
+        if (!isCardSelected)
+        {
+            PC.critDmg += critDmgIncAmount;
 
-        if (PC.critDmg >= maxCritDmg)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "CritDamage") 
+            if (PC.critDmg >= maxCritDmg)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Crit Damage: " + PC.critDmg * 100 + "%";
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "CritDamage") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Crit Damage: " + PC.critDmg * 100 + "%";
+                    break;
+                }
             }
         }
     }
     
     public void IncDodgeChance(GameObject callerObject)
     {
-        PC.dodgeChance += dodgeChanceIncAmount;
+        if (!isCardSelected)
+        {
+            PC.dodgeChance += dodgeChanceIncAmount;
 
-        if (PC.dodgeChance >= maxDodgeChance)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "DodgeChance") 
+            if (PC.dodgeChance >= maxDodgeChance)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dodge Chance: " + PC.dodgeChance * 100 + "%";
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
             }
-        }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "DodgeChance") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Dodge Chance: " + PC.dodgeChance * 100 + "%";
+                    break;
+                }
+            }
+        }   
     }
 
     public void IncRollSpeed(GameObject callerObject)
     {
-        PC.rollSpeed += rollSpeedIncAmount;
+        if (!isCardSelected)
+        {
+            PC.rollSpeed += rollSpeedIncAmount;
 
-        if (PC.rollSpeed >= maxRollSpeed)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "RollSpeed") 
+            if (PC.rollSpeed >= maxRollSpeed)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Roll Speed: " + PC.rollSpeed;
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "RollSpeed") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Roll Speed: " + PC.rollSpeed;
+                    break;
+                }
             }
         }
     }
 
     public void IncMeleeSpeed(GameObject callerObject)
     {
-        PC.meleeSpeed += meleeSpeedIncAmount;
+        if (!isCardSelected)
+        {
+            PC.meleeSpeed += meleeSpeedIncAmount;
 
-        if (PC.meleeSpeed >= maxMeleeSpeed)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "MeleeSpeed") 
+            if (PC.meleeSpeed >= maxMeleeSpeed)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "MeleeSpeed: " + PC.meleeSpeed * 100 + "%";
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "MeleeSpeed") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "MeleeSpeed: " + PC.meleeSpeed * 100 + "%";
+                    break;
+                }
             }
         }
     }
 
     public void IncHealthRegeneration(GameObject callerObject)
     {
-        PC.healthRegenerationPercent += h_RegenIncAmount;
+        if (!isCardSelected)
+        {
+            PC.healthRegenerationPercent += h_RegenIncAmount;
 
-        if (PC.healthRegenerationPercent >= maxH_Regen)
-        {
-            StartCoroutine(CardSelected(callerObject, true));
-        } else
-        {
-            StartCoroutine(CardSelected(callerObject, false));
-        }
-
-        for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
-        {
-            if (GameManager.gameManager.statsText[i].name == "HealthRegeneration") 
+            if (PC.healthRegenerationPercent >= maxH_Regen)
             {
-                GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Health Regeneration: " + PC.healthRegenerationPercent * 100 + "%";
-                break;
+                StartCoroutine(CardSelected(callerObject, true));
+            } else
+            {
+                StartCoroutine(CardSelected(callerObject, false));
+            }
+
+            for(int i = 0; i < GameManager.gameManager.statsText.Count; i++)
+            {
+                if (GameManager.gameManager.statsText[i].name == "HealthRegeneration") 
+                {
+                    GameManager.gameManager.statsText[i].GetComponent<TMP_Text>().text = "Health Regeneration: " + PC.healthRegenerationPercent * 100 + "%";
+                    break;
+                }
             }
         }
     }

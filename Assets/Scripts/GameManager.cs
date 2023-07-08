@@ -59,8 +59,13 @@ public class GameManager : MonoBehaviour
     int ranking;
 
     [Header("SFX")]
+    AudioSource audioSource;
+    [SerializeField] AudioClip hitEnemySFX;
     [SerializeField] AudioClip flyerDeathSFX;
     [SerializeField] AudioClip redBoyDeathSFX;
+    [SerializeField] AudioClip skeletonDeathSFX;
+    [SerializeField] AudioClip skeletonDeath1SFX;
+    
 
 
 
@@ -77,6 +82,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<playerController>();
         playerRenderer = player.GetComponent<Renderer>();
@@ -91,6 +97,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartCoroutine(upgradesScript.LevelUp());
+        }
+
+
         playerCurrentHealth = playerScript.currentHealth;
         playerMaxHealth = playerScript.maxHealth;
         playerPos = playerScript.transform.position;
@@ -209,6 +221,8 @@ public class GameManager : MonoBehaviour
 
     public void DamageEnemy(Collider2D enemy, float dmg, Transform attacker)
     {
+        audioSource.PlayOneShot(hitEnemySFX, 0.75f);
+
         if (enemy.CompareTag("redBoy"))
         {
             enemy.gameObject.GetComponent<RedBoyC>().DmgRedBoy(dmg, attacker);
@@ -229,6 +243,9 @@ public class GameManager : MonoBehaviour
         } else if (enemy.CompareTag("billy"))
         {
             enemy.gameObject.GetComponent<BillyC>().DmgBilly(dmg, attacker);
+        } else
+        {
+            Debug.Log("Tag not found");
         }
     }
 
@@ -249,11 +266,28 @@ public class GameManager : MonoBehaviour
 
         if (enemyTag == "flyer")
         {
-            gameObject.GetComponent<AudioSource>().PlayOneShot(flyerDeathSFX, 0.25f);
+            audioSource.PlayOneShot(flyerDeathSFX, 0.25f);
         } else if (enemyTag == "redBoy")
         {
-            gameObject.GetComponent<AudioSource>().PlayOneShot(redBoyDeathSFX, 0.25f);
-        }            
+            audioSource.PlayOneShot(redBoyDeathSFX, 0.25f);
+        } else if (enemyTag == "archer")
+        {
+            int randomSound = Random.Range(0, 2);
+            if (randomSound == 0)
+            {
+                audioSource.PlayOneShot(skeletonDeathSFX, 1f);
+            } else
+            {
+                audioSource.PlayOneShot(skeletonDeath1SFX, 1f);
+            }
+            
+        } else if (enemyTag == "stan")
+        {
+            // audioSource.PlayOneShot(skeletonDeathSFX, 1f);
+        }else if (enemyTag == "billy")
+        {
+            // audioSource.PlayOneShot(skeletonDeathSFX, 1f);
+        }         
     }
 
     public void BossKilled(int scoreValue)

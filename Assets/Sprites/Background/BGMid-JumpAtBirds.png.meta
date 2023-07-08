@@ -1,0 +1,778 @@
+fileFormatVersion: 2
+guid: 118d9ea6a942b4f5ba34f4c65dd63937
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 14504
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08938a13346464b228b6eb4f17611a4a
+      internalID: -473032368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 13986
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79af911c1c3d145c1a42fe47a72b4b81
+      internalID: -480203107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 13468
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d82d7322ffc684cddbefc5de628db7a9
+      internalID: -907530463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12950
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9efa8051631b43a2b8bf8f97a95694e
+      internalID: -1460670299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12432
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8637787dda71549d2ad1fc1b5084005e
+      internalID: -1906187742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 11914
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 381801bc3eb17467cb44231c146b46c0
+      internalID: 1741860841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 11396
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26fc8f1491daf45f3b050cc75696d1cd
+      internalID: 1832337217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10878
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9142f977f3284d12a49778fdd1a8a2d
+      internalID: -929927494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10360
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d26ce445b94f438485d9f87dfb8b63b
+      internalID: 1436394198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 9842
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e670b6dbf5294939aadeb3a5ba5deac
+      internalID: 371889121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 9324
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00cac4ded781b45ec8400202c6f7b76b
+      internalID: 572104637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8806
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d689bc444ab2e458a8fae0997b8ae16b
+      internalID: -907594800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8288
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9856b02dad5a6457b9b47fecbe1ca44f
+      internalID: 1992197491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7770
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e48a780cee16473aa7cb2a1d6288c84
+      internalID: 1255691603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7252
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92807fbba9b5e451a812efc07e6d7be6
+      internalID: -634861742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6734
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f23d1615606a140ceb5df8e1f2aab278
+      internalID: 912467388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6216
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65ee984799ce447ddaf868347bbc3b95
+      internalID: 101189641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5698
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3291a335cfab94881b1a7763bd8375aa
+      internalID: 213697325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5180
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95e7d92640e404c04b2b34a8150dc070
+      internalID: -837732044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4662
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5bc722e7d0ce44359a61a789a5668af
+      internalID: -815871356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4144
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eb5db74fdedd45c7a6c926fb826efec
+      internalID: -1048572411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3626
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c092a342706d24a508a5fea9bdb7d442
+      internalID: -1244881144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3108
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a2aad18d52064550bd4646bf7578638
+      internalID: -1033209488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_23
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2590
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5542a5e40a684bb39bae5878480cb04
+      internalID: -923622047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2072
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbcdd4132009a4592b04881f1662f881
+      internalID: 1515539426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1554
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7a9554240e7b43328c963045fb01cab
+      internalID: 702302602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1036
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31e29d80d97344dc96cacaed85be2e8
+      internalID: 268446360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 518
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 263056a43cbe94115b53f5b7e47d6b01
+      internalID: -1387529762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BGMid-JumpAtBirds_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 700
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70daac65cb08a47b5b55c8f089188b63
+      internalID: -1771127506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      BGMid-JumpAtBirds_0: -473032368
+      BGMid-JumpAtBirds_1: -480203107
+      BGMid-JumpAtBirds_10: 572104637
+      BGMid-JumpAtBirds_11: -907594800
+      BGMid-JumpAtBirds_12: 1992197491
+      BGMid-JumpAtBirds_13: 1255691603
+      BGMid-JumpAtBirds_14: -634861742
+      BGMid-JumpAtBirds_15: 912467388
+      BGMid-JumpAtBirds_16: 101189641
+      BGMid-JumpAtBirds_17: 213697325
+      BGMid-JumpAtBirds_18: -837732044
+      BGMid-JumpAtBirds_19: -815871356
+      BGMid-JumpAtBirds_2: -907530463
+      BGMid-JumpAtBirds_20: -1048572411
+      BGMid-JumpAtBirds_21: -1244881144
+      BGMid-JumpAtBirds_22: -1033209488
+      BGMid-JumpAtBirds_23: -923622047
+      BGMid-JumpAtBirds_24: 1515539426
+      BGMid-JumpAtBirds_25: 702302602
+      BGMid-JumpAtBirds_26: 268446360
+      BGMid-JumpAtBirds_27: -1387529762
+      BGMid-JumpAtBirds_28: -1771127506
+      BGMid-JumpAtBirds_3: -1460670299
+      BGMid-JumpAtBirds_4: -1906187742
+      BGMid-JumpAtBirds_5: 1741860841
+      BGMid-JumpAtBirds_6: 1832337217
+      BGMid-JumpAtBirds_7: -929927494
+      BGMid-JumpAtBirds_8: 1436394198
+      BGMid-JumpAtBirds_9: 371889121
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

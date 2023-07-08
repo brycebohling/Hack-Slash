@@ -108,6 +108,6 @@ public class UIC : MonoBehaviour
 
         anim.Play("selected");
         
-        tabsParent.GetComponent<AudioSource>().PlayOneShot(tabSelectedSFX);
+        tabsParent.GetComponent<AudioSource>().PlayOneShot(tabSelectedSFX, 1f);
     }
 }
