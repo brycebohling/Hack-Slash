@@ -264,6 +264,7 @@ public class BillyC : MonoBehaviour
             if (!IsAnimationPlaying(anim, ENEMY_HEALING))
             {
                 currentHealth += healAmount;
+
                 GameObject textPrefab = Instantiate(healingText, transform.position, Quaternion.identity);
 
                 textPrefab.GetComponentInChildren<TextMeshPro>().text = Mathf.RoundToInt(healAmount).ToString();

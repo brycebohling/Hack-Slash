@@ -405,74 +405,6 @@ public class playerController : MonoBehaviour
         }
     }
 
-    void BushJumpCheck()
-    {
-        bool pressedBushJump = false;
-
-        foreach(KeyCode keyBind in jumpInBushBinds)
-        {
-            if (Input.GetKeyDown(keyBind))
-            {
-                pressedBushJump = true;
-                break;
-            }
-        }
-
-        if (pressedBushJump && bushInRange.Length > 0)
-        {
-            float closestBush = 100000;
-
-            foreach (Collider2D bush in bushInRange)
-            {
-                float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
-
-                if (bushDistance < closestBush)
-                {
-                    closestBush = bushDistance;
-                    
-                    closestBushTransform = bush.gameObject.transform;
-                    bushScript = closestBushTransform.GetComponent<bushC>();
-                }
-            }
-
-            if (closestBush != 100000)
-            {
-                jumpingIntoBush = true;
-                invicible = true;
-                JumpBush(closestBushTransform);
-            }
-        }
-    }
-
-    void JumpBush(Transform bush) 
-    {
-        StopAllCoroutines();
-        canRoll = true;
-        bushStartPoint = transform.position;
-        
-        if (jumpingIntoBush)
-        {
-            originalPos = transform.position;
-            bushEndPoint = bush.position;
-            bushControlPoint = bushStartPoint + (bushEndPoint - bushStartPoint)/2 + Vector3.up * bushJumpHeight;
-
-        } else if (jumpingOutBush)
-        {
-            if (originalPos.x - bush.position.x > 0)
-            {
-                bushEndPoint = new Vector3(bush.position.x + 3f, bush.position.y + 1f, bush.position.z);
-            } else
-            {
-                bushEndPoint = new Vector3(bush.position.x - 3f, bush.position.y + 1f, bush.position.z);
-            }
-            
-            bushControlPoint = bushStartPoint +(bushEndPoint -bushStartPoint)/2 + Vector3.up * 5.0f;
-
-            spriteRend.enabled = true;
-        }
-        
-    }
-
     private void Flip()
     {
         if (isFacingRight && movementX < 0f || !isFacingRight && movementX > 0f)
@@ -766,6 +698,77 @@ public class playerController : MonoBehaviour
         }
     }
 
+    void BushJumpCheck()
+    {
+        bool pressedBushJump = false;
+
+        foreach(KeyCode keyBind in jumpInBushBinds)
+        {
+            if (Input.GetKeyDown(keyBind))
+            {
+                pressedBushJump = true;
+                break;
+            }
+        }
+
+        if (pressedBushJump && bushInRange.Length > 0)
+        {
+            float closestBush = 100000;
+
+            foreach (Collider2D bush in bushInRange)
+            {
+                float bushDistance = Vector3.Distance(transform.position, bush.gameObject.transform.position);
+
+                if (bushDistance < closestBush)
+                {
+                    closestBush = bushDistance;
+                    
+                    closestBushTransform = bush.gameObject.transform;
+                    bushScript = closestBushTransform.GetComponent<bushC>();
+                }
+            }
+
+            if (closestBush != 100000)
+            {
+                if (!jumpingIntoBush && !jumpingOutBush)
+                {
+                    jumpingIntoBush = true;
+                    invicible = true;
+                    JumpBush(closestBushTransform);
+                }
+            }
+        }
+    }
+
+    void JumpBush(Transform bush) 
+    {
+        StopAllCoroutines();
+        canRoll = true;
+        bushStartPoint = transform.position;
+        
+        if (jumpingIntoBush)
+        {
+            originalPos = transform.position;
+            bushEndPoint = bush.position;
+            bushControlPoint = bushStartPoint + (bushEndPoint - bushStartPoint)/2 + Vector3.up * bushJumpHeight;
+
+        } else if (jumpingOutBush)
+        {
+            if (originalPos.x - bush.position.x > 0)
+            {
+                bushEndPoint = new Vector3(bush.position.x + 3f, bush.position.y + 1f, bush.position.z);
+            } else
+            {
+                bushEndPoint = new Vector3(bush.position.x - 3f, bush.position.y + 1f, bush.position.z);
+            }
+            
+            bushControlPoint = bushStartPoint +(bushEndPoint -bushStartPoint)/2 + Vector3.up * 5.0f;
+
+            spriteRend.enabled = true;
+        }
+        
+    }
+
     private void JumpIntoBush()
     {
         daggerUIObejct.SetActive(false);
@@ -786,7 +789,6 @@ public class playerController : MonoBehaviour
         
         } else
         {
-
             if (!didBushShake)
             {
                 bushScript.BushShake();
@@ -794,7 +796,18 @@ public class playerController : MonoBehaviour
                 PlayerHeal(bushHealthAmount);
             }
 
-            if (Input.GetKeyDown(KeyCode.E) || timeInBush > bushTime)
+            bool pressedBushJump = false;
+
+            foreach(KeyCode keyBind in jumpInBushBinds)
+            {
+                if (Input.GetKeyDown(keyBind))
+                {
+                    pressedBushJump = true;
+                    break;
+                }
+            }
+
+            if (pressedBushJump || timeInBush > bushTime)
             {
                 bushLerp = 0f;
                 timeInBush = 0f;

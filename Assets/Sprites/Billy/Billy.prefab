@@ -189,7 +189,7 @@ MonoBehaviour:
     m_Bits: 256
   maxHealth: 100
   healAmount: 25
-  timeBetweenHeal: 4
+  timeBetweenHeal: 2
   healingText: {fileID: 7124021084714518017, guid: 3440ada6cfc064e038f8977943b9809e, type: 3}
   dmgTime: 0.1
   deathParticals: {fileID: 901058660515239618, guid: 28666f11eb9cb40c89a796406897a1b2, type: 3}
