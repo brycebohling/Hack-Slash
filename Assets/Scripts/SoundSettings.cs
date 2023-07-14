@@ -15,7 +15,7 @@ public class SoundSettings : MonoBehaviour
         SetVolume(PlayerPrefs.GetFloat("SavedMasterVolume", 100));
     }
 
-    public void SetVolume(float _value)
+    private void SetVolume(float _value)
     {
         if (_value < 1)
         {
@@ -33,7 +33,7 @@ public class SoundSettings : MonoBehaviour
         SetVolume(soundSlider.value);
     }
 
-    public void RefreshSlider(float _value)
+    private void RefreshSlider(float _value)
     {
         soundSlider.value = _value;
     }
