@@ -97,12 +97,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            StartCoroutine(upgradesScript.LevelUp());
-        }
-
-
         playerCurrentHealth = playerScript.currentHealth;
         playerMaxHealth = playerScript.maxHealth;
         playerPos = playerScript.transform.position;

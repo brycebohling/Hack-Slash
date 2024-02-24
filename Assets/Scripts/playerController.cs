@@ -12,17 +12,6 @@ public class playerController : MonoBehaviour
     [SerializeField] StaminaBarC SB;
     daggerAmmoUI daggerUIScript;
 
-    // States
-    private enum State {
-        idle,
-        walking,
-        running,
-        rolling,
-        jumping,
-    }
-
-    State currentState;
-
     [Header("Stats")]
     public float movementSpeed;
     public float jumpForce;
