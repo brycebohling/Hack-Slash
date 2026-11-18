@@ -9,6 +9,8 @@ public class UIC : MonoBehaviour
     [SerializeField] AudioClip tabHoverSFX;
     [SerializeField] GameObject[] tabs;
     [SerializeField] Animator[] tabBtnsAnims;
+    [SerializeField] GameObject title;
+    [SerializeField] GameObject leaderboardTab;
     List<bool> tabBtnsSelection = new List<bool>();
 
     private void Start() 
@@ -50,6 +52,12 @@ public class UIC : MonoBehaviour
             {
                 tabs[i].SetActive(true);
             }
+        }
+
+        // The big title sits on top of the leaderboard, so hide it while that tab is open.
+        if (title != null)
+        {
+            title.SetActive(selectedTab != leaderboardTab);
         }
     }
 

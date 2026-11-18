@@ -37,6 +37,7 @@ public class WaveSpawner : MonoBehaviour
     public int enemiesSpawned;
     public int killedEnemies;
     int enemiesLeft;
+    bool showingEnemiesLeft;
     bool spawnNextWave;
     [SerializeField] int bossSpawnWave;
     [SerializeField] GameObject toBossTeleporter;
@@ -101,10 +102,18 @@ public class WaveSpawner : MonoBehaviour
         if (spawnNextWave)
         {
             enemiesLeftText.text = "Spawning...";
+            showingEnemiesLeft = false;
         } else
         {
-            enemiesLeft = enemiesSpawned - killedEnemies;
-            enemiesLeftText.text = "Enemies Left: " + enemiesLeft.ToString();
+            int newEnemiesLeft = enemiesSpawned - killedEnemies;
+
+            // Only rebuild the string when the count changes (or we just switched back from "Spawning...").
+            if (newEnemiesLeft != enemiesLeft || !showingEnemiesLeft)
+            {
+                enemiesLeftText.text = "Enemies Left: " + newEnemiesLeft.ToString();
+                showingEnemiesLeft = true;
+            }
+            enemiesLeft = newEnemiesLeft;
 
             if (enemiesLeft == 0)
             {

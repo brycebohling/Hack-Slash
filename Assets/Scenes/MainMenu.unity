@@ -1454,6 +1454,8 @@ MonoBehaviour:
   - {fileID: 1115468972}
   - {fileID: 912136106}
   - {fileID: 1416214656}
+  title: {fileID: 24114487}
+  leaderboardTab: {fileID: 1146367708}
 --- !u!114 &281917493
 MonoBehaviour:
   m_ObjectHideFlags: 0
