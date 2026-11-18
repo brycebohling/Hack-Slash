@@ -235,7 +235,7 @@ public class FlyerC : MonoBehaviour
     {
         yield return new WaitForSeconds(knockbackTime);
         beingKnockedback = false;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 
     private void Died()

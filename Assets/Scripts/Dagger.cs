@@ -20,7 +20,7 @@ public class Dagger : MonoBehaviour
     {
         PC = GameObject.FindWithTag("Player").GetComponent<playerController>();
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * PC.daggerSpeed;
+        rb.linearVelocity = transform.right * PC.daggerSpeed;
     }
 
     void Update()
@@ -30,7 +30,7 @@ public class Dagger : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             transform.rotation = rotation;
 
-            rb.velocity = transform.right * PC.daggerSpeed;
+            rb.linearVelocity = transform.right * PC.daggerSpeed;
         }  
         
         isTouchingObject = Physics2D.OverlapBox(transform.position, coliderSize, 0, TouchableObjects);

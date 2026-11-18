@@ -36,11 +36,11 @@ public class TwigC : MonoBehaviour
         if (shootRight)
         {
             randomRotationY = Random.Range(-2, 2);
-            rb.velocity = new Vector2(speed, randomRotationY).normalized * speed;
+            rb.linearVelocity = new Vector2(speed, randomRotationY).normalized * speed;
         } else
         {
             randomRotationY = Random.Range(-2, 2);
-            rb.velocity = new Vector2(-speed, randomRotationY).normalized * speed;
+            rb.linearVelocity = new Vector2(-speed, randomRotationY).normalized * speed;
         }
     }
 }

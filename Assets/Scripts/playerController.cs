@@ -320,10 +320,10 @@ public class playerController : MonoBehaviour
 
         if (!isGrounded && wasRolling)
         {
-            rb.velocity = new Vector2(movementX * rollSpeed, rb.velocity.y);   
+            rb.linearVelocity = new Vector2(movementX * rollSpeed, rb.linearVelocity.y);   
         } else
         {
-            rb.velocity = new Vector2(movementX * movementSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(movementX * movementSpeed, rb.linearVelocity.y);
         }
         
     }
@@ -394,10 +394,10 @@ public class playerController : MonoBehaviour
 
                 if (isGrounded)
                 {
-                    rb.velocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.velocity.y);
+                    rb.linearVelocity = new Vector2(transform.localScale.x * attackMovementSpeed, rb.linearVelocity.y);
                 } else
                 {
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 }
 
                 return;
@@ -433,7 +433,7 @@ public class playerController : MonoBehaviour
         originalOffsetY = bcoll.offset.y;
         bcoll.size = new Vector2(rollWidth, rollHight);
         bcoll.offset = new Vector2(rollOffsetX, rollOffsetY);
-        rb.velocity = new Vector2(transform.localScale.x * rollSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(transform.localScale.x * rollSpeed, rb.linearVelocity.y);
     
         audioSource.PlayOneShot(rollSFX, 1f);
 
@@ -486,7 +486,7 @@ public class playerController : MonoBehaviour
 
     public void WillPlayerCrit()
     {
-        if (rb.velocity.y < -4f)
+        if (rb.linearVelocity.y < -4f)
         {
             willCrit = true;
         } else
@@ -500,7 +500,7 @@ public class playerController : MonoBehaviour
         // Dmg Enemies 
         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
 
-        if (willCrit || rb.velocity.y < -4f)
+        if (willCrit || rb.linearVelocity.y < -4f)
         {
             willCrit = false;
 
@@ -626,7 +626,7 @@ public class playerController : MonoBehaviour
     private void Knockback(Transform attacker)
     {
         Vector2 hitDir = (transform.position - attacker.position).normalized;
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         rb.AddForce(hitDir * knockbackPower, ForceMode2D.Impulse);
         attacking = false;        
     }
@@ -872,7 +872,7 @@ public class playerController : MonoBehaviour
             {   
                 if (isRolling && !isCeiling)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                     audioSource.PlayOneShot(jumpSFX, 0.5f);
                     jumpOffJumpTimer = 0f;
                     waitToCheckForJumpTimer = waitToCheckForJump;
@@ -881,7 +881,7 @@ public class playerController : MonoBehaviour
                     StopRoll();
                 } else if (!isRolling)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                     audioSource.PlayOneShot(jumpSFX, 0.5f);
                     jumpOffJumpTimer = 0f;
                     waitToCheckForJumpTimer = waitToCheckForJump;
@@ -891,7 +891,7 @@ public class playerController : MonoBehaviour
             {
                 if (isRolling && !isCeiling)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                     audioSource.PlayOneShot(jumpSFX, 0.5f);
                     currentNumOfJumps--;
                     ChangeAnimationState(PLAYER_JUMP);
@@ -899,7 +899,7 @@ public class playerController : MonoBehaviour
                     StopRoll();
                 } else if (!isRolling)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                     audioSource.PlayOneShot(jumpSFX, 0.5f);
                     currentNumOfJumps--;
                 }
@@ -909,13 +909,13 @@ public class playerController : MonoBehaviour
 
     private void HandleMovementAnim_SFX()
     {
-        if (movementX == 0 && rb.velocity.y == 0)
+        if (movementX == 0 && rb.linearVelocity.y == 0)
         {
             ChangeAnimationState(PLAYER_IDLE);
 
-        } else if (rb.velocity.y < -0.01f || rb.velocity.y > 0.01f) 
+        } else if (rb.linearVelocity.y < -0.01f || rb.linearVelocity.y > 0.01f) 
         {
-            if (rb.velocity.y > 0) 
+            if (rb.linearVelocity.y > 0) 
             {
                 ChangeAnimationState(PLAYER_JUMP);
             } else 

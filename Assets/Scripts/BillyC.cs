@@ -171,7 +171,7 @@ public class BillyC : MonoBehaviour
 
                     if (randomDir == 0)
                     {
-                        rb.velocity = new Vector2(-patrolSpeed, 0);
+                        rb.linearVelocity = new Vector2(-patrolSpeed, 0);
                 
                         if (isFacingRight)
                         {
@@ -180,7 +180,7 @@ public class BillyC : MonoBehaviour
 
                     } else
                     {
-                        rb.velocity = new Vector2(patrolSpeed, 0);
+                        rb.linearVelocity = new Vector2(patrolSpeed, 0);
                     
                         if (!isFacingRight)
                         {

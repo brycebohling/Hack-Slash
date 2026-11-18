@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+
 
 public class CameraC : MonoBehaviour
 {
-    CinemachineVirtualCamera vcam;
-    CinemachineBasicMultiChannelPerlin noisePerlin;
+    Unity.Cinemachine.CinemachineVirtualCamera vcam;
+    Unity.Cinemachine.CinemachineBasicMultiChannelPerlin noisePerlin;
     bool isShaking = false;
     [SerializeField] float shakeTime;
     float shakeTimeCountdown;
 
 
-    private void Awake() 
+    private void Awake()
     {
-        vcam = GetComponent<CinemachineVirtualCamera>();
-        noisePerlin = vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();  
+        vcam = GetComponent<Unity.Cinemachine.CinemachineVirtualCamera>();
+        noisePerlin = vcam.GetCinemachineComponent<Unity.Cinemachine.CinemachineBasicMultiChannelPerlin>();
     }
 
     private void Update()
@@ -33,16 +33,17 @@ public class CameraC : MonoBehaviour
 
     public void CameraStartShake(float AmplitudeGain, float FrequencyGain)
     {
-        noisePerlin.m_AmplitudeGain = AmplitudeGain;
-        noisePerlin.m_FrequencyGain = FrequencyGain;
+        noisePerlin.AmplitudeGain = AmplitudeGain;
+        noisePerlin.FrequencyGain = FrequencyGain;
         shakeTimeCountdown = shakeTime;
         isShaking = true;
     }
 
     public void CameraStopShake()
     {
-        noisePerlin.m_AmplitudeGain = 0f;
-        noisePerlin.m_FrequencyGain = 0f;
+        noisePerlin.AmplitudeGain = 0f;
+        noisePerlin.FrequencyGain = 0f;
+
         isShaking = false;
     }
 

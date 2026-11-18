@@ -116,7 +116,7 @@ public class IvanC : MonoBehaviour
 
         if (!IsAnimationPlaying(anim, ENEMY_WALK))
         {
-            rb.velocity = new Vector2(0,0);
+            rb.linearVelocity = new Vector2(0,0);
         }
 
         isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
@@ -149,10 +149,10 @@ public class IvanC : MonoBehaviour
                 {
                     if (GameManager.gameManager.playerPos.x > transform.position.x)
                     {
-                        rb.velocity = speed;
+                        rb.linearVelocity = speed;
                     } else
                     {
-                        rb.velocity = -speed;
+                        rb.linearVelocity = -speed;
                     }   
 
                     ChangeAnimationState(ENEMY_WALK);
@@ -175,7 +175,7 @@ public class IvanC : MonoBehaviour
 
                     if (randomDir == 0)
                     {
-                        rb.velocity = new Vector2(-patrolSpeed, 0);
+                        rb.linearVelocity = new Vector2(-patrolSpeed, 0);
                 
                         if (isFacingRight)
                         {
@@ -184,7 +184,7 @@ public class IvanC : MonoBehaviour
 
                     } else
                     {
-                        rb.velocity = new Vector2(patrolSpeed, 0);
+                        rb.linearVelocity = new Vector2(patrolSpeed, 0);
                     
                         if (!isFacingRight)
                         {

@@ -14,7 +14,7 @@ public class ArrowC : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * speed;
+        rb.linearVelocity = transform.right * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) 

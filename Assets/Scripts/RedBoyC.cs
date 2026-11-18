@@ -159,7 +159,7 @@ public class RedBoyC : MonoBehaviour
 
                     if (randomDir == 0)
                     {
-                        rb.velocity = new Vector2(-patrolSpeed, 0);
+                        rb.linearVelocity = new Vector2(-patrolSpeed, 0);
                 
                         if (isFacingRight)
                         {
@@ -168,7 +168,7 @@ public class RedBoyC : MonoBehaviour
 
                     } else
                     {
-                        rb.velocity = new Vector2(patrolSpeed, 0);
+                        rb.linearVelocity = new Vector2(patrolSpeed, 0);
                     
                         if (!isFacingRight)
                         {
@@ -246,7 +246,7 @@ public class RedBoyC : MonoBehaviour
     {
         yield return new WaitForSeconds(knockbackTime);
         beingKnockedback = false;
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 
     private void ChangeAnimationState(string newState)
