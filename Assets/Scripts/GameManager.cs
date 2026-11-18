@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject scoreIncText;
     [SerializeField] Vector2 socreTextPos;
     public int killStreak;
+    int shownKillStreak = -1;
     [SerializeField] int firstKillStreakThreshold;
     [SerializeField] int secondKillStreakThreshold;
     [SerializeField] float firstKillStreakMultiplier;
@@ -100,8 +101,13 @@ public class GameManager : MonoBehaviour
         playerCurrentHealth = playerScript.currentHealth;
         playerMaxHealth = playerScript.maxHealth;
         playerPos = playerScript.transform.position;
-        killStreakText.text = killStreak.ToString();
-        
+        // Only rebuild the string when the number changes, so we don't make garbage every frame.
+        if (killStreak != shownKillStreak)
+        {
+            shownKillStreak = killStreak;
+            killStreakText.text = killStreak.ToString();
+        }
+
         if (playerRenderer.enabled == true)
         {
             isPlayerRendered = true;
